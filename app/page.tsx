@@ -247,10 +247,10 @@ export default function MoneyMindsetSorter() {
 
         <div style={styles.buttonRow}>
           <button style={styles.button} onClick={handleSelectMe}>
-            This sounds like me
+            Agree
           </button>
           <button style={styles.button} onClick={handleSelectNotMe}>
-            This does not sound like me
+            Disagree
           </button>
         </div>
       </div>
