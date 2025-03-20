@@ -24,52 +24,165 @@ interface UserSelection {
 // ---------------------------------------------------------------------------
 const allStatements: StatementData[] = [
   // Guardians
-  { statement: "I feel secure when I maintain an ample cash reserve in my bank for unexpected emergencies.", category: "Guardians" },
-  { statement: "I track and monitor my expenditures to keep control over my finances.", category: "Guardians" },
-  { statement: "I prefer stable income and low risk investments over chasing speculative opportunities.", category: "Guardians" },
-  { statement: "Carrying debt makes me uncomfortable, even if it's considered 'good debt.", category: "Guardians" },
-  { statement: "I experience greater distress when my investments lose money than the satisfaction I derive from equivalent gains.", category: "Guardians" },
-  { statement: "I make saving a top priority, setting aside funds for future security before indulging in discretionary spending.", category: "Guardians" },
+  {
+    statement: "I feel secure when I maintain an ample cash reserve in my bank for unexpected emergencies.",
+    category: "Guardians",
+  },
+  {
+    statement: "I track and monitor my expenditures to keep control over my finances.",
+    category: "Guardians",
+  },
+  {
+    statement: "I prefer stable income and low risk investments over chasing speculative opportunities.",
+    category: "Guardians",
+  },
+  {
+    // Escaped single quotes
+    statement: "Carrying debt makes me uncomfortable, even if it&apos;s considered &apos;good debt.&apos;",
+    category: "Guardians",
+  },
+  {
+    statement:
+      "I experience greater distress when my investments lose money than the satisfaction I derive from equivalent gains.",
+    category: "Guardians",
+  },
+  {
+    statement:
+      "I make saving a top priority, setting aside funds for future security before indulging in discretionary spending.",
+    category: "Guardians",
+  },
 
   // Strategists
-  { statement: "I love mapping out clear, measurable financial goals (e.g., saving for retirement).", category: "Strategists" },
-  { statement: "I research thoroughly before making big money decisions (e.g., purchasing a home, car).", category: "Strategists" },
-  { statement: "I compare multiple options (mortgages, credit cards, investments) to find the best deal.", category: "Strategists" },
-  { statement: "I track my net worth or budget regularly to stay on course.", category: "Strategists" },
-  { statement: "I reflect on past money mistakes and adjust my plan to avoid repeating them.", category: "Strategists" },
-  { statement: "I consider potential financial setbacks well in advance to be prepared.", category: "Strategists" },
+  {
+    statement: "I love mapping out clear, measurable financial goals (e.g., saving for retirement).",
+    category: "Strategists",
+  },
+  {
+    statement: "I research thoroughly before making big money decisions (e.g., purchasing a home, car).",
+    category: "Strategists",
+  },
+  {
+    statement: "I compare multiple options (mortgages, credit cards, investments) to find the best deal.",
+    category: "Strategists",
+  },
+  {
+    statement: "I track my net worth or budget regularly to stay on course.",
+    category: "Strategists",
+  },
+  {
+    statement: "I reflect on past money mistakes and adjust my plan to avoid repeating them.",
+    category: "Strategists",
+  },
+  {
+    statement: "I consider potential financial setbacks well in advance to be prepared.",
+    category: "Strategists",
+  },
 
   // Impressors
-  { statement: "The lifestyle and choices of my social circle influences what I too value in my life", category: "Impressors" },
-  { statement: "I find myself drawn to purchases or experiences that others view positively or recommend.", category: "Impressors" },
-  { statement: "It is important to me that my financial choices align with the image I want to project.", category: "Impressors" },
-  { statement: "Receiving compliments on things I own or experiences I have had feels rewarding", category: "Impressors" },
-  { statement: "At times, I spend more to ensure my lifestyle stays comparable to those I spend time with.", category: "Impressors" },
-  { statement: "When making purchase decisions, I am influenced by what people I admire.", category: "Impressors" },
+  {
+    statement: "The lifestyle and choices of my social circle influences what I too value in my life",
+    category: "Impressors",
+  },
+  {
+    statement: "I find myself drawn to purchases or experiences that others view positively or recommend.",
+    category: "Impressors",
+  },
+  {
+    statement: "It is important to me that my financial choices align with the image I want to project.",
+    category: "Impressors",
+  },
+  {
+    statement: "Receiving compliments on things I own or experiences I have had feels rewarding",
+    category: "Impressors",
+  },
+  {
+    statement: "At times, I spend more to ensure my lifestyle stays comparable to those I spend time with.",
+    category: "Impressors",
+  },
+  {
+    statement: "When making purchase decisions, I am influenced by what people I admire.",
+    category: "Impressors",
+  },
 
   // Givers
-  { statement: "I enjoy giving gifts or donating money, even if it means a tighter budget for myself.", category: "Givers" },
-  { statement: "I feel more satisfaction when my money benefits others than when it only benefits me.", category: "Givers" },
-  { statement: "I often offer to cover expenses or help friends or family in need.", category: "Givers" },
-  { statement: "I believe charitable giving is more important than personal splurges.", category: "Givers" },
-  { statement: "I rarely hesitate to lend money to people I trust.", category: "Givers" },
-  { statement: "I measure my success by how many people I can help financially.", category: "Givers" },
+  {
+    statement: "I enjoy giving gifts or donating money, even if it means a tighter budget for myself.",
+    category: "Givers",
+  },
+  {
+    statement: "I feel more satisfaction when my money benefits others than when it only benefits me.",
+    category: "Givers",
+  },
+  {
+    statement: "I often offer to cover expenses or help friends or family in need.",
+    category: "Givers",
+  },
+  {
+    statement: "I believe charitable giving is more important than personal splurges.",
+    category: "Givers",
+  },
+  {
+    statement: "I rarely hesitate to lend money to people I trust.",
+    category: "Givers",
+  },
+  {
+    statement: "I measure my success by how many people I can help financially.",
+    category: "Givers",
+  },
 
   // Adventurers
-  { statement: "I get excited at the thought of high-potential, higher-risk financial moves.", category: "Adventurers" },
-  { statement: "I see unexpected costs as chances to learn or try unconventional solutions.", category: "Adventurers" },
-  { statement: "I make spontaneous spending or investment decisions when an opportunity seems worthwhile, without overanalyzing it.", category: "Adventurers" },
-  { statement: "I do not mind taking on debt to fund adventures or travel", category: "Adventurers" },
-  { statement: "I am more motivated by potential gains than worried about potential losses.", category: "Adventurers" },
-  { statement: "I often explore new side hustles or income streams for the thrill of it.", category: "Adventurers" },
+  {
+    statement: "I get excited at the thought of high-potential, higher-risk financial moves.",
+    category: "Adventurers",
+  },
+  {
+    statement: "I see unexpected costs as chances to learn or try unconventional solutions.",
+    category: "Adventurers",
+  },
+  {
+    statement:
+      "I make spontaneous spending or investment decisions when an opportunity seems worthwhile, without overanalyzing it.",
+    category: "Adventurers",
+  },
+  {
+    statement: "I do not mind taking on debt to fund adventures or travel",
+    category: "Adventurers",
+  },
+  {
+    statement: "I am more motivated by potential gains than worried about potential losses.",
+    category: "Adventurers",
+  },
+  {
+    statement: "I often explore new side hustles or income streams for the thrill of it.",
+    category: "Adventurers",
+  },
 
   // Free Spirits
-  { statement: "I do not stress over tracking every dollar because I trust it will work out.", category: "Free Spirits" },
-  { statement: "I rarely create strict budgets, preferring to handle money more flexibly.", category: "Free Spirits" },
-  { statement: "I feel limited by tight financial plans or rules.", category: "Free Spirits" },
-  { statement: "I often make spontaneous purchases without guilt.", category: "Free Spirits" },
-  { statement: "I believe money is just a tool; I don't obsess over it.", category: "Free Spirits" },
-  { statement: "I don't see the point in worrying too much about future 'what ifs.'", category: "Free Spirits" },
+  {
+    statement: "I do not stress over tracking every dollar because I trust it will work out.",
+    category: "Free Spirits",
+  },
+  {
+    statement: "I rarely create strict budgets, preferring to handle money more flexibly.",
+    category: "Free Spirits",
+  },
+  {
+    statement: "I feel limited by tight financial plans or rules.",
+    category: "Free Spirits",
+  },
+  {
+    statement: "I often make spontaneous purchases without guilt.",
+    category: "Free Spirits",
+  },
+  {
+    statement: "I believe money is just a tool; I don't obsess over it.",
+    category: "Free Spirits",
+  },
+  {
+    // Escaped single quotes
+    statement: "I don&apos;t see the point in worrying too much about future &apos;what ifs.&apos;",
+    category: "Free Spirits",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -140,7 +253,7 @@ export default function MoneyMindsetGame() {
             First input your name & email so you can also receive a copy of your results.
             We will discuss the results in an upcoming session. Once you hit begin,
             you will be presented with 36 cards. Take a few seconds to evaluate each one.
-            Then sort them into one of two piles: <strong> "Agree" </strong> or <strong>"Disagree"</strong>
+            Then sort them into one of two piles: <strong>&quot;Agree&quot;</strong> or <strong>&quot;Disagree&quot;</strong>
           </p>
 
           {/* Collect Name + Email Upfront */}
@@ -248,7 +361,7 @@ export default function MoneyMindsetGame() {
     return (
       <div style={styles.container}>
         <h2 style={styles.title}>
-          For each statement below, indicate if it sounds like you. Don't overthink!
+          For each statement below, indicate if it sounds like you. Do not overthink!
         </h2>
         <div style={styles.progressBarContainer}>
           <div style={{ ...styles.progressBarFill, width: `${progressPercentage}%` }} />
@@ -348,7 +461,7 @@ export default function MoneyMindsetGame() {
         <div style={styles.resultsTable}>
           <div style={styles.resultsHeader}>
             <div style={styles.resultsHeaderCell}>Money Mindset</div>
-            <div style={styles.resultsHeaderCell}># of "Me" Cards</div>
+            <div style={styles.resultsHeaderCell}># of &quot;Me&quot; Cards</div>
             <div style={styles.resultsHeaderCell}>Strength</div>
             <div style={styles.resultsHeaderCell}>Core Motivation</div>
           </div>

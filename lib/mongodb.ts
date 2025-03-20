@@ -1,4 +1,3 @@
-// /lib/mongodb.ts
 import { MongoClient } from "mongodb";
 
 if (!process.env.MONGODB_URI) {
@@ -6,20 +5,23 @@ if (!process.env.MONGODB_URI) {
 }
 
 const uri = process.env.MONGODB_URI;
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
 
+// We must declare the global so TS doesn't complain about `global._mongoClientPromise`
 declare global {
   // allow global var as workaround for hot-reloading in development
-  // so we don’t create extra connections
   // eslint-disable-next-line no-var
-  var _mongoClientPromise: Promise<MongoClient>;
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (!global._mongoClientPromise) {
-  client = new MongoClient(uri);
-  global._mongoClientPromise = client.connect();
-}
-clientPromise = global._mongoClientPromise;
+// 1) Either use the existing global promise, or create a new one
+const clientPromise: Promise<MongoClient> =
+  global._mongoClientPromise ||
+  new MongoClient(uri).connect();
 
+// 2) If in dev, store in the global, so it’s cached across reloads
+if (process.env.NODE_ENV !== "production") {
+  global._mongoClientPromise = clientPromise;
+}
+
+// 3) Export the promise for use in other parts of your app
 export default clientPromise;
