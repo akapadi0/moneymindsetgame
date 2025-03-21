@@ -29,7 +29,7 @@ const allStatements: StatementData[] = [
     category: "Guardians",
   },
   {
-    statement: "I am aware of and control how much I spend and save each month",
+    statement: "I am aware of and control how much I spend and save each month.",
     category: "Guardians",
   },
   {
@@ -66,7 +66,7 @@ const allStatements: StatementData[] = [
     category: "Strategists",
   },
   {
-    statement: "I track my net worth or budget regularly to stay on course.",
+    statement: "I track my net worth regularly to stay on course.",
     category: "Strategists",
   },
   {
@@ -100,7 +100,7 @@ const allStatements: StatementData[] = [
     category: "Impressors",
   },
   {
-    statement: "When making purchase decisions, I am influenced by what people I admire.",
+    statement: "I often look to the choices of people I admire as a guide for my own purchases.",
     category: "Impressors",
   },
 
@@ -114,7 +114,7 @@ const allStatements: StatementData[] = [
     category: "Givers",
   },
   {
-    statement: "I often offer to cover expenses or help friends or family in need.",
+    statement: "I often, offer to cover expenses or help friends or family in need.",
     category: "Givers",
   },
   {
@@ -136,7 +136,7 @@ const allStatements: StatementData[] = [
     category: "Adventurers",
   },
   {
-    statement: "I see surprise costs as opportunities to experiment and adapt, rather than stress out.",
+    statement: "I view unexpected costs as a normal part of life and see them as opportunities to learn, rather than a source of stress.",
     category: "Adventurers",
   },
   {
@@ -153,7 +153,7 @@ const allStatements: StatementData[] = [
     category: "Adventurers",
   },
   {
-    statement: "I often explore new side hustles or income streams for the thrill of it.",
+    statement: "I find myself engaging in new side hustles and income streams for the thrill of it.",
     category: "Adventurers",
   },
 
@@ -180,7 +180,7 @@ const allStatements: StatementData[] = [
   },
   {
     // Escaped single quotes
-    statement: "I do not worry about future possibilities or setbacks, trusting that I will adapt if needed.",
+    statement: "I do not believe in mapping out financial scenarios or stress over setbacks — I trust I will adapt as needed.",
     category: "Free Spirits",
   },
 ];
