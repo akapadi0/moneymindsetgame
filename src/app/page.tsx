@@ -38,7 +38,7 @@ const allStatements: StatementData[] = [
   },
   {
     // Escaped single quotes
-    statement: "Carrying debt makes me uncomfortable, even if it&apos;s considered &apos;good debt.&apos;",
+    statement: "Carrying debt makes me uncomfortable, even if is considered good debt.",
     category: "Guardians",
   },
   {
@@ -80,7 +80,7 @@ const allStatements: StatementData[] = [
 
   // Impressors
   {
-    statement: "The lifestyle and choices of my social circle influences what I too value in my life",
+    statement: "The lifestyle and choices of my social circle influences what I too value in my life.",
     category: "Impressors",
   },
   {
@@ -180,7 +180,7 @@ const allStatements: StatementData[] = [
   },
   {
     // Escaped single quotes
-    statement: "I don&apos;t see the point in worrying too much about future &apos;what ifs.&apos;",
+    statement: "I do not see the point in worrying too much about future and what ifs",
     category: "Free Spirits",
   },
 ];
@@ -249,8 +249,8 @@ export default function MoneyMindsetGame() {
           />
           <h1 style={styles.title}>Welcome to the Money Mindset Game</h1>
           <p style={styles.introText}>
-            This is a tool we have developed to help us understand you better.
-            First input your name & email so you can also receive a copy of your results.
+            This is a tool we have developed, to help us understand you better.
+            Please input your name & email so you can receive a copy of your results.
             We will discuss the results in an upcoming session. Once you hit begin,
             you will be presented with 36 cards. Take a few seconds to evaluate each one.
             Then sort them into one of two piles: <strong>&quot;Agree&quot;</strong> or <strong>&quot;Disagree&quot;</strong>
