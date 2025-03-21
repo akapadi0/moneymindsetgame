@@ -29,7 +29,7 @@ const allStatements: StatementData[] = [
     category: "Guardians",
   },
   {
-    statement: "I track and monitor my expenditures to keep control over my finances.",
+    statement: "I am aware of and control how much I spend and save each month",
     category: "Guardians",
   },
   {
@@ -88,7 +88,7 @@ const allStatements: StatementData[] = [
     category: "Impressors",
   },
   {
-    statement: "It is important to me that my financial choices align with the image I want to project.",
+    statement: "I have  spent or invested money to create a certain image or impression.",
     category: "Impressors",
   },
   {
@@ -132,11 +132,11 @@ const allStatements: StatementData[] = [
 
   // Adventurers
   {
-    statement: "I get excited at the thought of high-potential, higher-risk financial moves.",
+    statement: "I actively pursue high-potential, higher-risk financial moves.",
     category: "Adventurers",
   },
   {
-    statement: "I see unexpected costs as chances to learn or try unconventional solutions.",
+    statement: "I see surprise costs as opportunities to experiment and adapt, rather than stress out.",
     category: "Adventurers",
   },
   {
@@ -145,7 +145,7 @@ const allStatements: StatementData[] = [
     category: "Adventurers",
   },
   {
-    statement: "I do not mind taking on debt to fund adventures or travel",
+    statement: "I am okay with taking on debt to fund new experiences or travel",
     category: "Adventurers",
   },
   {
@@ -159,11 +159,11 @@ const allStatements: StatementData[] = [
 
   // Free Spirits
   {
-    statement: "I do not stress over tracking every dollar because I trust it will work out.",
+    statement: "I rarely worry about money details, trusting everything will balance out in the end.",
     category: "Free Spirits",
   },
   {
-    statement: "I rarely create strict budgets, preferring to handle money more flexibly.",
+    statement: "I do not enjoy creating budgets, preferring to handle money more flexibly.",
     category: "Free Spirits",
   },
   {
@@ -180,7 +180,7 @@ const allStatements: StatementData[] = [
   },
   {
     // Escaped single quotes
-    statement: "I do not see the point in worrying too much about future and what ifs",
+    statement: "I do not worry about future possibilities or setbacks, trusting that I will adapt if needed.",
     category: "Free Spirits",
   },
 ];
