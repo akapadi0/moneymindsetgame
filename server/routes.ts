@@ -67,16 +67,34 @@ async function seedQuestions() {
       "I enjoy trading stocks and crypto.",
       "I prefer stable, low-risk investments.",
       "Money is just a tool to enjoy life today.",
-      "I am constantly looking for new income streams."
+      "I am constantly looking for new income streams.",
+      "I track every single expense in a spreadsheet.",
+      "Buying luxury items makes me feel successful.",
+      "I'd rather invest in a startup than a savings account.",
+      "I worry about my financial future daily.",
+      "Budgeting feels like a restriction on my freedom.",
+      "I believe wealth is a reflection of hard work.",
+      "I check my investment portfolio multiple times a day.",
+      "I rarely look at the price tag before buying something.",
+      "I've already planned my retirement in detail.",
+      "I enjoy the thrill of a high-stakes gamble.",
+      "Having a high credit limit makes me feel powerful.",
+      "I prioritize financial independence above all else.",
+      "I often treat friends and family to expensive dinners.",
+      "I am hesitant to spend money even on necessities.",
+      "I view money as a way to gain social status.",
+      "I find financial news and market trends fascinating.",
+      "I live by the motto 'You can't take it with you'.",
+      "I feel most confident when my bank account is full."
     ];
 
-    // Generate 36 questions (looping through categories/placeholders for now)
-    for (let i = 0; i < 36; i++) {
+    // Seed exactly 30 questions
+    for (let i = 0; i < 30; i++) {
       await storage.createQuestion({
-        text: placeholders[i % placeholders.length],
+        text: placeholders[i],
         category: categories[i % categories.length],
       });
     }
-    console.log("Seeded 36 questions");
+    console.log("Seeded 30 questions");
   }
 }

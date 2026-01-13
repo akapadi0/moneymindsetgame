@@ -69,7 +69,7 @@ export default function Results() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-display font-bold mb-2">Your Financial Blueprint</h1>
-            <p className="text-muted-foreground">Analysis based on your 36 responses</p>
+            <p className="text-muted-foreground">Analysis based on your 30 concise responses</p>
           </div>
 
           {/* Archetype Card */}
