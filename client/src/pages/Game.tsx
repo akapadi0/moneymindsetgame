@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { useQuestions } from "@/hooks/use-game";
 import { GameCard } from "@/components/game-card";
 import { ProgressBar } from "@/components/progress-bar";
+import { Timer } from "@/components/timer";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -23,7 +24,6 @@ export default function Game() {
     
     const currentQuestion = questions[currentIndex];
     
-    // Logic: Agree (Right) adds score, Disagree (Left) does nothing (or could be explicit 0)
     if (direction === "right") {
       setScores(prev => ({
         ...prev,
@@ -31,11 +31,9 @@ export default function Game() {
       }));
     }
 
-    // Delay slighty for animation to complete before index change
     setTimeout(() => {
       const nextIndex = currentIndex + 1;
       if (nextIndex >= questions.length) {
-        // Game Over - Save temporary results and go to results page
         const finalScores = direction === "right" 
           ? { ...scores, [currentQuestion.category]: (scores[currentQuestion.category] || 0) + 1 }
           : scores;
@@ -71,21 +69,26 @@ export default function Game() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 relative overflow-hidden">
-      {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-1/2 bg-primary/5 rounded-b-[3rem] -z-0" />
       
       <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 pt-8 pb-12">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-xl font-display font-semibold text-primary mb-6">
+        <div className="text-center mb-6">
+          <h2 className="text-xl font-display font-semibold text-primary mb-4">
             WealthIQ Assessment
           </h2>
           <ProgressBar current={currentIndex + 1} total={questions.length} />
         </div>
 
-        {/* Card Stack Area */}
+        <div className="flex justify-center mb-8">
+          <Timer 
+            duration={20} 
+            onTimeUp={() => handleSwipe("left")} 
+            resetKey={currentIndex} 
+          />
+        </div>
+
         <div className="flex-1 relative flex items-center justify-center min-h-[400px]">
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {currentQuestion && (
               <GameCard 
                 key={currentQuestion.id} 
@@ -97,13 +100,13 @@ export default function Game() {
           </AnimatePresence>
         </div>
 
-        {/* Controls (Manual Buttons for Accessibility/Desktop) */}
         <div className="mt-8 flex justify-between gap-6 px-4">
           <Button 
             variant="outline" 
             size="lg" 
             onClick={() => handleSwipe("left")}
             className="flex-1 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive"
+            data-testid="button-disagree"
           >
             Disagree
           </Button>
@@ -112,13 +115,14 @@ export default function Game() {
             size="lg" 
             onClick={() => handleSwipe("right")}
             className="flex-1 border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500"
+            data-testid="button-agree"
           >
             Agree
           </Button>
         </div>
         
         <p className="text-center text-xs text-muted-foreground mt-6 uppercase tracking-widest opacity-60">
-          Swipe or click to choose
+          Decide quickly • No going back
         </p>
       </div>
     </div>

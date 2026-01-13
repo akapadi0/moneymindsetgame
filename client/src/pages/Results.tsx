@@ -106,17 +106,26 @@ export default function Results() {
 
           {/* Breakdown */}
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-xl border border-border shadow-sm">
+            <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
               <h3 className="font-bold mb-6">Category Breakdown</h3>
               <div className="h-64">
                  <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={chartData} layout="vertical" margin={{ left: 20 }}>
                     <XAxis type="number" hide />
-                    <YAxis dataKey="subject" type="category" width={80} tick={{ fontSize: 12 }} />
-                    <Tooltip cursor={{fill: 'transparent'}} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                    <YAxis dataKey="subject" type="category" width={80} tick={{ fontSize: 12, fill: 'currentColor' }} />
+                    <Tooltip 
+                      cursor={{fill: 'transparent'}} 
+                      contentStyle={{ 
+                        borderRadius: '12px', 
+                        border: 'none', 
+                        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
+                        backgroundColor: 'hsl(var(--card))',
+                        color: 'hsl(var(--card-foreground))'
+                      }} 
+                    />
                     <Bar dataKey="A" radius={[0, 4, 4, 0]} barSize={24}>
                       {chartData.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "hsl(160, 40%, 30%)" : "hsl(35, 70%, 50%)"} />
+                        <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "hsl(var(--primary))" : "hsl(var(--accent))"} />
                       ))}
                     </Bar>
                   </BarChart>
@@ -125,22 +134,27 @@ export default function Results() {
             </div>
 
             <div className="bg-primary/5 p-6 rounded-xl border border-primary/10">
-              <h3 className="font-bold mb-4 text-primary">Recommendations</h3>
+              <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
+                <CheckCircle className="w-5 h-5" />
+                Strategic Recommendations
+              </h3>
               <ul className="space-y-4">
-                <li className="flex gap-3">
-                  <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Set up a "Fun Fund" to practice guilt-free spending on experiences.</span>
+                <li className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
+                  <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+                  <span className="text-sm leading-relaxed">Set up a "Fun Fund" to practice guilt-free spending on experiences that enrich your life.</span>
                 </li>
-                <li className="flex gap-3">
-                  <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Automate your investments to reduce decision fatigue.</span>
+                <li className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
+                  <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+                  <span className="text-sm leading-relaxed">Automate your wealth-building investments to reduce daily decision fatigue.</span>
                 </li>
-                <li className="flex gap-3">
-                  <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Schedule a quarterly review to align spending with core values.</span>
+                <li className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
+                  <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+                  <span className="text-sm leading-relaxed">Schedule a quarterly review to align your spending with core personal values.</span>
                 </li>
               </ul>
-              <Button className="w-full mt-6" variant="outline">Book Coaching Session</Button>
+              <Button className="w-full mt-6" variant="primary" data-testid="button-book-coaching">
+                Explore Premium Coaching
+              </Button>
             </div>
           </div>
         </div>
