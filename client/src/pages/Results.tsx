@@ -152,9 +152,33 @@ export default function Results() {
                   <span className="text-sm leading-relaxed">Schedule a quarterly review to align your spending with core personal values.</span>
                 </li>
               </ul>
-              <Button className="w-full mt-6" variant="primary" data-testid="button-book-coaching">
-                Explore Premium Coaching
-              </Button>
+              <div className="flex flex-col gap-3 mt-6">
+                <Button className="w-full" variant="primary" data-testid="button-book-coaching">
+                  Explore Premium Coaching
+                </Button>
+                <div className="grid grid-cols-2 gap-3">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      const text = `I just discovered my financial archetype is "${topArchetype[0]}"! Take the WealthIQ Assessment to find yours.`;
+                      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+                    }}
+                    data-testid="button-share-twitter"
+                  >
+                    Share on X
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.href);
+                      toast({ title: "Link Copied", description: "Share your results with others!" });
+                    }}
+                    data-testid="button-copy-link"
+                  >
+                    Copy Link
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

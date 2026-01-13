@@ -50,7 +50,7 @@ export default function Landing() {
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
               Unlock the hidden psychological patterns driving your financial decisions. 
-              Play the 3-minute card game to reveal your unique archetype.
+              Take the 5-minute assessment to reveal your unique archetype.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

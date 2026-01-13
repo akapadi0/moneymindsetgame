@@ -81,7 +81,7 @@ export default function Game() {
 
         <div className="flex justify-center mb-8">
           <Timer 
-            duration={20} 
+            duration={35} 
             onTimeUp={() => handleSwipe("left")} 
             resetKey={currentIndex} 
           />
