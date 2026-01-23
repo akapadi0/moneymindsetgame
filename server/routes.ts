@@ -54,59 +54,61 @@ export async function registerRoutes(
 async function seedQuestions() {
   const existing = await storage.getQuestions();
   if (existing.length === 0) {
-    const categories = ["Saver", "Spender", "Risk Taker", "Security Seeker", "Flyer", "Earner"];
-    const placeholders = [
-      // Wealth & Abundance
-      "Money comes easily and frequently to me.",
-      "There is always enough money available for what I need.",
-      "I deserve to be wealthy and financially successful.",
-      "Making money is a natural skill I can develop.",
-      "The world has abundant opportunities for creating wealth.",
-      "I am worthy of earning a high income.",
-      // Saving & Investing
-      "I regularly save at least 10% of my income.",
-      "Investing in the stock market is a smart long-term strategy.",
-      "I understand the basics of compound interest.",
-      "Building an emergency fund is one of my top priorities.",
-      "I feel confident making investment decisions.",
-      "I review my financial situation at least monthly.",
-      // Spending & Debt
-      "I track my spending and know where my money goes.",
-      "I can easily delay gratification for larger future rewards.",
-      "Credit card debt is acceptable only in emergencies.",
-      "I make purchasing decisions based on value, not price alone.",
-      "I pay my credit card balance in full every month.",
-      "I live below my means to create financial margin.",
-      // Money Beliefs & Psychology
-      "Talking about money openly is important and healthy.",
-      "My childhood experiences with money still influence me today.",
-      "Money cannot buy happiness, but it can reduce stress.",
-      "I am in control of my financial future.",
-      "Financial education is just as important as formal education.",
-      "I believe I can recover from financial setbacks.",
-      // Additional WealthIQ Specific prompts
-      "I feel most confident when my bank account is full.",
-      "I believe wealth is a reflection of hard work.",
-      "I've already planned my retirement in detail.",
-      "I find financial news and market trends fascinating.",
-      "I prioritize financial independence above all else.",
-      "I enjoy the thrill of a high-stakes gamble.",
-      // Completing the 36
-      "Retail therapy is my go-to stress reliever.",
-      "I save every penny I can.",
-      "I enjoy trading stocks and crypto.",
-      "I prefer stable, low-risk investments.",
-      "Money is just a tool to enjoy life today.",
-      "I am constantly looking for new income streams."
+    // Original 36 WealthIQ questions organized by category (6 each)
+    const originalQuestions = [
+      // Saver (6)
+      { text: "I make saving a top priority, setting aside funds for future security before indulging in discretionary spending.", category: "Saver" },
+      { text: "I am aware of and control how much I spend and save each month.", category: "Saver" },
+      { text: "I love mapping out clear, measurable financial goals (e.g., saving for retirement).", category: "Saver" },
+      { text: "I track my net worth regularly to stay on course.", category: "Saver" },
+      { text: "I compare multiple options (mortgages, credit cards, investments) to find the best deal.", category: "Saver" },
+      { text: "I reflect on past money mistakes and adjust my plan to avoid repeating them.", category: "Saver" },
+      
+      // Spender (6)
+      { text: "I make deliberate financial choices to build and reinforce the image I want to project to others.", category: "Spender" },
+      { text: "I find myself drawn to purchases or experiences that others view positively or recommend.", category: "Spender" },
+      { text: "Receiving compliments on things I own or experiences I have had feels rewarding.", category: "Spender" },
+      { text: "The lifestyle and choices of my social circle influences what I too value in my life.", category: "Spender" },
+      { text: "I often look to the choices of people I admire as a guide for my own purchases.", category: "Spender" },
+      { text: "At times, I spend more to ensure my lifestyle stays comparable to those I spend time with.", category: "Spender" },
+      
+      // Risk Taker (6)
+      { text: "I find myself engaging in new side hustles and income streams for the thrill of it.", category: "Risk Taker" },
+      { text: "I make spontaneous spending or investment decisions when an opportunity seems worthwhile, without overanalyzing it.", category: "Risk Taker" },
+      { text: "I often make spontaneous purchases without guilt.", category: "Risk Taker" },
+      { text: "I actively pursue high-potential, higher-risk financial moves.", category: "Risk Taker" },
+      { text: "I am more motivated by potential gains than worried about potential losses.", category: "Risk Taker" },
+      { text: "I am okay with taking on debt to fund new experiences or travel.", category: "Risk Taker" },
+      
+      // Security Seeker (6)
+      { text: "I research thoroughly before making big money decisions (e.g., purchasing a home, car).", category: "Security Seeker" },
+      { text: "I consider potential financial setbacks well in advance to be prepared.", category: "Security Seeker" },
+      { text: "Carrying debt makes me uncomfortable, even if it is considered good debt.", category: "Security Seeker" },
+      { text: "I prefer stable income and low risk investments over chasing speculative opportunities.", category: "Security Seeker" },
+      { text: "I feel secure when I maintain an ample cash reserve in my bank for unexpected emergencies.", category: "Security Seeker" },
+      { text: "I experience greater distress when my investments lose money than the satisfaction I derive from equivalent gains.", category: "Security Seeker" },
+      
+      // Flyer (6)
+      { text: "I do not enjoy creating budgets, preferring to handle money more flexibly.", category: "Flyer" },
+      { text: "I rarely worry about money details, trusting everything will balance out in the end.", category: "Flyer" },
+      { text: "I believe money is just a tool; I don't obsess over it.", category: "Flyer" },
+      { text: "I view unexpected costs as a normal part of life and see them as opportunities to learn, rather than a source of stress.", category: "Flyer" },
+      { text: "I do not believe in mapping out financial scenarios or stress over setbacks - I trust I will adapt as needed.", category: "Flyer" },
+      { text: "I feel limited by tight financial plans or rules.", category: "Flyer" },
+      
+      // Earner (6)
+      { text: "I enjoy giving gifts or donating money, even if it means a tighter budget for myself.", category: "Earner" },
+      { text: "I measure my success by how many people I can help financially.", category: "Earner" },
+      { text: "I believe charitable giving is more important than personal splurges.", category: "Earner" },
+      { text: "I often offer to cover expenses or help friends or family in need.", category: "Earner" },
+      { text: "I rarely hesitate to lend money to people I trust.", category: "Earner" },
+      { text: "I feel more satisfaction when my money benefits others than when it only benefits me.", category: "Earner" },
     ];
 
-    // Seed exactly 36 questions
-    for (let i = 0; i < 36; i++) {
-      await storage.createQuestion({
-        text: placeholders[i],
-        category: categories[i % categories.length],
-      });
+    // Seed all 36 questions
+    for (const q of originalQuestions) {
+      await storage.createQuestion(q);
     }
-    console.log("Seeded 36 questions");
+    console.log("Seeded 36 original WealthIQ questions");
   }
 }
