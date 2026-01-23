@@ -56,45 +56,57 @@ async function seedQuestions() {
   if (existing.length === 0) {
     const categories = ["Saver", "Spender", "Risk Taker", "Security Seeker", "Flyer", "Earner"];
     const placeholders = [
-      "I feel guilty when I spend money on myself.",
-      "I often buy things I don't need just because they are on sale.",
-      "I am comfortable taking big financial risks for big returns.",
-      "I need a large emergency fund to feel safe.",
-      "I don't really pay attention to my bank balance.",
-      "Making more money is the solution to all my problems.",
-      "I save every penny I can.",
+      // Wealth & Abundance
+      "Money comes easily and frequently to me.",
+      "There is always enough money available for what I need.",
+      "I deserve to be wealthy and financially successful.",
+      "Making money is a natural skill I can develop.",
+      "The world has abundant opportunities for creating wealth.",
+      "I am worthy of earning a high income.",
+      // Saving & Investing
+      "I regularly save at least 10% of my income.",
+      "Investing in the stock market is a smart long-term strategy.",
+      "I understand the basics of compound interest.",
+      "Building an emergency fund is one of my top priorities.",
+      "I feel confident making investment decisions.",
+      "I review my financial situation at least monthly.",
+      // Spending & Debt
+      "I track my spending and know where my money goes.",
+      "I can easily delay gratification for larger future rewards.",
+      "Credit card debt is acceptable only in emergencies.",
+      "I make purchasing decisions based on value, not price alone.",
+      "I pay my credit card balance in full every month.",
+      "I live below my means to create financial margin.",
+      // Money Beliefs & Psychology
+      "Talking about money openly is important and healthy.",
+      "My childhood experiences with money still influence me today.",
+      "Money cannot buy happiness, but it can reduce stress.",
+      "I am in control of my financial future.",
+      "Financial education is just as important as formal education.",
+      "I believe I can recover from financial setbacks.",
+      // Additional WealthIQ Specific prompts
+      "I feel most confident when my bank account is full.",
+      "I believe wealth is a reflection of hard work.",
+      "I've already planned my retirement in detail.",
+      "I find financial news and market trends fascinating.",
+      "I prioritize financial independence above all else.",
+      "I enjoy the thrill of a high-stakes gamble.",
+      // Completing the 36
       "Retail therapy is my go-to stress reliever.",
+      "I save every penny I can.",
       "I enjoy trading stocks and crypto.",
       "I prefer stable, low-risk investments.",
       "Money is just a tool to enjoy life today.",
-      "I am constantly looking for new income streams.",
-      "I track every single expense in a spreadsheet.",
-      "Buying luxury items makes me feel successful.",
-      "I'd rather invest in a startup than a savings account.",
-      "I worry about my financial future daily.",
-      "Budgeting feels like a restriction on my freedom.",
-      "I believe wealth is a reflection of hard work.",
-      "I check my investment portfolio multiple times a day.",
-      "I rarely look at the price tag before buying something.",
-      "I've already planned my retirement in detail.",
-      "I enjoy the thrill of a high-stakes gamble.",
-      "Having a high credit limit makes me feel powerful.",
-      "I prioritize financial independence above all else.",
-      "I often treat friends and family to expensive dinners.",
-      "I am hesitant to spend money even on necessities.",
-      "I view money as a way to gain social status.",
-      "I find financial news and market trends fascinating.",
-      "I live by the motto 'You can't take it with you'.",
-      "I feel most confident when my bank account is full."
+      "I am constantly looking for new income streams."
     ];
 
-    // Seed exactly 30 questions
-    for (let i = 0; i < 30; i++) {
+    // Seed exactly 36 questions
+    for (let i = 0; i < 36; i++) {
       await storage.createQuestion({
         text: placeholders[i],
         category: categories[i % categories.length],
       });
     }
-    console.log("Seeded 30 questions");
+    console.log("Seeded 36 questions");
   }
 }

@@ -100,25 +100,40 @@ export default function Game() {
           </AnimatePresence>
         </div>
 
-        <div className="mt-8 flex justify-between gap-6 px-4">
-          <Button 
-            variant="outline" 
-            size="lg" 
-            onClick={() => handleSwipe("left")}
-            className="flex-1 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive"
-            data-testid="button-disagree"
-          >
-            Disagree
-          </Button>
-          <Button 
-            variant="outline" 
-            size="lg" 
-            onClick={() => handleSwipe("right")}
-            className="flex-1 border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500"
-            data-testid="button-agree"
-          >
-            Agree
-          </Button>
+        <div className="mt-8 flex flex-col gap-4 w-full">
+          <div className="flex justify-between gap-6 px-4">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              onClick={() => handleSwipe("left")}
+              className="flex-1 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive"
+              data-testid="button-disagree"
+            >
+              Disagree
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              onClick={() => handleSwipe("right")}
+              className="flex-1 border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500"
+              data-testid="button-agree"
+            >
+              Agree
+            </Button>
+          </div>
+          
+          <div className="px-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => currentIndex > 0 && setCurrentIndex(currentIndex - 1)}
+              disabled={currentIndex === 0}
+              className="w-full text-muted-foreground hover:text-primary"
+              data-testid="button-go-back"
+            >
+              Go Back
+            </Button>
+          </div>
         </div>
         
         <p className="text-center text-xs text-muted-foreground mt-6 uppercase tracking-widest opacity-60">
