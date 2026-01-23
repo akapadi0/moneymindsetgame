@@ -67,7 +67,7 @@ export default function Landing() {
       {/* Value Props */}
       <section className="py-24 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover-elevate transition-all">
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 text-primary">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,6 +85,13 @@ export default function Landing() {
               </div>
               <h3 className="text-xl font-bold mb-2">Instant Blueprint</h3>
               <p className="text-muted-foreground text-sm">Receive a data-driven breakdown of your financial archetype with personalized strategic recommendations.</p>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover-elevate transition-all">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 text-primary">
+                <Shield className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Break Hidden Patterns</h3>
+              <p className="text-muted-foreground text-sm">Uncover the subconscious beliefs shaping your financial life - the first step to lasting wealth transformation.</p>
             </div>
           </div>
         </div>
