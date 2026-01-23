@@ -1,6 +1,5 @@
 import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
 import { Question } from "@shared/schema";
-import { CheckCircle, XCircle } from "lucide-react";
 
 interface GameCardProps {
   question: Question;
@@ -75,12 +74,6 @@ export function GameCard({ question, onSwipe, active }: GameCardProps) {
         <h3 className="text-2xl md:text-4xl font-display font-medium text-foreground leading-snug">
           "{question.text}"
         </h3>
-
-        <div className="absolute bottom-8 text-sm text-muted-foreground flex gap-4 items-center opacity-50">
-          <span className="flex items-center gap-1"><XCircle size={16} /> Swipe Left</span>
-          <span className="w-1 h-1 bg-current rounded-full" />
-          <span className="flex items-center gap-1">Swipe Right <CheckCircle size={16} /></span>
-        </div>
       </motion.div>
     </motion.div>
   );
