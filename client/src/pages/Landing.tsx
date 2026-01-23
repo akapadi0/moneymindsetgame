@@ -19,9 +19,6 @@ export default function Landing() {
             </div>
             <span className="font-display text-xl font-bold tracking-tight text-primary">WealthIQ</span>
           </div>
-          <Link href="/admin">
-            <Button variant="ghost" size="sm">Coach Login</Button>
-          </Link>
         </div>
       </nav>
 
