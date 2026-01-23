@@ -80,16 +80,16 @@ export function GameCard({ question, onSwipe, active, showTutorial }: GameCardPr
         <AnimatePresence>
           {showTutorial && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-max bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg text-sm font-medium z-50 pointer-events-none"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="absolute -top-24 left-1/2 -translate-x-1/2 w-[200px] bg-primary text-primary-foreground p-3 rounded-2xl shadow-xl text-xs font-bold z-50 pointer-events-none text-center flex flex-col items-center gap-2"
             >
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-primary" />
               <div className="flex items-center gap-2">
-                <ArrowLeftRight className="w-4 h-4 animate-bounce" />
-                Swipe left to disagree or right to agree
+                <ArrowLeftRight className="w-5 h-5 animate-bounce" />
+                <span>Swipe Left or Right</span>
               </div>
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-primary" />
             </motion.div>
           )}
         </AnimatePresence>
