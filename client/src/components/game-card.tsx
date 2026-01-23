@@ -1,27 +1,14 @@
-import { useState, useEffect } from "react";
-import { motion, PanInfo, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
+import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
 import { Question } from "@shared/schema";
-import { CheckCircle, XCircle, ArrowLeftRight } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 
 interface GameCardProps {
   question: Question;
   onSwipe: (direction: "left" | "right") => void;
   active: boolean;
-  showTutorial?: boolean;
 }
 
-export function GameCard({ question, onSwipe, active, showTutorial }: GameCardProps) {
-  const [tutorialVisible, setTutorialVisible] = useState(showTutorial);
-
-  useEffect(() => {
-    if (showTutorial) {
-      setTutorialVisible(true);
-      const timer = setTimeout(() => {
-        setTutorialVisible(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [showTutorial]);
+export function GameCard({ question, onSwipe, active }: GameCardProps) {
   // Motion values for drag interaction
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
@@ -88,37 +75,6 @@ export function GameCard({ question, onSwipe, active, showTutorial }: GameCardPr
         <h3 className="text-2xl md:text-4xl font-display font-medium text-foreground leading-snug">
           "{question.text}"
         </h3>
-
-        <AnimatePresence>
-          {tutorialVisible && (
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ 
-                opacity: 1, 
-                x: [0, 10, 0],
-                transition: {
-                  opacity: { duration: 0.3 },
-                  x: { 
-                    repeat: Infinity, 
-                    duration: 1.5,
-                    ease: "easeInOut"
-                  }
-                }
-              }}
-              exit={{ opacity: 0, x: 20, transition: { duration: 0.3 } }}
-              className="absolute top-1/2 -right-4 translate-x-full -translate-y-1/2 w-[160px] bg-primary/95 backdrop-blur-sm text-primary-foreground p-3 rounded-xl shadow-2xl text-xs font-bold z-50 pointer-events-none text-center flex flex-col items-center gap-2 border border-white/20"
-            >
-              <div className="absolute top-1/2 -left-2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-primary" />
-              <div className="flex items-center gap-2">
-                <ArrowLeftRight className="w-5 h-5" />
-                <span>Swipe to Decide</span>
-              </div>
-              <p className="text-[9px] uppercase tracking-wider opacity-80 font-medium leading-relaxed">
-                Drag card left or right
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         <div className="absolute bottom-8 text-sm text-muted-foreground flex gap-4 items-center opacity-50">
           <span className="flex items-center gap-1"><XCircle size={16} /> Swipe Left</span>
