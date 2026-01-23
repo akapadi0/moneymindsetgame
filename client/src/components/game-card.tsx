@@ -92,28 +92,29 @@ export function GameCard({ question, onSwipe, active, showTutorial }: GameCardPr
         <AnimatePresence>
           {tutorialVisible && (
             <motion.div
-              initial={{ opacity: 0, x: "-50%", y: 20 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ 
                 opacity: 1, 
-                x: ["-50%", "-60%", "-40%", "-50%"],
+                x: [0, 10, 0],
                 transition: {
                   opacity: { duration: 0.3 },
                   x: { 
                     repeat: Infinity, 
-                    duration: 2,
+                    duration: 1.5,
                     ease: "easeInOut"
                   }
                 }
               }}
-              exit={{ opacity: 0, transition: { duration: 0.5 } }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] bg-primary/95 backdrop-blur-sm text-primary-foreground p-4 rounded-2xl shadow-2xl text-sm font-bold z-50 pointer-events-none text-center flex flex-col items-center gap-3 border border-white/20"
+              exit={{ opacity: 0, x: 20, transition: { duration: 0.3 } }}
+              className="absolute top-1/2 -right-4 translate-x-full -translate-y-1/2 w-[160px] bg-primary/95 backdrop-blur-sm text-primary-foreground p-3 rounded-xl shadow-2xl text-xs font-bold z-50 pointer-events-none text-center flex flex-col items-center gap-2 border border-white/20"
             >
+              <div className="absolute top-1/2 -left-2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-primary" />
               <div className="flex items-center gap-2">
-                <ArrowLeftRight className="w-6 h-6" />
+                <ArrowLeftRight className="w-5 h-5" />
                 <span>Swipe to Decide</span>
               </div>
-              <p className="text-[10px] uppercase tracking-widest opacity-80 font-medium">
-                Try swiping this card left or right
+              <p className="text-[9px] uppercase tracking-wider opacity-80 font-medium leading-relaxed">
+                Drag card left or right
               </p>
             </motion.div>
           )}
