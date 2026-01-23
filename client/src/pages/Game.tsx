@@ -136,8 +136,8 @@ export default function Game() {
           </div>
         </div>
         
-        <p className="text-center text-xs text-muted-foreground mt-6 uppercase tracking-widest opacity-60">
-          Decide quickly • No going back
+        <p className="text-center text-xs text-muted-foreground mt-6 uppercase tracking-[0.2em] font-bold animate-pulse">
+          ← Swipe Left to Disagree • Swipe Right to Agree →
         </p>
       </div>
     </div>

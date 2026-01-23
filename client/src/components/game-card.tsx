@@ -54,11 +54,21 @@ export function GameCard({ question, onSwipe, active }: GameCardProps) {
         </div>
 
         {/* Swipe Indicators */}
-        <motion.div style={{ opacity: rightOpacity }} className="absolute top-8 right-8 text-green-500 transform rotate-12 border-4 border-green-500 rounded-lg px-2 py-1 font-bold text-xl uppercase tracking-widest">
-          Agree
+        <motion.div 
+          style={{ opacity: rightOpacity }} 
+          className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-green-500/20 to-transparent flex items-center justify-center pointer-events-none"
+        >
+          <div className="text-green-500 transform rotate-90 border-4 border-green-500 rounded-lg px-4 py-2 font-bold text-2xl uppercase tracking-widest bg-card/80 backdrop-blur-sm">
+            Agree
+          </div>
         </motion.div>
-        <motion.div style={{ opacity: leftOpacity }} className="absolute top-8 left-8 text-red-500 transform -rotate-12 border-4 border-red-500 rounded-lg px-2 py-1 font-bold text-xl uppercase tracking-widest">
-          Disagree
+        <motion.div 
+          style={{ opacity: leftOpacity }} 
+          className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-red-500/20 to-transparent flex items-center justify-center pointer-events-none"
+        >
+          <div className="text-red-500 transform -rotate-90 border-4 border-red-500 rounded-lg px-4 py-2 font-bold text-2xl uppercase tracking-widest bg-card/80 backdrop-blur-sm">
+            Disagree
+          </div>
         </motion.div>
 
         {/* Card Content */}
