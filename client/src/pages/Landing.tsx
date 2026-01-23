@@ -50,7 +50,7 @@ export default function Landing() {
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
               Unlock the hidden psychological patterns driving your financial decisions. 
-              Take the 5-minute assessment to reveal your unique archetype.
+              Play the 5-minute card game to reveal your unique archetype.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -67,41 +67,25 @@ export default function Landing() {
       {/* Value Props */}
       <section className="py-24 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-12">
-            {[
-              {
-                icon: <Zap className="w-8 h-8 text-accent" />,
-                title: "Instant Insights",
-                desc: "No long forms. Just swipe left or right to reveal your subconscious biases in minutes."
-              },
-              {
-                icon: <PieChart className="w-8 h-8 text-accent" />,
-                title: "Detailed Archetypes",
-                desc: "Are you a Saver, Spender, or Investor? Get a breakdown of your unique profile."
-              },
-              {
-                icon: <Shield className="w-8 h-8 text-accent" />,
-                title: "Actionable Growth",
-                desc: "Use your results to build better habits and achieve true financial freedom."
-              }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="p-8 rounded-2xl bg-background border border-border/50 hover:shadow-xl hover:border-accent/30 transition-all duration-300 group"
-              >
-                <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.desc}
-                </p>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover-elevate transition-all">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 text-primary">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">36 Precise Cards</h3>
+              <p className="text-muted-foreground text-sm">A fast-paced psychological assessment designed to reveal your core spending behavior in under 5 minutes.</p>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover-elevate transition-all">
+              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4 text-accent">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Instant Blueprint</h3>
+              <p className="text-muted-foreground text-sm">Receive a data-driven breakdown of your financial archetype with personalized strategic recommendations.</p>
+            </div>
           </div>
         </div>
       </section>
