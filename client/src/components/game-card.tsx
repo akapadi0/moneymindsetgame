@@ -80,16 +80,29 @@ export function GameCard({ question, onSwipe, active, showTutorial }: GameCardPr
         <AnimatePresence>
           {showTutorial && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="absolute -top-24 left-1/2 -translate-x-1/2 w-[200px] bg-primary text-primary-foreground p-3 rounded-2xl shadow-xl text-xs font-bold z-50 pointer-events-none text-center flex flex-col items-center gap-2"
+              initial={{ opacity: 0, x: "-50%", y: 20 }}
+              animate={{ 
+                opacity: 1, 
+                x: ["-50%", "-60%", "-40%", "-50%"],
+                transition: {
+                  opacity: { duration: 0.3 },
+                  x: { 
+                    repeat: Infinity, 
+                    duration: 2,
+                    ease: "easeInOut"
+                  }
+                }
+              }}
+              exit={{ opacity: 0 }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] bg-primary/95 backdrop-blur-sm text-primary-foreground p-4 rounded-2xl shadow-2xl text-sm font-bold z-50 pointer-events-none text-center flex flex-col items-center gap-3 border border-white/20"
             >
               <div className="flex items-center gap-2">
-                <ArrowLeftRight className="w-5 h-5 animate-bounce" />
-                <span>Swipe Left or Right</span>
+                <ArrowLeftRight className="w-6 h-6" />
+                <span>Swipe to Decide</span>
               </div>
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-primary" />
+              <p className="text-[10px] uppercase tracking-widest opacity-80 font-medium">
+                Try swiping this card left or right
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
