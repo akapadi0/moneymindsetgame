@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion, PanInfo, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
 import { Question } from "@shared/schema";
 import { CheckCircle, XCircle, ArrowLeftRight } from "lucide-react";
@@ -10,6 +11,17 @@ interface GameCardProps {
 }
 
 export function GameCard({ question, onSwipe, active, showTutorial }: GameCardProps) {
+  const [tutorialVisible, setTutorialVisible] = useState(showTutorial);
+
+  useEffect(() => {
+    if (showTutorial) {
+      setTutorialVisible(true);
+      const timer = setTimeout(() => {
+        setTutorialVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showTutorial]);
   // Motion values for drag interaction
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
@@ -78,7 +90,7 @@ export function GameCard({ question, onSwipe, active, showTutorial }: GameCardPr
         </h3>
 
         <AnimatePresence>
-          {showTutorial && (
+          {tutorialVisible && (
             <motion.div
               initial={{ opacity: 0, x: "-50%", y: 20 }}
               animate={{ 
@@ -93,7 +105,7 @@ export function GameCard({ question, onSwipe, active, showTutorial }: GameCardPr
                   }
                 }
               }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.5 } }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] bg-primary/95 backdrop-blur-sm text-primary-foreground p-4 rounded-2xl shadow-2xl text-sm font-bold z-50 pointer-events-none text-center flex flex-col items-center gap-3 border border-white/20"
             >
               <div className="flex items-center gap-2">
