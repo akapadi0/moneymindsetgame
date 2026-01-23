@@ -66,6 +66,7 @@ export default function Game() {
   }
 
   const currentQuestion = questions[currentIndex];
+  const showTutorial = currentIndex === 0;
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 relative overflow-hidden">
@@ -95,6 +96,7 @@ export default function Game() {
                 question={currentQuestion} 
                 onSwipe={handleSwipe} 
                 active={true}
+                showTutorial={showTutorial}
               />
             )}
           </AnimatePresence>

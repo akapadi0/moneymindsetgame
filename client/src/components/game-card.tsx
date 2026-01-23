@@ -1,14 +1,15 @@
-import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { motion, PanInfo, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
 import { Question } from "@shared/schema";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, XCircle, ArrowLeftRight } from "lucide-react";
 
 interface GameCardProps {
   question: Question;
   onSwipe: (direction: "left" | "right") => void;
   active: boolean;
+  showTutorial?: boolean;
 }
 
-export function GameCard({ question, onSwipe, active }: GameCardProps) {
+export function GameCard({ question, onSwipe, active, showTutorial }: GameCardProps) {
   // Motion values for drag interaction
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
@@ -75,6 +76,23 @@ export function GameCard({ question, onSwipe, active }: GameCardProps) {
         <h3 className="text-2xl md:text-4xl font-display font-medium text-foreground leading-snug">
           "{question.text}"
         </h3>
+
+        <AnimatePresence>
+          {showTutorial && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-max bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg text-sm font-medium z-50 pointer-events-none"
+            >
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-primary" />
+              <div className="flex items-center gap-2">
+                <ArrowLeftRight className="w-4 h-4 animate-bounce" />
+                Swipe left to disagree or right to agree
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="absolute bottom-8 text-sm text-muted-foreground flex gap-4 items-center opacity-50">
           <span className="flex items-center gap-1"><XCircle size={16} /> Swipe Left</span>
