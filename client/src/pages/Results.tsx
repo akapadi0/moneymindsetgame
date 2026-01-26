@@ -238,46 +238,48 @@ export default function Results() {
 
           {/* Card Front - Archetype Content */}
           <div 
-            className={`rounded-2xl border-2 p-6 md:p-8 ${data.color} h-full`}
+            className={`rounded-2xl border-2 p-5 md:p-6 ${data.color} h-full`}
             style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
           >
-            <div className="mb-4">
-              <span className="text-sm font-semibold uppercase tracking-wider text-black/60">
-                {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
-              </span>
+            {/* Header row: Label + Name/Icon */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center overflow-hidden p-1.5 flex-shrink-0">
+                  <img src={data.image} alt={name} className="w-full h-full object-contain" />
+                </div>
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-black/50 block">
+                    {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
+                  </span>
+                  <h2 className="text-2xl md:text-3xl font-display font-bold text-black">{name}</h2>
+                </div>
+              </div>
             </div>
             
-            {/* Image and Name */}
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
-                <img src={data.image} alt={name} className="w-full h-full object-contain" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-black">{name}</h2>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="bg-white rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2 text-black">
-                  <Target className="w-5 h-5 text-indigo-500" />
-                  <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
+            {/* Content: 3 boxes - horizontal on desktop, vertical on mobile */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+              <div className="bg-white rounded-xl p-3">
+                <div className="flex items-center gap-2 mb-1.5 text-black">
+                  <Target className="w-4 h-4 text-indigo-500" />
+                  <span className="font-bold text-xs uppercase tracking-wide">Motivation</span>
                 </div>
-                <p className="text-sm leading-relaxed text-black/80">{data.motivation}</p>
+                <p className="text-xs leading-relaxed text-black/80">{data.motivation}</p>
               </div>
               
-              <div className="bg-white rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2 text-black">
-                  <Zap className="w-5 h-5 text-amber-500" />
-                  <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
+              <div className="bg-white rounded-xl p-3">
+                <div className="flex items-center gap-2 mb-1.5 text-black">
+                  <Zap className="w-4 h-4 text-amber-500" />
+                  <span className="font-bold text-xs uppercase tracking-wide">Superpowers</span>
                 </div>
-                <p className="text-sm leading-relaxed text-black/80">{data.superpowers}</p>
+                <p className="text-xs leading-relaxed text-black/80">{data.superpowers}</p>
               </div>
               
-              <div className="bg-white rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2 text-black">
-                  <AlertTriangle className="w-5 h-5 text-rose-500" />
-                  <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
+              <div className="bg-white rounded-xl p-3">
+                <div className="flex items-center gap-2 mb-1.5 text-black">
+                  <AlertTriangle className="w-4 h-4 text-rose-500" />
+                  <span className="font-bold text-xs uppercase tracking-wide">Biases</span>
                 </div>
-                <p className="text-sm leading-relaxed text-black/80">{data.biases}</p>
+                <p className="text-xs leading-relaxed text-black/80">{data.biases}</p>
               </div>
             </div>
           </div>
@@ -366,8 +368,8 @@ export default function Results() {
             <p className="text-muted-foreground">Analysis based on your 36 responses</p>
           </div>
 
-          {/* Top 2 Archetypes */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
+          {/* Top 2 Archetypes - stacked for better horizontal content */}
+          <div className="space-y-6 mb-12">
             {primaryArchetype && renderArchetypeCard(primaryArchetype, true)}
             {secondaryArchetype && renderArchetypeCard(secondaryArchetype, false)}
           </div>
