@@ -567,7 +567,7 @@ export default function Results() {
                     <Loader2 className="animate-spin w-5 h-5" /> Preparing your blueprint...
                   </span>
                 ) : (
-                  "Reveal My Blueprint"
+                  "Reveal My Financial Blueprint"
                 )}
               </Button>
             </form>
