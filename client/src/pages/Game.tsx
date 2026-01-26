@@ -145,71 +145,8 @@ export default function Game() {
           />
         </div>
 
-        {/* Mobile Swipe Hint - positioned at card level */}
-        <div className="flex justify-between items-center px-2 mb-2">
-          <div className="flex items-center gap-1 text-destructive/70">
-            <ThumbsDown className="w-5 h-5" />
-            <span className="text-xs font-medium">Disagree</span>
-          </div>
-          <div className="flex items-center gap-1 text-green-600/70">
-            <span className="text-xs font-medium">Agree</span>
-            <ThumbsUp className="w-5 h-5" />
-          </div>
-        </div>
-
-        <div className="flex-1 relative flex items-center justify-center min-h-[400px]">
-          <AnimatePresence mode="wait">
-            {currentQuestion && (
-              <GameCard 
-                key={currentQuestion.id} 
-                question={currentQuestion} 
-                onSwipe={handleSwipe} 
-                active={true}
-              />
-            )}
-          </AnimatePresence>
-        </div>
-
-        <div className="mt-8 flex flex-col gap-4 w-full">
-          <div className="flex justify-between gap-6 px-4">
-            <Button 
-              variant="outline" 
-              size="lg" 
-              onClick={() => handleSwipe("left")}
-              className="flex-1 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive gap-2"
-              data-testid="button-disagree"
-            >
-              <ThumbsDown className="w-4 h-4" />
-              Disagree
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              onClick={() => handleSwipe("right")}
-              className="flex-1 border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500 gap-2"
-              data-testid="button-agree"
-            >
-              Agree
-              <ThumbsUp className="w-4 h-4" />
-            </Button>
-          </div>
-          
-          <div className="px-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleGoBack}
-              disabled={currentIndex === 0}
-              className="w-full text-muted-foreground hover:text-primary gap-2"
-              data-testid="button-go-back"
-            >
-              <Undo2 className="w-4 h-4" />
-              Go Back & Change Answer
-            </Button>
-          </div>
-        </div>
-        
-        <div className="mt-6 flex items-center justify-center gap-2">
+        {/* Swipe instruction - above the card */}
+        <div className="flex items-center justify-center gap-2 mb-4">
           <motion.div 
             animate={{ x: [-5, 0, -5] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -227,6 +164,58 @@ export default function Game() {
           >
             →
           </motion.div>
+        </div>
+
+        {/* Card with Go Back button on the right */}
+        <div className="flex-1 relative flex items-center justify-center min-h-[400px]">
+          <AnimatePresence mode="wait">
+            {currentQuestion && (
+              <GameCard 
+                key={currentQuestion.id} 
+                question={currentQuestion} 
+                onSwipe={handleSwipe} 
+                active={true}
+              />
+            )}
+          </AnimatePresence>
+          
+          {/* Go Back button - positioned to the right of card */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 sm:mr-0">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleGoBack}
+              disabled={currentIndex === 0}
+              className="flex-col gap-1 h-auto py-2 px-2 text-muted-foreground hover:text-primary"
+              data-testid="button-go-back"
+            >
+              <Undo2 className="w-5 h-5" />
+              <span className="text-[10px]">Go Back</span>
+            </Button>
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-center gap-6 px-4 w-full">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            onClick={() => handleSwipe("left")}
+            className="flex-1 max-w-[150px] border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive gap-2"
+            data-testid="button-disagree"
+          >
+            <ThumbsDown className="w-4 h-4" />
+            Disagree
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            onClick={() => handleSwipe("right")}
+            className="flex-1 max-w-[150px] border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500 gap-2"
+            data-testid="button-agree"
+          >
+            Agree
+            <ThumbsUp className="w-4 h-4" />
+          </Button>
         </div>
       </div>
     </div>
