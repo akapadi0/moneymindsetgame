@@ -129,15 +129,12 @@ export default function Game() {
         )}
       </AnimatePresence>
       
-      <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 pt-6 pb-8">
+      <div className="relative z-10 flex-1 flex flex-col max-w-md mx-auto w-full px-4 py-6">
         {/* Header */}
         <div className="text-center mb-4">
-          <h2 className="text-lg font-display font-semibold text-primary">
+          <h2 className="text-xl font-display font-semibold text-primary mb-3">
             WealthIQ Assessment
           </h2>
-        </div>
-        
-        <div className="mb-4">
           <ProgressBar current={currentIndex + 1} total={questions.length} />
         </div>
 
@@ -149,12 +146,12 @@ export default function Game() {
           />
         </div>
 
-        {/* Swipe instruction - right above the card */}
-        <div className="flex items-center justify-center gap-2 mb-2">
+        {/* Swipe instruction */}
+        <div className="flex items-center justify-center gap-2 mb-3">
           <motion.div 
             animate={{ x: [-5, 0, -5] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="text-destructive/60"
+            className="text-destructive/60 text-lg"
           >
             ←
           </motion.div>
@@ -164,47 +161,28 @@ export default function Game() {
           <motion.div 
             animate={{ x: [5, 0, 5] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="text-green-600/60"
+            className="text-green-600/60 text-lg"
           >
             →
           </motion.div>
         </div>
 
-        {/* Card with Go Back on the left */}
-        <div className="flex-1 flex items-start justify-center gap-2">
-          {/* Go Back button - left side, visible */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleGoBack}
-            disabled={currentIndex === 0}
-            className="flex-col gap-1 h-auto py-3 px-3 text-muted-foreground hover:text-primary border-muted-foreground/20 mt-8"
-            data-testid="button-go-back"
-          >
-            <Undo2 className="w-5 h-5" />
-            <span className="text-[10px] font-medium">Go Back</span>
-          </Button>
-          
-          {/* Card container */}
-          <div className="flex-1 relative min-h-[320px] max-w-sm">
-            <AnimatePresence mode="wait">
-              {currentQuestion && (
-                <GameCard 
-                  key={currentQuestion.id} 
-                  question={currentQuestion} 
-                  onSwipe={handleSwipe} 
-                  active={true}
-                />
-              )}
-            </AnimatePresence>
-          </div>
-          
-          {/* Spacer for balance */}
-          <div className="w-[52px]" />
+        {/* Card container */}
+        <div className="flex-1 relative min-h-[300px]">
+          <AnimatePresence mode="wait">
+            {currentQuestion && (
+              <GameCard 
+                key={currentQuestion.id} 
+                question={currentQuestion} 
+                onSwipe={handleSwipe} 
+                active={true}
+              />
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* Action buttons - right below the card */}
-        <div className="mt-4 flex justify-center gap-4 w-full max-w-sm mx-auto">
+        {/* Action buttons */}
+        <div className="mt-4 flex justify-center gap-4 w-full">
           <Button 
             variant="outline" 
             size="lg" 
@@ -224,6 +202,21 @@ export default function Game() {
           >
             Agree
             <ThumbsUp className="w-4 h-4" />
+          </Button>
+        </div>
+        
+        {/* Go Back button - below action buttons */}
+        <div className="mt-3 flex justify-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleGoBack}
+            disabled={currentIndex === 0}
+            className="gap-2 text-muted-foreground hover:text-primary"
+            data-testid="button-go-back"
+          >
+            <Undo2 className="w-4 h-4" />
+            Go Back
           </Button>
         </div>
       </div>
