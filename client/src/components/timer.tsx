@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 interface TimerProps {
@@ -9,14 +9,27 @@ interface TimerProps {
 
 export function Timer({ duration, onTimeUp, resetKey }: TimerProps) {
   const [timeLeft, setTimeLeft] = useState(duration);
+  const onTimeUpRef = useRef(onTimeUp);
+  const hasCalledRef = useRef(false);
+  
+  // Keep callback ref updated
+  useEffect(() => {
+    onTimeUpRef.current = onTimeUp;
+  }, [onTimeUp]);
 
+  // Reset timer when resetKey changes
   useEffect(() => {
     setTimeLeft(duration);
+    hasCalledRef.current = false;
   }, [resetKey, duration]);
 
+  // Countdown effect
   useEffect(() => {
     if (timeLeft <= 0) {
-      onTimeUp();
+      if (!hasCalledRef.current) {
+        hasCalledRef.current = true;
+        onTimeUpRef.current();
+      }
       return;
     }
 
@@ -25,7 +38,7 @@ export function Timer({ duration, onTimeUp, resetKey }: TimerProps) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, onTimeUp]);
+  }, [timeLeft]);
 
   const percentage = (timeLeft / duration) * 100;
   const isUrgent = timeLeft <= 5;

@@ -168,17 +168,19 @@ export default function Game() {
         </div>
 
         {/* Card container */}
-        <div className="flex-1 relative min-h-[220px]">
-          <AnimatePresence mode="wait">
-            {currentQuestion && (
-              <GameCard 
-                key={currentQuestion.id} 
-                question={currentQuestion} 
-                onSwipe={handleSwipe} 
-                active={true}
-              />
-            )}
-          </AnimatePresence>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="w-full max-w-md">
+            <AnimatePresence mode="wait">
+              {currentQuestion && (
+                <GameCard 
+                  key={currentQuestion.id} 
+                  question={currentQuestion} 
+                  onSwipe={handleSwipe} 
+                  active={true}
+                />
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* Action buttons */}
