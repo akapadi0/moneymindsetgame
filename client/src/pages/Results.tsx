@@ -211,7 +211,7 @@ export default function Results() {
             delay: isPrimary ? 0 : 0.3,
             ease: "easeOut"
           }}
-          style={{ transformStyle: "preserve-3d" }}
+          style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
           className={`rounded-2xl border-2 p-6 md:p-8 ${data.color}`}
         >
           <div className="mb-4">
@@ -294,12 +294,20 @@ export default function Results() {
     }))}`;
   };
 
-  const copyCompatibilityLink = () => {
-    navigator.clipboard.writeText(getCompatibilityLink());
-    toast({ 
-      title: "Link Copied!", 
-      description: "Share this link with someone to compare money mindsets." 
-    });
+  const copyCompatibilityLink = async () => {
+    try {
+      await navigator.clipboard.writeText(getCompatibilityLink());
+      toast({ 
+        title: "Link Copied!", 
+        description: "Share this link with someone to compare money mindsets." 
+      });
+    } catch (err) {
+      toast({ 
+        title: "Could not copy link", 
+        description: "Please try again or manually copy the link.",
+        variant: "destructive"
+      });
+    }
   };
 
   // Handle sharing results via email
@@ -386,7 +394,7 @@ export default function Results() {
             <Button 
               variant="outline" 
               onClick={copyCompatibilityLink}
-              className="gap-2 border-violet-300 dark:border-violet-700 text-violet-700 dark:text-violet-300 hover:bg-violet-100 dark:hover:bg-violet-900/30"
+              className="gap-2"
               data-testid="button-copy-compatibility"
             >
               <Copy className="w-4 h-4" />
