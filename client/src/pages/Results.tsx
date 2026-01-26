@@ -372,39 +372,41 @@ export default function Results() {
             {secondaryArchetype && renderArchetypeCard(secondaryArchetype, false)}
           </div>
 
-          {/* Strategic Recommendations & Challenges */}
-          <div className="bg-primary/5 p-6 rounded-xl border border-primary/10 mb-8">
-            <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              Strategic Recommendations
-            </h3>
-            <ul className="space-y-4 mb-8">
-              {getRecommendations().map((rec, index) => (
-                <li key={index} className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
-                  <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
-                  <span className="text-sm leading-relaxed">{rec}</span>
-                </li>
-              ))}
-            </ul>
+          {/* Strategic Recommendations & Challenges - Side by Side */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Strategic Recommendations */}
+            <div className="bg-primary/5 p-6 rounded-xl border border-primary/10">
+              <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
+                <CheckCircle className="w-5 h-5" />
+                Strategic Recommendations
+              </h3>
+              <ul className="space-y-3">
+                {getRecommendations().map((rec, index) => (
+                  <li key={index} className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
+                    <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+                    <span className="text-sm leading-relaxed">{rec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            {/* Challenge Yourself - Same section, different heading */}
-            <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
-              <Flame className="w-5 h-5" />
-              Challenge Yourself
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Based on your unique blueprint, here are personalized challenges to help you grow:
-            </p>
-            <ul className="space-y-4">
-              {getChallenges().map((challenge, index) => (
-                <li key={index} className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
-                  <div className="w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    {index + 1}
-                  </div>
-                  <span className="text-sm leading-relaxed">{challenge}</span>
-                </li>
-              ))}
-            </ul>
+            {/* Challenge Yourself */}
+            <div className="bg-primary/5 p-6 rounded-xl border border-primary/10">
+              <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
+                <Flame className="w-5 h-5" />
+                Challenge Yourself
+              </h3>
+              <ul className="space-y-3">
+                {getChallenges().map((challenge, index) => (
+                  <li key={index} className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
+                    <div className="w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold flex-shrink-0">
+                      {index + 1}
+                    </div>
+                    <span className="text-sm leading-relaxed">{challenge}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Full Results Notice */}
@@ -418,13 +420,13 @@ export default function Results() {
 
           {/* Share Section */}
           <div className="bg-card rounded-xl border border-border p-6 mb-8">
-            <h3 className="font-bold mb-4 text-center flex items-center justify-center gap-2">
+            <h3 className="font-bold mb-6 text-center flex items-center justify-center gap-2">
               <Share2 className="w-5 h-5 text-primary" />
               Share Your Blueprint
             </h3>
             
-            {/* Social Sharing */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+            {/* Social Sharing - Centered */}
+            <div className="flex flex-wrap gap-3 justify-center mb-6">
               <Button 
                 variant="outline" 
                 onClick={() => {
@@ -452,12 +454,13 @@ export default function Results() {
               </Button>
             </div>
 
-            {/* Invite to Compare */}
-            <div className="border-t border-border pt-6 mb-6">
-              <p className="text-sm text-muted-foreground text-center mb-3">
-                Invite someone to take the quiz and compare archetypes with you
-              </p>
-              <div className="flex justify-center">
+            {/* Two Column Layout for Invite & Email */}
+            <div className="grid md:grid-cols-2 gap-6 border-t border-border pt-6">
+              {/* Invite to Compare - for spouse/family */}
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-3">
+                  Invite your spouse or family to take the quiz and compare
+                </p>
                 <Button 
                   variant="outline" 
                   onClick={copyCompatibilityLink}
@@ -468,35 +471,35 @@ export default function Results() {
                   Copy Quiz Invite Link
                 </Button>
               </div>
-            </div>
 
-            {/* Send Results via Email */}
-            <div className="border-t border-border pt-6">
-              <p className="text-sm text-muted-foreground text-center mb-3">
-                Email your results directly to someone
-              </p>
-              <div className="flex gap-2 max-w-md mx-auto">
-                <Input
-                  type="email"
-                  placeholder="Enter their email address"
-                  value={shareEmail}
-                  onChange={(e) => setShareEmail(e.target.value)}
-                  className="flex-1"
-                  data-testid="input-share-email"
-                />
-                <Button 
-                  onClick={handleEmailShare}
-                  disabled={isSendingEmail}
-                  data-testid="button-send-email"
-                  className="gap-2"
-                >
-                  {isSendingEmail ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4" />
-                  )}
-                  Send
-                </Button>
+              {/* Send Results via Email - for friends, family, advisor */}
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-3">
+                  Send results to friends, family, or a financial advisor
+                </p>
+                <div className="flex gap-2 max-w-sm mx-auto">
+                  <Input
+                    type="email"
+                    placeholder="Their email"
+                    value={shareEmail}
+                    onChange={(e) => setShareEmail(e.target.value)}
+                    className="flex-1"
+                    data-testid="input-share-email"
+                  />
+                  <Button 
+                    onClick={handleEmailShare}
+                    disabled={isSendingEmail}
+                    data-testid="button-send-email"
+                    className="gap-2"
+                  >
+                    {isSendingEmail ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
+                    Send
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
