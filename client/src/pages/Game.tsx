@@ -129,15 +129,31 @@ export default function Game() {
         )}
       </AnimatePresence>
       
-      <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 pt-8 pb-12">
-        <div className="text-center mb-6">
-          <h2 className="text-xl font-display font-semibold text-primary mb-4">
+      <div className="relative z-10 flex-1 flex flex-col max-w-md mx-auto w-full px-4 pt-6 pb-8">
+        {/* Header with Go Back button */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="w-20" /> {/* Spacer */}
+          <h2 className="text-lg font-display font-semibold text-primary">
             WealthIQ Assessment
           </h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleGoBack}
+            disabled={currentIndex === 0}
+            className="w-20 gap-1 text-muted-foreground hover:text-primary text-xs"
+            data-testid="button-go-back"
+          >
+            <Undo2 className="w-4 h-4" />
+            Go Back
+          </Button>
+        </div>
+        
+        <div className="mb-4">
           <ProgressBar current={currentIndex + 1} total={questions.length} />
         </div>
 
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-4">
           <Timer 
             duration={35} 
             onTimeUp={() => handleSwipe("left", true)} 
@@ -145,8 +161,8 @@ export default function Game() {
           />
         </div>
 
-        {/* Swipe instruction - above the card */}
-        <div className="flex items-center justify-center gap-2 mb-4">
+        {/* Swipe instruction - right above the card */}
+        <div className="flex items-center justify-center gap-2 mb-2">
           <motion.div 
             animate={{ x: [-5, 0, -5] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -166,47 +182,27 @@ export default function Game() {
           </motion.div>
         </div>
 
-        {/* Card area with Go Back button outside on the right */}
-        <div className="flex-1 flex items-center justify-center gap-4">
-          {/* Spacer for symmetry on larger screens */}
-          <div className="w-12 sm:w-16 hidden sm:block flex-shrink-0" />
-          
-          {/* Card container - needs fixed dimensions for absolute positioned card */}
-          <div className="relative w-full max-w-sm h-[380px] sm:h-[420px]">
-            <AnimatePresence mode="wait">
-              {currentQuestion && (
-                <GameCard 
-                  key={currentQuestion.id} 
-                  question={currentQuestion} 
-                  onSwipe={handleSwipe} 
-                  active={true}
-                />
-              )}
-            </AnimatePresence>
-          </div>
-          
-          {/* Go Back button - outside the card on the right */}
-          <div className="w-12 sm:w-16 flex items-center justify-center flex-shrink-0">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleGoBack}
-              disabled={currentIndex === 0}
-              className="flex-col gap-1 h-auto py-2 px-2 text-muted-foreground hover:text-primary"
-              data-testid="button-go-back"
-            >
-              <Undo2 className="w-5 h-5" />
-              <span className="text-[10px]">Go Back</span>
-            </Button>
-          </div>
+        {/* Card container */}
+        <div className="flex-1 relative min-h-[320px]">
+          <AnimatePresence mode="wait">
+            {currentQuestion && (
+              <GameCard 
+                key={currentQuestion.id} 
+                question={currentQuestion} 
+                onSwipe={handleSwipe} 
+                active={true}
+              />
+            )}
+          </AnimatePresence>
         </div>
 
-        <div className="mt-8 flex justify-center gap-6 px-4 w-full">
+        {/* Action buttons - right below the card */}
+        <div className="mt-4 flex justify-center gap-4 w-full">
           <Button 
             variant="outline" 
             size="lg" 
             onClick={() => handleSwipe("left")}
-            className="flex-1 max-w-[150px] border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive gap-2"
+            className="flex-1 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive gap-2"
             data-testid="button-disagree"
           >
             <ThumbsDown className="w-4 h-4" />
@@ -216,7 +212,7 @@ export default function Game() {
             variant="outline" 
             size="lg" 
             onClick={() => handleSwipe("right")}
-            className="flex-1 max-w-[150px] border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500 gap-2"
+            className="flex-1 border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500 gap-2"
             data-testid="button-agree"
           >
             Agree
