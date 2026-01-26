@@ -3,12 +3,53 @@ import { useLocation } from "wouter";
 import { useCreateSubmission } from "@/hooks/use-game";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Loader2, Lock, CheckCircle, Mail } from "lucide-react";
-import { 
-  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
-  BarChart, Bar, XAxis, YAxis, Tooltip, Cell
-} from "recharts";
+import { Loader2, Lock, Mail, Target, Zap, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+// Archetype definitions with motivation, superpowers, and biases
+const ARCHETYPES: Record<string, {
+  motivation: string;
+  superpowers: string;
+  biases: string;
+  color: string;
+}> = {
+  "Strategists": {
+    motivation: "Long-term success through structure & informed decisions",
+    superpowers: "Long-term thinker, loves planning, efficient with resources",
+    biases: "May overanalyze decisions, delay action until all the data is in",
+    color: "bg-emerald-100 border-emerald-300 text-emerald-800"
+  },
+  "Givers": {
+    motivation: "Community well-being through generosity",
+    superpowers: "Deeply values people and purpose, community-oriented",
+    biases: "Take on responsibilities that are not aligned with long-term goals",
+    color: "bg-rose-100 border-rose-300 text-rose-800"
+  },
+  "Adventurers": {
+    motivation: "Seeking excitement, novelty, and freedom",
+    superpowers: "Comfortable with risk, visionary, flexible thinker",
+    biases: "Prone to impulsive decisions without considering trade offs",
+    color: "bg-amber-100 border-amber-300 text-amber-800"
+  },
+  "Guardians": {
+    motivation: "Minimizing uncertainty and ensuring safety",
+    superpowers: "Excellent at protecting stability and managing downside risk",
+    biases: "Tends to avoid risks or underinvest in growth",
+    color: "bg-teal-100 border-teal-300 text-teal-800"
+  },
+  "Impressors": {
+    motivation: "Enhancing self-worth through display",
+    superpowers: "Great at branding, making things look and feel valuable",
+    biases: "May spend based on external validation or comparison, rather than alignment",
+    color: "bg-purple-100 border-purple-300 text-purple-800"
+  },
+  "Free Spirits": {
+    motivation: "Enjoying life's flow and reducing anxiety",
+    superpowers: "Intuitive, flow-based, values alignment over optimization",
+    biases: "Avoids structure — often due to anxiety or rebellion",
+    color: "bg-sky-100 border-sky-300 text-sky-800"
+  }
+};
 
 export default function Results() {
   const [_, setLocation] = useLocation();
@@ -38,7 +79,7 @@ export default function Results() {
       {
         onSuccess: () => {
           setIsUnlocked(true);
-          toast({ title: "Results Unlocked!", description: "Welcome to your financial profile." });
+          toast({ title: "Results Unlocked!", description: "Check your email for your full report." });
         },
         onError: (err) => {
           toast({ title: "Error", description: err.message, variant: "destructive" });
@@ -49,15 +90,65 @@ export default function Results() {
 
   if (!scores) return null;
 
-  // Transform scores for Recharts
-  const chartData = Object.entries(scores).map(([category, value]) => ({
-    subject: category,
-    A: value,
-    fullMark: 10 // Assuming max 10 per category roughly
-  }));
+  // Get top 2 archetypes sorted by score
+  const sortedArchetypes = Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 2);
+  
+  const [primaryArchetype, secondaryArchetype] = sortedArchetypes;
 
-  // Find Archetype
-  const topArchetype = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b, ["Unknown", 0]);
+  // Helper to render archetype card
+  const renderArchetypeCard = (archetype: [string, number], isPrimary: boolean) => {
+    const [name, score] = archetype;
+    const data = ARCHETYPES[name];
+    if (!data) return null;
+
+    return (
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: isPrimary ? 0 : 0.2 }}
+        className={`rounded-2xl border-2 p-6 md:p-8 ${data.color}`}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-sm font-semibold uppercase tracking-wider opacity-70">
+            {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
+          </span>
+          <span className="text-sm font-bold px-3 py-1 rounded-full bg-white/50">
+            {score} cards
+          </span>
+        </div>
+        
+        <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">{name}</h2>
+        
+        <div className="space-y-4">
+          <div className="bg-white/40 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Target className="w-5 h-5" />
+              <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
+            </div>
+            <p className="text-sm leading-relaxed">{data.motivation}</p>
+          </div>
+          
+          <div className="bg-white/40 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Zap className="w-5 h-5" />
+              <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
+            </div>
+            <p className="text-sm leading-relaxed">{data.superpowers}</p>
+          </div>
+          
+          <div className="bg-white/40 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="w-5 h-5" />
+              <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
+            </div>
+            <p className="text-sm leading-relaxed">{data.biases}</p>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -68,118 +159,47 @@ export default function Results() {
           
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-display font-bold mb-2">Your Financial Blueprint</h1>
-            <p className="text-muted-foreground">Analysis based on your 36 responses</p>
+            <h1 className="text-4xl font-display font-bold mb-2">Your Money Mindset</h1>
+            <p className="text-muted-foreground">Your top 2 archetypes based on 36 responses</p>
           </div>
 
-          {/* Archetype Card */}
-          <div className="bg-card rounded-2xl shadow-xl p-8 mb-12 border border-border/50">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-1">
-                <span className="text-sm font-semibold text-accent uppercase tracking-wider mb-2 block">Primary Archetype</span>
-                <h2 className="text-5xl font-display font-bold text-primary mb-4">{topArchetype[0]}</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Your dominant style indicates a strong focus on stability and future planning. 
-                  You likely find comfort in watching your savings grow but may struggle with 
-                  spending on experiences that bring joy in the present moment.
-                </p>
-              </div>
-              <div className="w-full md:w-1/3 aspect-square relative">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
-                    <PolarGrid stroke="#e2e8f0" />
-                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12 }} />
-                    <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
-                    <Radar
-                      name="Profile"
-                      dataKey="A"
-                      stroke="hsl(160, 40%, 30%)"
-                      strokeWidth={3}
-                      fill="hsl(160, 40%, 30%)"
-                      fillOpacity={0.3}
-                    />
-                  </RadarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
+          {/* Top 2 Archetypes */}
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            {primaryArchetype && renderArchetypeCard(primaryArchetype, true)}
+            {secondaryArchetype && renderArchetypeCard(secondaryArchetype, false)}
           </div>
 
-          {/* Breakdown */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
-              <h3 className="font-bold mb-6">Category Breakdown</h3>
-              <div className="h-64">
-                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} layout="vertical" margin={{ left: 20 }}>
-                    <XAxis type="number" hide />
-                    <YAxis dataKey="subject" type="category" width={80} tick={{ fontSize: 12, fill: 'currentColor' }} />
-                    <Tooltip 
-                      cursor={{fill: 'transparent'}} 
-                      contentStyle={{ 
-                        borderRadius: '12px', 
-                        border: 'none', 
-                        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
-                        backgroundColor: 'hsl(var(--card))',
-                        color: 'hsl(var(--card-foreground))'
-                      }} 
-                    />
-                    <Bar dataKey="A" radius={[0, 4, 4, 0]} barSize={24}>
-                      {chartData.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "hsl(var(--primary))" : "hsl(var(--accent))"} />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
+          {/* Full Results Notice */}
+          <div className="bg-card rounded-xl border border-border p-6 mb-8 text-center">
+            <Mail className="w-8 h-8 mx-auto mb-3 text-primary" />
+            <h3 className="font-bold mb-2">Full Results Sent to Your Email</h3>
+            <p className="text-sm text-muted-foreground">
+              Check your inbox for a detailed breakdown of all 6 archetypes, including your complete score analysis and personalized recommendations.
+            </p>
+          </div>
 
-            <div className="bg-primary/5 p-6 rounded-xl border border-primary/10">
-              <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
-                <CheckCircle className="w-5 h-5" />
-                Strategic Recommendations
-              </h3>
-              <ul className="space-y-4">
-                <li className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
-                  <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
-                  <span className="text-sm leading-relaxed">Set up a "Fun Fund" to practice guilt-free spending on experiences that enrich your life.</span>
-                </li>
-                <li className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
-                  <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
-                  <span className="text-sm leading-relaxed">Automate your wealth-building investments to reduce daily decision fatigue.</span>
-                </li>
-                <li className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
-                  <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
-                  <span className="text-sm leading-relaxed">Schedule a quarterly review to align your spending with core personal values.</span>
-                </li>
-              </ul>
-              <div className="flex flex-col gap-3 mt-6">
-                <Button className="w-full" variant="primary" data-testid="button-book-coaching">
-                  Explore Premium Coaching
-                </Button>
-                <div className="grid grid-cols-2 gap-3">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      const text = `I just discovered my financial archetype is "${topArchetype[0]}"! Take the WealthIQ Assessment to find yours.`;
-                      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-                    }}
-                    data-testid="button-share-twitter"
-                  >
-                    Share on X
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      navigator.clipboard.writeText(window.location.href);
-                      toast({ title: "Link Copied", description: "Share your results with others!" });
-                    }}
-                    data-testid="button-copy-link"
-                  >
-                    Copy Link
-                  </Button>
-                </div>
-              </div>
-            </div>
+          {/* Share & Actions */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                const text = `My top money archetypes are ${primaryArchetype?.[0]} and ${secondaryArchetype?.[0]}! Take the WealthIQ Assessment to find yours.`;
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+              }}
+              data-testid="button-share-twitter"
+            >
+              Share on X
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                toast({ title: "Link Copied", description: "Share your results with others!" });
+              }}
+              data-testid="button-copy-link"
+            >
+              Copy Link
+            </Button>
           </div>
         </div>
       </div>
