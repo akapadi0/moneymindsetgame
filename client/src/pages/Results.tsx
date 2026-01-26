@@ -528,37 +528,17 @@ export default function Results() {
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-3">
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <label className="text-xs font-medium text-muted-foreground ml-1">First Name</label>
-                  <input 
-                    required
-                    type="text"
-                    placeholder="Jane"
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                    value={formData.name.split(' ')[0] || ''}
-                    onChange={e => {
-                      const lastName = formData.name.split(' ').slice(1).join(' ');
-                      setFormData(prev => ({ ...prev, name: `${e.target.value} ${lastName}`.trim() }));
-                    }}
-                    data-testid="input-first-name"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-medium text-muted-foreground ml-1">Last Name</label>
-                  <input 
-                    required
-                    type="text"
-                    placeholder="Doe"
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                    value={formData.name.split(' ').slice(1).join(' ') || ''}
-                    onChange={e => {
-                      const firstName = formData.name.split(' ')[0] || '';
-                      setFormData(prev => ({ ...prev, name: `${firstName} ${e.target.value}`.trim() }));
-                    }}
-                    data-testid="input-last-name"
-                  />
-                </div>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-muted-foreground ml-1">Full Name</label>
+                <input 
+                  required
+                  type="text"
+                  placeholder="Jane Doe"
+                  className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  value={formData.name}
+                  onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  data-testid="input-full-name"
+                />
               </div>
               <div className="space-y-1">
                 <label className="text-xs font-medium text-muted-foreground ml-1">Email Address</label>
@@ -591,10 +571,6 @@ export default function Results() {
                 )}
               </Button>
             </form>
-            
-            <p className="text-xs text-center text-muted-foreground mt-4">
-              Your results will also be emailed to you. No spam, ever.
-            </p>
           </motion.div>
         </div>
       )}
