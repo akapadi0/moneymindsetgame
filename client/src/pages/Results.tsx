@@ -258,7 +258,7 @@ export default function Results() {
             <div className="space-y-4">
               <div className="bg-white rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2 text-black">
-                  <Target className="w-5 h-5" />
+                  <Target className="w-5 h-5 text-indigo-500" />
                   <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
                 </div>
                 <p className="text-sm leading-relaxed text-black/80">{data.motivation}</p>
@@ -266,7 +266,7 @@ export default function Results() {
               
               <div className="bg-white rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2 text-black">
-                  <Zap className="w-5 h-5" />
+                  <Zap className="w-5 h-5 text-amber-500" />
                   <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
                 </div>
                 <p className="text-sm leading-relaxed text-black/80">{data.superpowers}</p>
@@ -274,7 +274,7 @@ export default function Results() {
               
               <div className="bg-white rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2 text-black">
-                  <AlertTriangle className="w-5 h-5" />
+                  <AlertTriangle className="w-5 h-5 text-rose-500" />
                   <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
                 </div>
                 <p className="text-sm leading-relaxed text-black/80">{data.biases}</p>
