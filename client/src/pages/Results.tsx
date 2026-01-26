@@ -5,19 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { 
-  Loader2, Lock, Mail, Target, Zap, AlertTriangle, CheckCircle,
-  TrendingUp, Shield, Heart, Sparkles, Compass, Wind, Send
+  Loader2, Lock, Mail, Target, Zap, AlertTriangle, CheckCircle, Share2, Send
 } from "lucide-react";
 import { SiX, SiLinkedin } from "react-icons/si";
 import { useToast } from "@/hooks/use-toast";
 
-// Archetype definitions with motivation, superpowers, biases, and icon
+// Import archetype images
+import strategistImg from "@/assets/images/archetype-strategist.png";
+import giverImg from "@/assets/images/archetype-giver.png";
+import adventurerImg from "@/assets/images/archetype-adventurer.png";
+import guardianImg from "@/assets/images/archetype-guardian.png";
+import impressorImg from "@/assets/images/archetype-impressor.png";
+import freespiritImg from "@/assets/images/archetype-freespirit.png";
+
+// Archetype definitions with motivation, superpowers, biases, and image
 const ARCHETYPES: Record<string, {
   motivation: string;
   superpowers: string;
   biases: string;
   color: string;
-  icon: typeof TrendingUp;
+  image: string;
   recommendations: string[];
 }> = {
   "Strategists": {
@@ -25,7 +32,7 @@ const ARCHETYPES: Record<string, {
     superpowers: "Long-term thinker, loves planning, efficient with resources",
     biases: "May overanalyze decisions, delay action until all the data is in",
     color: "bg-emerald-100 border-emerald-300 text-emerald-800",
-    icon: TrendingUp,
+    image: strategistImg,
     recommendations: [
       "Set a deadline for financial decisions to avoid analysis paralysis",
       "Build in a 'spontaneity fund' for unplanned opportunities",
@@ -37,7 +44,7 @@ const ARCHETYPES: Record<string, {
     superpowers: "Deeply values people and purpose, community-oriented",
     biases: "Take on responsibilities that are not aligned with long-term goals",
     color: "bg-rose-100 border-rose-300 text-rose-800",
-    icon: Heart,
+    image: giverImg,
     recommendations: [
       "Create a giving budget that protects your own financial security first",
       "Learn to say 'not right now' instead of always saying yes",
@@ -49,7 +56,7 @@ const ARCHETYPES: Record<string, {
     superpowers: "Comfortable with risk, visionary, flexible thinker",
     biases: "Prone to impulsive decisions without considering trade offs",
     color: "bg-amber-100 border-amber-300 text-amber-800",
-    icon: Compass,
+    image: adventurerImg,
     recommendations: [
       "Implement a 48-hour rule before major financial decisions",
       "Channel your risk tolerance into diversified investments",
@@ -61,7 +68,7 @@ const ARCHETYPES: Record<string, {
     superpowers: "Excellent at protecting stability and managing downside risk",
     biases: "Tends to avoid risks or underinvest in growth",
     color: "bg-teal-100 border-teal-300 text-teal-800",
-    icon: Shield,
+    image: guardianImg,
     recommendations: [
       "Set up a 'growth fund' separate from your emergency savings",
       "Start small with investments to build comfort with calculated risks",
@@ -73,7 +80,7 @@ const ARCHETYPES: Record<string, {
     superpowers: "Great at branding, making things look and feel valuable",
     biases: "May spend based on external validation or comparison, rather than alignment",
     color: "bg-purple-100 border-purple-300 text-purple-800",
-    icon: Sparkles,
+    image: impressorImg,
     recommendations: [
       "Before purchases, ask: 'Would I buy this if no one would ever see it?'",
       "Create a 'values list' to check spending decisions against",
@@ -85,7 +92,7 @@ const ARCHETYPES: Record<string, {
     superpowers: "Intuitive, flow-based, values alignment over optimization",
     biases: "Avoids structure — often due to anxiety or rebellion",
     color: "bg-sky-100 border-sky-300 text-sky-800",
-    icon: Wind,
+    image: freespiritImg,
     recommendations: [
       "Set up one automated transfer to savings — 'set it and forget it'",
       "Create a simple, visual spending tracker you'll actually enjoy using",
@@ -142,12 +149,11 @@ export default function Results() {
   
   const [primaryArchetype, secondaryArchetype] = sortedArchetypes;
 
-  // Helper to render archetype card with icon
+  // Helper to render archetype card with image
   const renderArchetypeCard = (archetype: [string, number], isPrimary: boolean) => {
-    const [name, score] = archetype;
+    const [name] = archetype;
     const data = ARCHETYPES[name];
     if (!data) return null;
-    const IconComponent = data.icon;
 
     return (
       <motion.div 
@@ -156,19 +162,16 @@ export default function Results() {
         transition={{ delay: isPrimary ? 0 : 0.2 }}
         className={`rounded-2xl border-2 p-6 md:p-8 ${data.color}`}
       >
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4">
           <span className="text-sm font-semibold uppercase tracking-wider opacity-70">
             {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
           </span>
-          <span className="text-sm font-bold px-3 py-1 rounded-full bg-white/50">
-            {score} cards
-          </span>
         </div>
         
-        {/* Icon and Name */}
+        {/* Image and Name */}
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-full bg-white/60 flex items-center justify-center">
-            <IconComponent className="w-7 h-7" />
+          <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center overflow-hidden p-2">
+            <img src={data.image} alt={name} className="w-full h-full object-contain" />
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold">{name}</h2>
         </div>
@@ -277,7 +280,10 @@ export default function Results() {
 
           {/* Share Section */}
           <div className="bg-card rounded-xl border border-border p-6 mb-8">
-            <h3 className="font-bold mb-4 text-center">Share Your Results</h3>
+            <h3 className="font-bold mb-4 text-center flex items-center justify-center gap-2">
+              <Share2 className="w-5 h-5 text-primary" />
+              Share Your Results
+            </h3>
             
             {/* Social Sharing */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
@@ -311,12 +317,12 @@ export default function Results() {
             {/* Email Sharing */}
             <div className="border-t border-border pt-6">
               <p className="text-sm text-muted-foreground text-center mb-3">
-                Or send your results to yourself or someone else
+                Share your blueprint with a friend, coach, or financial advisor
               </p>
               <div className="flex gap-2 max-w-md mx-auto">
                 <Input
                   type="email"
-                  placeholder="Enter email address"
+                  placeholder="Enter their email address"
                   value={shareEmail}
                   onChange={(e) => setShareEmail(e.target.value)}
                   className="flex-1"
