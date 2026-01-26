@@ -213,17 +213,25 @@ export default function Results() {
         >
           {/* Card Back - Pattern Design */}
           <div 
-            className="absolute inset-0 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/20 p-6 md:p-8 flex flex-col items-center justify-center"
+            className={`absolute inset-0 rounded-2xl border-2 border-primary/20 p-4 md:p-6 ${isPrimary ? 'bg-emerald-50' : 'bg-rose-50'}`}
             style={{ backfaceVisibility: "hidden" }}
           >
-            <div className="w-full h-full rounded-xl border-2 border-dashed border-primary/20 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-4xl font-display font-bold text-primary/40">W</span>
-                </div>
-                <p className="text-sm font-semibold text-primary/40 uppercase tracking-widest">
-                  {isPrimary ? "Primary" : "Secondary"}
-                </p>
+            <div className="w-full h-full rounded-xl border border-primary/10 flex items-center justify-center relative overflow-hidden">
+              {/* Decorative pattern - circles */}
+              <div className="absolute inset-0 opacity-30">
+                <div className="absolute top-4 left-4 w-16 h-16 rounded-full border-2 border-primary/30" />
+                <div className="absolute top-8 right-8 w-12 h-12 rounded-full border-2 border-accent/30" />
+                <div className="absolute bottom-6 left-1/4 w-20 h-20 rounded-full border-2 border-primary/20" />
+                <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full border-2 border-accent/40" />
+                <div className="absolute top-1/3 left-1/2 w-8 h-8 rounded-full border-2 border-primary/25" />
+                <div className="absolute bottom-1/3 right-1/3 w-14 h-14 rounded-full border-2 border-accent/20" />
+              </div>
+              {/* Decorative lines */}
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-primary/40 to-transparent" />
+                <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-accent/40 to-transparent" />
+                <div className="absolute left-0 top-1/3 w-full h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+                <div className="absolute left-0 bottom-1/4 w-full h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
               </div>
             </div>
           </div>
@@ -234,42 +242,42 @@ export default function Results() {
             style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
           >
             <div className="mb-4">
-              <span className="text-sm font-semibold uppercase tracking-wider opacity-70">
+              <span className="text-sm font-semibold uppercase tracking-wider text-black/60">
                 {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
               </span>
             </div>
             
             {/* Image and Name */}
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center overflow-hidden p-2">
+              <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
                 <img src={data.image} alt={name} className="w-full h-full object-contain" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold">{name}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-black">{name}</h2>
             </div>
             
             <div className="space-y-4">
-              <div className="bg-white/60 rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
+              <div className="bg-white rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2 text-black">
                   <Target className="w-5 h-5" />
                   <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
                 </div>
-                <p className="text-sm leading-relaxed">{data.motivation}</p>
+                <p className="text-sm leading-relaxed text-black/80">{data.motivation}</p>
               </div>
               
-              <div className="bg-white/60 rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
+              <div className="bg-white rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2 text-black">
                   <Zap className="w-5 h-5" />
                   <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
                 </div>
-                <p className="text-sm leading-relaxed">{data.superpowers}</p>
+                <p className="text-sm leading-relaxed text-black/80">{data.superpowers}</p>
               </div>
               
-              <div className="bg-white/60 rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
+              <div className="bg-white rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2 text-black">
                   <AlertTriangle className="w-5 h-5" />
                   <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
                 </div>
-                <p className="text-sm leading-relaxed">{data.biases}</p>
+                <p className="text-sm leading-relaxed text-black/80">{data.biases}</p>
               </div>
             </div>
           </div>
@@ -444,10 +452,10 @@ export default function Results() {
               </Button>
             </div>
 
-            {/* Compatibility Link */}
+            {/* Invite to Compare */}
             <div className="border-t border-border pt-6 mb-6">
               <p className="text-sm text-muted-foreground text-center mb-3">
-                Compare money mindsets with a partner, friend, or family member
+                Invite someone to take the quiz and compare archetypes with you
               </p>
               <div className="flex justify-center">
                 <Button 
@@ -457,15 +465,15 @@ export default function Results() {
                   data-testid="button-copy-compatibility"
                 >
                   <Users className="w-4 h-4" />
-                  Copy Compatibility Link
+                  Copy Quiz Invite Link
                 </Button>
               </div>
             </div>
 
-            {/* Email Sharing */}
+            {/* Send Results via Email */}
             <div className="border-t border-border pt-6">
               <p className="text-sm text-muted-foreground text-center mb-3">
-                Send your blueprint to family, friends, or a financial advisor
+                Email your results directly to someone
               </p>
               <div className="flex gap-2 max-w-md mx-auto">
                 <Input
