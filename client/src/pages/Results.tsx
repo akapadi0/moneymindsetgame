@@ -3,9 +3,10 @@ import { useLocation } from "wouter";
 import { useCreateSubmission } from "@/hooks/use-game";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Loader2, Lock, Mail, Target, Zap, AlertTriangle, CheckCircle, Share2, Send
+  Loader2, Lock, Mail, Target, Zap, AlertTriangle, CheckCircle, Share2, Send,
+  Users, Flame, Copy
 } from "lucide-react";
 import { SiX, SiLinkedin } from "react-icons/si";
 import { useToast } from "@/hooks/use-toast";
@@ -18,7 +19,7 @@ import guardianImg from "@/assets/images/archetype-guardian.png";
 import impressorImg from "@/assets/images/archetype-impressor.png";
 import freespiritImg from "@/assets/images/archetype-freespirit.png";
 
-// Archetype definitions with motivation, superpowers, biases, and image
+// Archetype definitions with motivation, superpowers, biases, image, and challenges
 const ARCHETYPES: Record<string, {
   motivation: string;
   superpowers: string;
@@ -26,77 +27,108 @@ const ARCHETYPES: Record<string, {
   color: string;
   image: string;
   recommendations: string[];
+  challenges: string[];
 }> = {
   "Strategists": {
     motivation: "Long-term success through structure & informed decisions",
     superpowers: "Long-term thinker, loves planning, efficient with resources",
     biases: "May overanalyze decisions, delay action until all the data is in",
-    color: "bg-emerald-100 border-emerald-300 text-emerald-800",
+    color: "bg-emerald-50 border-emerald-200 text-emerald-700",
     image: strategistImg,
     recommendations: [
       "Set a deadline for financial decisions to avoid analysis paralysis",
       "Build in a 'spontaneity fund' for unplanned opportunities",
       "Practice making smaller decisions quickly to build confidence"
+    ],
+    challenges: [
+      "Make one financial decision this week in under 10 minutes",
+      "Spend $50 on something fun without researching it first",
+      "Skip one spreadsheet review this month and trust your gut"
     ]
   },
   "Givers": {
     motivation: "Community well-being through generosity",
     superpowers: "Deeply values people and purpose, community-oriented",
     biases: "Take on responsibilities that are not aligned with long-term goals",
-    color: "bg-rose-100 border-rose-300 text-rose-800",
+    color: "bg-rose-50 border-rose-200 text-rose-700",
     image: giverImg,
     recommendations: [
       "Create a giving budget that protects your own financial security first",
       "Learn to say 'not right now' instead of always saying yes",
       "Set up automatic savings before allocating funds to help others"
+    ],
+    challenges: [
+      "Say 'let me think about it' before agreeing to any financial help this week",
+      "Transfer 10% of your next paycheck to your own savings before giving",
+      "Write down 3 ways to help others that don't involve money"
     ]
   },
   "Adventurers": {
     motivation: "Seeking excitement, novelty, and freedom",
     superpowers: "Comfortable with risk, visionary, flexible thinker",
     biases: "Prone to impulsive decisions without considering trade offs",
-    color: "bg-amber-100 border-amber-300 text-amber-800",
+    color: "bg-amber-50 border-amber-200 text-amber-700",
     image: adventurerImg,
     recommendations: [
       "Implement a 48-hour rule before major financial decisions",
       "Channel your risk tolerance into diversified investments",
       "Create adventure-specific savings to fund experiences responsibly"
+    ],
+    challenges: [
+      "Wait 48 hours before your next purchase over $100",
+      "Create a dedicated 'adventure fund' and only use that for spontaneous buys",
+      "Track every impulse purchase for 2 weeks — no judgment, just awareness"
     ]
   },
   "Guardians": {
     motivation: "Minimizing uncertainty and ensuring safety",
     superpowers: "Excellent at protecting stability and managing downside risk",
     biases: "Tends to avoid risks or underinvest in growth",
-    color: "bg-teal-100 border-teal-300 text-teal-800",
+    color: "bg-teal-50 border-teal-200 text-teal-700",
     image: guardianImg,
     recommendations: [
       "Set up a 'growth fund' separate from your emergency savings",
       "Start small with investments to build comfort with calculated risks",
       "Review your portfolio annually to ensure you're not being too conservative"
+    ],
+    challenges: [
+      "Invest $25 in something new this month — even if it feels uncomfortable",
+      "Research one 'risky' investment and learn why others find it appealing",
+      "Calculate how much extra you'd have if you'd taken more growth risk"
     ]
   },
   "Impressors": {
     motivation: "Enhancing self-worth through display",
     superpowers: "Great at branding, making things look and feel valuable",
     biases: "May spend based on external validation or comparison, rather than alignment",
-    color: "bg-purple-100 border-purple-300 text-purple-800",
+    color: "bg-violet-50 border-violet-200 text-violet-700",
     image: impressorImg,
     recommendations: [
       "Before purchases, ask: 'Would I buy this if no one would ever see it?'",
       "Create a 'values list' to check spending decisions against",
       "Redirect some 'impression spending' into wealth-building investments"
+    ],
+    challenges: [
+      "Before any purchase this week, ask: 'Would I buy this if no one knew?'",
+      "Unfollow 3 accounts that trigger comparison spending",
+      "Redirect one 'impression purchase' into your investment account"
     ]
   },
   "Free Spirits": {
     motivation: "Enjoying life's flow and reducing anxiety",
     superpowers: "Intuitive, flow-based, values alignment over optimization",
     biases: "Avoids structure — often due to anxiety or rebellion",
-    color: "bg-sky-100 border-sky-300 text-sky-800",
+    color: "bg-sky-50 border-sky-200 text-sky-700",
     image: freespiritImg,
     recommendations: [
       "Set up one automated transfer to savings — 'set it and forget it'",
       "Create a simple, visual spending tracker you'll actually enjoy using",
       "Schedule a quarterly 'money date' to check in without overwhelming yourself"
+    ],
+    challenges: [
+      "Set up one automatic savings transfer — just $20 — and forget about it",
+      "Spend 5 minutes looking at your bank balance (no stress, just awareness)",
+      "Create one simple money rule for yourself that feels freeing, not limiting"
     ]
   }
 };
@@ -105,6 +137,7 @@ export default function Results() {
   const [_, setLocation] = useLocation();
   const [scores, setScores] = useState<Record<string, number> | null>(null);
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [cardsRevealed, setCardsRevealed] = useState(false);
   
   // Form State
   const [formData, setFormData] = useState({ name: "", email: "" });
@@ -112,6 +145,16 @@ export default function Results() {
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const { mutate: submitResults, isPending } = useCreateSubmission();
   const { toast } = useToast();
+
+  // Trigger card reveal animation after unlock
+  useEffect(() => {
+    if (isUnlocked && !cardsRevealed) {
+      const timer = setTimeout(() => {
+        setCardsRevealed(true);
+      }, 1500); // 1.5 second flip animation
+      return () => clearTimeout(timer);
+    }
+  }, [isUnlocked, cardsRevealed]);
 
   useEffect(() => {
     const saved = localStorage.getItem("moneyMindsetResults");
@@ -149,59 +192,69 @@ export default function Results() {
   
   const [primaryArchetype, secondaryArchetype] = sortedArchetypes;
 
-  // Helper to render archetype card with image
+  // Helper to render archetype card with flip animation
   const renderArchetypeCard = (archetype: [string, number], isPrimary: boolean) => {
     const [name] = archetype;
     const data = ARCHETYPES[name];
     if (!data) return null;
 
     return (
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: isPrimary ? 0 : 0.2 }}
-        className={`rounded-2xl border-2 p-6 md:p-8 ${data.color}`}
-      >
-        <div className="mb-4">
-          <span className="text-sm font-semibold uppercase tracking-wider opacity-70">
-            {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
-          </span>
-        </div>
-        
-        {/* Image and Name */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center overflow-hidden p-2">
-            <img src={data.image} alt={name} className="w-full h-full object-contain" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-display font-bold">{name}</h2>
-        </div>
-        
-        <div className="space-y-4">
-          <div className="bg-white/40 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Target className="w-5 h-5" />
-              <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
-            </div>
-            <p className="text-sm leading-relaxed">{data.motivation}</p>
+      <div className="perspective-1000">
+        <motion.div 
+          initial={{ rotateY: 180, opacity: 0 }}
+          animate={{ 
+            rotateY: cardsRevealed ? 0 : 180, 
+            opacity: cardsRevealed ? 1 : 0 
+          }}
+          transition={{ 
+            duration: 0.8, 
+            delay: isPrimary ? 0 : 0.3,
+            ease: "easeOut"
+          }}
+          style={{ transformStyle: "preserve-3d" }}
+          className={`rounded-2xl border-2 p-6 md:p-8 ${data.color}`}
+        >
+          <div className="mb-4">
+            <span className="text-sm font-semibold uppercase tracking-wider opacity-70">
+              {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
+            </span>
           </div>
           
-          <div className="bg-white/40 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5" />
-              <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
+          {/* Image and Name */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center overflow-hidden p-2">
+              <img src={data.image} alt={name} className="w-full h-full object-contain" />
             </div>
-            <p className="text-sm leading-relaxed">{data.superpowers}</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold">{name}</h2>
           </div>
           
-          <div className="bg-white/40 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-5 h-5" />
-              <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
+          <div className="space-y-4">
+            <div className="bg-white/60 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Target className="w-5 h-5" />
+                <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
+              </div>
+              <p className="text-sm leading-relaxed">{data.motivation}</p>
             </div>
-            <p className="text-sm leading-relaxed">{data.biases}</p>
+            
+            <div className="bg-white/60 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className="w-5 h-5" />
+                <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
+              </div>
+              <p className="text-sm leading-relaxed">{data.superpowers}</p>
+            </div>
+            
+            <div className="bg-white/60 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <AlertTriangle className="w-5 h-5" />
+                <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
+              </div>
+              <p className="text-sm leading-relaxed">{data.biases}</p>
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     );
   };
 
@@ -217,6 +270,36 @@ export default function Results() {
       if (data) recs.push(data.recommendations[0]);
     }
     return recs;
+  };
+
+  // Get challenges based on top 2 archetypes
+  const getChallenges = () => {
+    const challenges: string[] = [];
+    if (primaryArchetype) {
+      const data = ARCHETYPES[primaryArchetype[0]];
+      if (data) challenges.push(...data.challenges.slice(0, 2));
+    }
+    if (secondaryArchetype) {
+      const data = ARCHETYPES[secondaryArchetype[0]];
+      if (data) challenges.push(data.challenges[0]);
+    }
+    return challenges;
+  };
+
+  // Generate compatibility link
+  const getCompatibilityLink = () => {
+    return `${window.location.origin}/game?compare=${encodeURIComponent(JSON.stringify({ 
+      name: formData.name, 
+      archetypes: [primaryArchetype?.[0], secondaryArchetype?.[0]] 
+    }))}`;
+  };
+
+  const copyCompatibilityLink = () => {
+    navigator.clipboard.writeText(getCompatibilityLink());
+    toast({ 
+      title: "Link Copied!", 
+      description: "Share this link with someone to compare money mindsets." 
+    });
   };
 
   // Handle sharing results via email
@@ -269,6 +352,48 @@ export default function Results() {
             </ul>
           </div>
 
+          {/* Challenge Yourself Section */}
+          <div className="bg-amber-50 dark:bg-amber-950/20 p-6 rounded-xl border border-amber-200 dark:border-amber-800 mb-8">
+            <h3 className="font-bold mb-4 text-amber-700 dark:text-amber-400 flex items-center gap-2">
+              <Flame className="w-5 h-5" />
+              Challenge Yourself
+            </h3>
+            <p className="text-sm text-amber-600 dark:text-amber-300 mb-4">
+              Based on your unique blueprint, here are personalized challenges to help you grow:
+            </p>
+            <ul className="space-y-4">
+              {getChallenges().map((challenge, index) => (
+                <li key={index} className="flex gap-3 bg-white/60 dark:bg-background/50 p-3 rounded-lg border border-amber-200/50 dark:border-amber-700/50">
+                  <div className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    {index + 1}
+                  </div>
+                  <span className="text-sm leading-relaxed">{challenge}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Compatibility Checker */}
+          <div className="bg-violet-50 dark:bg-violet-950/20 p-6 rounded-xl border border-violet-200 dark:border-violet-800 mb-8">
+            <h3 className="font-bold mb-2 text-violet-700 dark:text-violet-400 flex items-center gap-2">
+              <Users className="w-5 h-5" />
+              Money Mindset Compatibility
+            </h3>
+            <p className="text-sm text-violet-600 dark:text-violet-300 mb-4">
+              Curious how your money mindset compares with a partner, friend, or family member? 
+              Send them this link so they can take the quiz and see how your archetypes align.
+            </p>
+            <Button 
+              variant="outline" 
+              onClick={copyCompatibilityLink}
+              className="gap-2 border-violet-300 dark:border-violet-700 text-violet-700 dark:text-violet-300 hover:bg-violet-100 dark:hover:bg-violet-900/30"
+              data-testid="button-copy-compatibility"
+            >
+              <Copy className="w-4 h-4" />
+              Copy Compatibility Link
+            </Button>
+          </div>
+
           {/* Full Results Notice */}
           <div className="bg-card rounded-xl border border-border p-6 mb-8 text-center">
             <Mail className="w-8 h-8 mx-auto mb-3 text-primary" />
@@ -282,7 +407,7 @@ export default function Results() {
           <div className="bg-card rounded-xl border border-border p-6 mb-8">
             <h3 className="font-bold mb-4 text-center flex items-center justify-center gap-2">
               <Share2 className="w-5 h-5 text-primary" />
-              Share Your Results
+              Share Your Blueprint
             </h3>
             
             {/* Social Sharing */}
@@ -317,7 +442,7 @@ export default function Results() {
             {/* Email Sharing */}
             <div className="border-t border-border pt-6">
               <p className="text-sm text-muted-foreground text-center mb-3">
-                Share your blueprint with a friend, coach, or financial advisor
+                Share your blueprint with family, friends, or a financial advisor
               </p>
               <div className="flex gap-2 max-w-md mx-auto">
                 <Input
