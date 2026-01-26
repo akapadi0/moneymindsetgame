@@ -456,10 +456,10 @@ export default function Results() {
 
             {/* Two Column Layout for Invite & Email */}
             <div className="grid md:grid-cols-2 gap-6 border-t border-border pt-6">
-              {/* Invite to Compare - for partner/spouse/family */}
+              {/* Invite to Compare */}
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-3">
-                  Invite your partner, spouse, or family to take the quiz and compare
+                  Invite someone such as a partner, spouse, or family member to take the quiz and compare
                 </p>
                 <Button 
                   variant="outline" 
@@ -472,10 +472,10 @@ export default function Results() {
                 </Button>
               </div>
 
-              {/* Send Results via Email - for friends, family, advisor */}
+              {/* Send Results via Email */}
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-3">
-                  Send results to friends, family, or a financial advisor
+                  Send results to someone such as a friend, family member, or financial advisor
                 </p>
                 <div className="flex gap-2 max-w-sm mx-auto">
                   <Input
