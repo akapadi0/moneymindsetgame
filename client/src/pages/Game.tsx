@@ -146,8 +146,8 @@ export default function Game() {
           />
         </div>
 
-        {/* Swipe instruction */}
-        <div className="flex items-center justify-center gap-2 mb-2">
+        {/* Swipe instruction - above card */}
+        <div className="flex items-center justify-center gap-2 mb-1">
           <motion.div 
             animate={{ x: [-5, 0, -5] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -168,23 +168,21 @@ export default function Game() {
         </div>
 
         {/* Card container */}
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-full">
-            <AnimatePresence mode="wait">
-              {currentQuestion && (
-                <GameCard 
-                  key={currentQuestion.id} 
-                  question={currentQuestion} 
-                  onSwipe={handleSwipe} 
-                  active={true}
-                />
-              )}
-            </AnimatePresence>
-          </div>
+        <div className="w-full">
+          <AnimatePresence mode="wait">
+            {currentQuestion && (
+              <GameCard 
+                key={currentQuestion.id} 
+                question={currentQuestion} 
+                onSwipe={handleSwipe} 
+                active={true}
+              />
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Action buttons */}
-        <div className="mt-3 flex justify-center gap-4 w-full">
+        <div className="mt-2 flex justify-center gap-4 w-full">
           <Button 
             variant="outline" 
             size="lg" 
