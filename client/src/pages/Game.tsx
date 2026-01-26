@@ -182,7 +182,7 @@ export default function Game() {
         </div>
 
         {/* Action buttons */}
-        <div className="mt-2 flex justify-center gap-4 w-full">
+        <div className="mt-12 flex justify-center gap-4 w-full">
           <Button 
             variant="outline" 
             size="lg" 
