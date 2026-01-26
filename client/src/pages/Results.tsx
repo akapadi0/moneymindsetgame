@@ -151,7 +151,7 @@ export default function Results() {
     if (isUnlocked && !cardsRevealed) {
       const timer = setTimeout(() => {
         setCardsRevealed(true);
-      }, 1500); // 1.5 second flip animation
+      }, 400); // Quick delay then flip
       return () => clearTimeout(timer);
     }
   }, [isUnlocked, cardsRevealed]);
@@ -199,58 +199,78 @@ export default function Results() {
     if (!data) return null;
 
     return (
-      <div className="perspective-1000">
+      <div className="perspective-1000 h-full">
         <motion.div 
-          initial={{ rotateY: 180, opacity: 0 }}
-          animate={{ 
-            rotateY: cardsRevealed ? 0 : 180, 
-            opacity: cardsRevealed ? 1 : 0 
-          }}
+          initial={{ rotateY: 0 }}
+          animate={{ rotateY: cardsRevealed ? 180 : 0 }}
           transition={{ 
-            duration: 0.8, 
-            delay: isPrimary ? 0 : 0.3,
+            duration: 0.6, 
+            delay: isPrimary ? 0.1 : 0.25,
             ease: "easeOut"
           }}
-          style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
-          className={`rounded-2xl border-2 p-6 md:p-8 ${data.color}`}
+          style={{ transformStyle: "preserve-3d" }}
+          className="relative h-full"
         >
-          <div className="mb-4">
-            <span className="text-sm font-semibold uppercase tracking-wider opacity-70">
-              {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
-            </span>
-          </div>
-          
-          {/* Image and Name */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center overflow-hidden p-2">
-              <img src={data.image} alt={name} className="w-full h-full object-contain" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold">{name}</h2>
-          </div>
-          
-          <div className="space-y-4">
-            <div className="bg-white/60 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Target className="w-5 h-5" />
-                <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
+          {/* Card Back - Pattern Design */}
+          <div 
+            className="absolute inset-0 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/20 p-6 md:p-8 flex flex-col items-center justify-center"
+            style={{ backfaceVisibility: "hidden" }}
+          >
+            <div className="w-full h-full rounded-xl border-2 border-dashed border-primary/20 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="text-4xl font-display font-bold text-primary/40">W</span>
+                </div>
+                <p className="text-sm font-semibold text-primary/40 uppercase tracking-widest">
+                  {isPrimary ? "Primary" : "Secondary"}
+                </p>
               </div>
-              <p className="text-sm leading-relaxed">{data.motivation}</p>
+            </div>
+          </div>
+
+          {/* Card Front - Archetype Content */}
+          <div 
+            className={`rounded-2xl border-2 p-6 md:p-8 ${data.color} h-full`}
+            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+          >
+            <div className="mb-4">
+              <span className="text-sm font-semibold uppercase tracking-wider opacity-70">
+                {isPrimary ? "Primary Archetype" : "Secondary Archetype"}
+              </span>
             </div>
             
-            <div className="bg-white/60 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="w-5 h-5" />
-                <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
+            {/* Image and Name */}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-16 h-16 rounded-full bg-white/80 flex items-center justify-center overflow-hidden p-2">
+                <img src={data.image} alt={name} className="w-full h-full object-contain" />
               </div>
-              <p className="text-sm leading-relaxed">{data.superpowers}</p>
+              <h2 className="text-3xl md:text-4xl font-display font-bold">{name}</h2>
             </div>
             
-            <div className="bg-white/60 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle className="w-5 h-5" />
-                <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
+            <div className="space-y-4">
+              <div className="bg-white/60 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Target className="w-5 h-5" />
+                  <span className="font-bold text-sm uppercase tracking-wide">Motivation</span>
+                </div>
+                <p className="text-sm leading-relaxed">{data.motivation}</p>
               </div>
-              <p className="text-sm leading-relaxed">{data.biases}</p>
+              
+              <div className="bg-white/60 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className="w-5 h-5" />
+                  <span className="font-bold text-sm uppercase tracking-wide">Superpowers</span>
+                </div>
+                <p className="text-sm leading-relaxed">{data.superpowers}</p>
+              </div>
+              
+              <div className="bg-white/60 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertTriangle className="w-5 h-5" />
+                  <span className="font-bold text-sm uppercase tracking-wide">Biases</span>
+                </div>
+                <p className="text-sm leading-relaxed">{data.biases}</p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -344,13 +364,13 @@ export default function Results() {
             {secondaryArchetype && renderArchetypeCard(secondaryArchetype, false)}
           </div>
 
-          {/* Strategic Recommendations */}
+          {/* Strategic Recommendations & Challenges */}
           <div className="bg-primary/5 p-6 rounded-xl border border-primary/10 mb-8">
             <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Strategic Recommendations
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-4 mb-8">
               {getRecommendations().map((rec, index) => (
                 <li key={index} className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
                   <div className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0" />
@@ -358,48 +378,25 @@ export default function Results() {
                 </li>
               ))}
             </ul>
-          </div>
 
-          {/* Challenge Yourself Section */}
-          <div className="bg-amber-50 dark:bg-amber-950/20 p-6 rounded-xl border border-amber-200 dark:border-amber-800 mb-8">
-            <h3 className="font-bold mb-4 text-amber-700 dark:text-amber-400 flex items-center gap-2">
+            {/* Challenge Yourself - Same section, different heading */}
+            <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
               <Flame className="w-5 h-5" />
               Challenge Yourself
             </h3>
-            <p className="text-sm text-amber-600 dark:text-amber-300 mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               Based on your unique blueprint, here are personalized challenges to help you grow:
             </p>
             <ul className="space-y-4">
               {getChallenges().map((challenge, index) => (
-                <li key={index} className="flex gap-3 bg-white/60 dark:bg-background/50 p-3 rounded-lg border border-amber-200/50 dark:border-amber-700/50">
-                  <div className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+                <li key={index} className="flex gap-3 bg-background/50 p-3 rounded-lg border border-border/50">
+                  <div className="w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold flex-shrink-0">
                     {index + 1}
                   </div>
                   <span className="text-sm leading-relaxed">{challenge}</span>
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Compatibility Checker */}
-          <div className="bg-violet-50 dark:bg-violet-950/20 p-6 rounded-xl border border-violet-200 dark:border-violet-800 mb-8">
-            <h3 className="font-bold mb-2 text-violet-700 dark:text-violet-400 flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              Money Mindset Compatibility
-            </h3>
-            <p className="text-sm text-violet-600 dark:text-violet-300 mb-4">
-              Curious how your money mindset compares with a partner, friend, or family member? 
-              Send them this link so they can take the quiz and see how your archetypes align.
-            </p>
-            <Button 
-              variant="outline" 
-              onClick={copyCompatibilityLink}
-              className="gap-2"
-              data-testid="button-copy-compatibility"
-            >
-              <Copy className="w-4 h-4" />
-              Copy Compatibility Link
-            </Button>
           </div>
 
           {/* Full Results Notice */}
@@ -447,10 +444,28 @@ export default function Results() {
               </Button>
             </div>
 
+            {/* Compatibility Link */}
+            <div className="border-t border-border pt-6 mb-6">
+              <p className="text-sm text-muted-foreground text-center mb-3">
+                Compare money mindsets with a partner, friend, or family member
+              </p>
+              <div className="flex justify-center">
+                <Button 
+                  variant="outline" 
+                  onClick={copyCompatibilityLink}
+                  className="gap-2"
+                  data-testid="button-copy-compatibility"
+                >
+                  <Users className="w-4 h-4" />
+                  Copy Compatibility Link
+                </Button>
+              </div>
+            </div>
+
             {/* Email Sharing */}
             <div className="border-t border-border pt-6">
               <p className="text-sm text-muted-foreground text-center mb-3">
-                Share your blueprint with family, friends, or a financial advisor
+                Send your blueprint to family, friends, or a financial advisor
               </p>
               <div className="flex gap-2 max-w-md mx-auto">
                 <Input
