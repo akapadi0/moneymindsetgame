@@ -166,21 +166,27 @@ export default function Game() {
           </motion.div>
         </div>
 
-        {/* Card with Go Back button on the right */}
-        <div className="flex-1 relative flex items-center justify-center min-h-[400px]">
-          <AnimatePresence mode="wait">
-            {currentQuestion && (
-              <GameCard 
-                key={currentQuestion.id} 
-                question={currentQuestion} 
-                onSwipe={handleSwipe} 
-                active={true}
-              />
-            )}
-          </AnimatePresence>
+        {/* Card area with Go Back button outside on the right */}
+        <div className="flex-1 flex items-center justify-center gap-2 min-h-[400px]">
+          {/* Spacer for symmetry */}
+          <div className="w-16 hidden sm:block" />
           
-          {/* Go Back button - positioned to the right of card */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 sm:mr-0">
+          {/* Card */}
+          <div className="relative flex items-center justify-center flex-1 max-w-md">
+            <AnimatePresence mode="wait">
+              {currentQuestion && (
+                <GameCard 
+                  key={currentQuestion.id} 
+                  question={currentQuestion} 
+                  onSwipe={handleSwipe} 
+                  active={true}
+                />
+              )}
+            </AnimatePresence>
+          </div>
+          
+          {/* Go Back button - outside the card on the right */}
+          <div className="w-16 flex items-center justify-center">
             <Button
               variant="ghost"
               size="sm"
