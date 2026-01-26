@@ -168,7 +168,7 @@ export default function Game() {
         </div>
 
         {/* Card container */}
-        <div className="flex-1 relative min-h-[300px]">
+        <div className="flex-1 relative min-h-[220px]">
           <AnimatePresence mode="wait">
             {currentQuestion && (
               <GameCard 
