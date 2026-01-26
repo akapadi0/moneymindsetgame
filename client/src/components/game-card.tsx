@@ -45,7 +45,7 @@ export function GameCard({ question, onSwipe, active }: GameCardProps) {
     >
       <motion.div 
         style={{ borderColor }}
-        className="w-full aspect-[3/2] bg-card rounded-2xl shadow-2xl border-4 border-transparent p-6 md:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden"
+        className="w-full aspect-[4/3] min-h-[240px] bg-card rounded-2xl shadow-2xl border-4 border-transparent p-6 md:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden"
       >
         {/* Category Tag */}
         <div className="absolute top-4 text-xs font-bold tracking-widest text-muted-foreground uppercase opacity-50">

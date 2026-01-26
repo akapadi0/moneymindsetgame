@@ -129,16 +129,16 @@ export default function Game() {
         )}
       </AnimatePresence>
       
-      <div className="relative z-10 flex-1 flex flex-col max-w-md mx-auto w-full px-4 py-6">
+      <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 py-4">
         {/* Header */}
-        <div className="text-center mb-4">
-          <h2 className="text-xl font-display font-semibold text-primary mb-3">
+        <div className="text-center mb-2">
+          <h2 className="text-xl font-display font-semibold text-primary mb-2">
             WealthIQ Assessment
           </h2>
           <ProgressBar current={currentIndex + 1} total={questions.length} />
         </div>
 
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-2">
           <Timer 
             duration={35} 
             onTimeUp={() => handleSwipe("left", true)} 
@@ -147,7 +147,7 @@ export default function Game() {
         </div>
 
         {/* Swipe instruction */}
-        <div className="flex items-center justify-center gap-2 mb-3">
+        <div className="flex items-center justify-center gap-2 mb-2">
           <motion.div 
             animate={{ x: [-5, 0, -5] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -169,7 +169,7 @@ export default function Game() {
 
         {/* Card container */}
         <div className="flex-1 flex items-center justify-center">
-          <div className="w-full max-w-md">
+          <div className="w-full">
             <AnimatePresence mode="wait">
               {currentQuestion && (
                 <GameCard 
@@ -184,7 +184,7 @@ export default function Game() {
         </div>
 
         {/* Action buttons */}
-        <div className="mt-4 flex justify-center gap-4 w-full">
+        <div className="mt-3 flex justify-center gap-4 w-full">
           <Button 
             variant="outline" 
             size="lg" 
