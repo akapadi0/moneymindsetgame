@@ -129,24 +129,12 @@ export default function Game() {
         )}
       </AnimatePresence>
       
-      <div className="relative z-10 flex-1 flex flex-col max-w-md mx-auto w-full px-4 pt-6 pb-8">
-        {/* Header with Go Back button */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="w-20" /> {/* Spacer */}
+      <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 pt-6 pb-8">
+        {/* Header */}
+        <div className="text-center mb-4">
           <h2 className="text-lg font-display font-semibold text-primary">
             WealthIQ Assessment
           </h2>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleGoBack}
-            disabled={currentIndex === 0}
-            className="w-20 gap-1 text-muted-foreground hover:text-primary text-xs"
-            data-testid="button-go-back"
-          >
-            <Undo2 className="w-4 h-4" />
-            Go Back
-          </Button>
         </div>
         
         <div className="mb-4">
@@ -182,22 +170,41 @@ export default function Game() {
           </motion.div>
         </div>
 
-        {/* Card container */}
-        <div className="flex-1 relative min-h-[320px]">
-          <AnimatePresence mode="wait">
-            {currentQuestion && (
-              <GameCard 
-                key={currentQuestion.id} 
-                question={currentQuestion} 
-                onSwipe={handleSwipe} 
-                active={true}
-              />
-            )}
-          </AnimatePresence>
+        {/* Card with Go Back on the left */}
+        <div className="flex-1 flex items-start justify-center gap-2">
+          {/* Go Back button - left side, visible */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleGoBack}
+            disabled={currentIndex === 0}
+            className="flex-col gap-1 h-auto py-3 px-3 text-muted-foreground hover:text-primary border-muted-foreground/20 mt-8"
+            data-testid="button-go-back"
+          >
+            <Undo2 className="w-5 h-5" />
+            <span className="text-[10px] font-medium">Go Back</span>
+          </Button>
+          
+          {/* Card container */}
+          <div className="flex-1 relative min-h-[320px] max-w-sm">
+            <AnimatePresence mode="wait">
+              {currentQuestion && (
+                <GameCard 
+                  key={currentQuestion.id} 
+                  question={currentQuestion} 
+                  onSwipe={handleSwipe} 
+                  active={true}
+                />
+              )}
+            </AnimatePresence>
+          </div>
+          
+          {/* Spacer for balance */}
+          <div className="w-[52px]" />
         </div>
 
         {/* Action buttons - right below the card */}
-        <div className="mt-4 flex justify-center gap-4 w-full">
+        <div className="mt-4 flex justify-center gap-4 w-full max-w-sm mx-auto">
           <Button 
             variant="outline" 
             size="lg" 
