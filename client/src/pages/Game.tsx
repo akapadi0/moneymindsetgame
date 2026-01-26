@@ -6,23 +6,38 @@ import { ProgressBar } from "@/components/progress-bar";
 import { Timer } from "@/components/timer";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, AlertCircle, Undo2, Clock, ThumbsDown, ThumbsUp } from "lucide-react";
 
 export default function Game() {
   const [_, setLocation] = useLocation();
   const { data: questions, isLoading, isError } = useQuestions();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>({});
+  const [answerHistory, setAnswerHistory] = useState<Array<{ category: string; direction: "left" | "right" | "timeout" }>>([]);
+  const [timerKey, setTimerKey] = useState(0);
+  const [showTimeoutFlash, setShowTimeoutFlash] = useState(false);
 
   // Reset scores on mount
   useEffect(() => {
     localStorage.removeItem("moneyMindsetResults");
   }, []);
 
-  const handleSwipe = (direction: "left" | "right") => {
+  const handleSwipe = (direction: "left" | "right", isTimeout = false) => {
     if (!questions) return;
     
     const currentQuestion = questions[currentIndex];
+    
+    // Show timeout flash if time ran out
+    if (isTimeout) {
+      setShowTimeoutFlash(true);
+      setTimeout(() => setShowTimeoutFlash(false), 800);
+    }
+    
+    // Track this answer in history
+    setAnswerHistory(prev => [
+      ...prev.slice(0, currentIndex), // Replace any future history if going back
+      { category: currentQuestion.category, direction: isTimeout ? "timeout" : direction }
+    ]);
     
     if (direction === "right") {
       setScores(prev => ({
@@ -31,6 +46,8 @@ export default function Game() {
       }));
     }
 
+    // Delay slightly longer for timeout to show flash
+    const delay = isTimeout ? 600 : 200;
     setTimeout(() => {
       const nextIndex = currentIndex + 1;
       if (nextIndex >= questions.length) {
@@ -43,7 +60,27 @@ export default function Game() {
       } else {
         setCurrentIndex(nextIndex);
       }
-    }, 200);
+    }, delay);
+  };
+
+  const handleGoBack = () => {
+    if (currentIndex === 0 || !questions) return;
+    
+    const prevIndex = currentIndex - 1;
+    const prevAnswer = answerHistory[prevIndex];
+    
+    // If previous answer was "right" (agree), undo that score
+    if (prevAnswer && prevAnswer.direction === "right") {
+      setScores(prev => ({
+        ...prev,
+        [prevAnswer.category]: Math.max(0, (prev[prevAnswer.category] || 0) - 1)
+      }));
+    }
+    
+    // Remove that answer from history so they can re-answer
+    setAnswerHistory(prev => prev.slice(0, prevIndex));
+    setCurrentIndex(prevIndex);
+    setTimerKey(prev => prev + 1); // Reset timer for the question
   };
 
   if (isLoading) {
@@ -71,6 +108,27 @@ export default function Game() {
     <div className="min-h-screen flex flex-col bg-slate-50 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1/2 bg-primary/5 rounded-b-[3rem] -z-0" />
       
+      {/* Timeout Flash Overlay */}
+      <AnimatePresence>
+        {showTimeoutFlash && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-amber-500/20 z-50 flex items-center justify-center"
+          >
+            <motion.div 
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              className="bg-white rounded-2xl p-6 shadow-xl flex items-center gap-3"
+            >
+              <Clock className="w-8 h-8 text-amber-500" />
+              <span className="text-lg font-bold text-amber-700">Time's up! Moving on...</span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
       <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 pt-8 pb-12">
         <div className="text-center mb-6">
           <h2 className="text-xl font-display font-semibold text-primary mb-4">
@@ -82,9 +140,21 @@ export default function Game() {
         <div className="flex justify-center mb-8">
           <Timer 
             duration={35} 
-            onTimeUp={() => handleSwipe("left")} 
-            resetKey={currentIndex} 
+            onTimeUp={() => handleSwipe("left", true)} 
+            resetKey={`${currentIndex}-${timerKey}`} 
           />
+        </div>
+
+        {/* Mobile Swipe Hint - positioned at card level */}
+        <div className="flex justify-between items-center px-2 mb-2">
+          <div className="flex items-center gap-1 text-destructive/70">
+            <ThumbsDown className="w-5 h-5" />
+            <span className="text-xs font-medium">Disagree</span>
+          </div>
+          <div className="flex items-center gap-1 text-green-600/70">
+            <span className="text-xs font-medium">Agree</span>
+            <ThumbsUp className="w-5 h-5" />
+          </div>
         </div>
 
         <div className="flex-1 relative flex items-center justify-center min-h-[400px]">
@@ -106,19 +176,21 @@ export default function Game() {
               variant="outline" 
               size="lg" 
               onClick={() => handleSwipe("left")}
-              className="flex-1 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive"
+              className="flex-1 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive gap-2"
               data-testid="button-disagree"
             >
+              <ThumbsDown className="w-4 h-4" />
               Disagree
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
               onClick={() => handleSwipe("right")}
-              className="flex-1 border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500"
+              className="flex-1 border-green-500/20 text-green-600 hover:bg-green-500/10 hover:border-green-500 gap-2"
               data-testid="button-agree"
             >
               Agree
+              <ThumbsUp className="w-4 h-4" />
             </Button>
           </div>
           
@@ -126,19 +198,36 @@ export default function Game() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => currentIndex > 0 && setCurrentIndex(currentIndex - 1)}
+              onClick={handleGoBack}
               disabled={currentIndex === 0}
-              className="w-full text-muted-foreground hover:text-primary"
+              className="w-full text-muted-foreground hover:text-primary gap-2"
               data-testid="button-go-back"
             >
-              Go Back
+              <Undo2 className="w-4 h-4" />
+              Go Back & Change Answer
             </Button>
           </div>
         </div>
         
-        <p className="text-center text-xs text-muted-foreground mt-6 uppercase tracking-[0.2em] font-bold animate-pulse">
-          ← Swipe Left to Disagree • Swipe Right to Agree →
-        </p>
+        <div className="mt-6 flex items-center justify-center gap-2">
+          <motion.div 
+            animate={{ x: [-5, 0, -5] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+            className="text-destructive/60"
+          >
+            ←
+          </motion.div>
+          <p className="text-xs text-muted-foreground uppercase tracking-widest font-medium">
+            Swipe or tap to answer
+          </p>
+          <motion.div 
+            animate={{ x: [5, 0, 5] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+            className="text-green-600/60"
+          >
+            →
+          </motion.div>
+        </div>
       </div>
     </div>
   );

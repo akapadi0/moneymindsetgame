@@ -356,8 +356,8 @@ export default function Results() {
   return (
     <div className="min-h-screen bg-background relative">
       
-      {/* Content Layer - Blurred when locked */}
-      <div className={`transition-all duration-500 ${!isUnlocked ? 'filter blur-lg opacity-30 pointer-events-none' : ''}`}>
+      {/* Content Layer - Subtle blur when locked, still visible as preview */}
+      <div className={`transition-all duration-500 ${!isUnlocked ? 'filter blur-sm opacity-60 pointer-events-none' : ''}`}>
         <div className="max-w-4xl mx-auto px-4 py-12">
           
           {/* Header */}
@@ -506,39 +506,62 @@ export default function Results() {
         </div>
       </div>
 
-      {/* Lock Overlay */}
+      {/* Final Step Overlay - Feels like completion, not a gate */}
       {!isUnlocked && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" />
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
           
           <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-card w-full max-w-md relative z-10 rounded-2xl shadow-2xl border border-border p-8"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="bg-card w-full max-w-md relative z-10 rounded-2xl shadow-2xl border border-border p-6 sm:p-8 mb-4 sm:mb-0"
           >
-            <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Lock className="w-8 h-8 text-accent" />
+            {/* Success indicator */}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-sm font-medium text-emerald-600">Assessment Complete</span>
             </div>
             
-            <h2 className="text-2xl font-display font-bold text-center mb-2">Your Results Are Ready</h2>
-            <p className="text-center text-muted-foreground mb-8">
-              Enter your details below to unlock your personalized archetype report and recommendations.
+            <h2 className="text-2xl font-display font-bold text-center mb-2">Almost There!</h2>
+            <p className="text-center text-muted-foreground mb-6">
+              Enter your details to reveal your personalized Financial Blueprint and receive a copy via email.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium ml-1">Full Name</label>
-                <input 
-                  required
-                  type="text"
-                  placeholder="Jane Doe"
-                  className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                  value={formData.name}
-                  onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                />
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-muted-foreground ml-1">First Name</label>
+                  <input 
+                    required
+                    type="text"
+                    placeholder="Jane"
+                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    value={formData.name.split(' ')[0] || ''}
+                    onChange={e => {
+                      const lastName = formData.name.split(' ').slice(1).join(' ');
+                      setFormData(prev => ({ ...prev, name: `${e.target.value} ${lastName}`.trim() }));
+                    }}
+                    data-testid="input-first-name"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-muted-foreground ml-1">Last Name</label>
+                  <input 
+                    required
+                    type="text"
+                    placeholder="Doe"
+                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    value={formData.name.split(' ').slice(1).join(' ') || ''}
+                    onChange={e => {
+                      const firstName = formData.name.split(' ')[0] || '';
+                      setFormData(prev => ({ ...prev, name: `${firstName} ${e.target.value}`.trim() }));
+                    }}
+                    data-testid="input-last-name"
+                  />
+                </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium ml-1">Email Address</label>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-muted-foreground ml-1">Email Address</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input 
@@ -548,27 +571,29 @@ export default function Results() {
                     className="w-full pl-11 pr-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                     value={formData.email}
                     onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    data-testid="input-email"
                   />
                 </div>
               </div>
 
               <Button 
                 type="submit" 
-                className="w-full h-14 text-lg mt-2" 
+                className="w-full h-12 text-base mt-2" 
                 disabled={isPending}
+                data-testid="button-reveal-results"
               >
                 {isPending ? (
                   <span className="flex items-center gap-2">
-                    <Loader2 className="animate-spin w-5 h-5" /> Analyzing...
+                    <Loader2 className="animate-spin w-5 h-5" /> Preparing your blueprint...
                   </span>
                 ) : (
-                  "Unlock My Results"
+                  "Reveal My Blueprint"
                 )}
               </Button>
             </form>
             
             <p className="text-xs text-center text-muted-foreground mt-4">
-              We respect your privacy. No spam, ever.
+              Your results will also be emailed to you. No spam, ever.
             </p>
           </motion.div>
         </div>
