@@ -167,12 +167,12 @@ export default function Game() {
         </div>
 
         {/* Card area with Go Back button outside on the right */}
-        <div className="flex-1 flex items-center justify-center gap-2 min-h-[400px]">
-          {/* Spacer for symmetry */}
-          <div className="w-16 hidden sm:block" />
+        <div className="flex-1 flex items-center justify-center gap-4">
+          {/* Spacer for symmetry on larger screens */}
+          <div className="w-12 sm:w-16 hidden sm:block flex-shrink-0" />
           
-          {/* Card */}
-          <div className="relative flex items-center justify-center flex-1 max-w-md">
+          {/* Card container - needs fixed dimensions for absolute positioned card */}
+          <div className="relative w-full max-w-sm h-[380px] sm:h-[420px]">
             <AnimatePresence mode="wait">
               {currentQuestion && (
                 <GameCard 
@@ -186,7 +186,7 @@ export default function Game() {
           </div>
           
           {/* Go Back button - outside the card on the right */}
-          <div className="w-16 flex items-center justify-center">
+          <div className="w-12 sm:w-16 flex items-center justify-center flex-shrink-0">
             <Button
               variant="ghost"
               size="sm"
