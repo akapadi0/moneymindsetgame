@@ -377,7 +377,7 @@ export default function Results() {
             {/* Strategic Recommendations */}
             <div className="bg-primary/5 p-6 rounded-xl border border-primary/10">
               <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
-                <CheckCircle className="w-5 h-5" />
+                <CheckCircle className="w-5 h-5 text-emerald-500" />
                 Strategic Recommendations
               </h3>
               <ul className="space-y-3">
@@ -393,7 +393,7 @@ export default function Results() {
             {/* Challenge Yourself */}
             <div className="bg-primary/5 p-6 rounded-xl border border-primary/10">
               <h3 className="font-bold mb-4 text-primary flex items-center gap-2">
-                <Flame className="w-5 h-5" />
+                <Flame className="w-5 h-5 text-orange-500" />
                 Challenge Yourself
               </h3>
               <ul className="space-y-3">
@@ -411,7 +411,7 @@ export default function Results() {
 
           {/* Full Results Notice */}
           <div className="bg-card rounded-xl border border-border p-6 mb-8 text-center">
-            <Mail className="w-8 h-8 mx-auto mb-3 text-primary" />
+            <Mail className="w-8 h-8 mx-auto mb-3 text-rose-500" />
             <h3 className="font-bold mb-2">Full Results Sent to Your Email</h3>
             <p className="text-sm text-muted-foreground">
               Check your inbox for a detailed breakdown of all 6 archetypes, including your complete score analysis.
@@ -421,7 +421,7 @@ export default function Results() {
           {/* Share Section */}
           <div className="bg-card rounded-xl border border-border p-6 mb-8">
             <h3 className="font-bold mb-6 text-center flex items-center justify-center gap-2">
-              <Share2 className="w-5 h-5 text-primary" />
+              <Share2 className="w-5 h-5 text-violet-500" />
               Share Your Blueprint
             </h3>
             
@@ -436,7 +436,7 @@ export default function Results() {
                 data-testid="button-share-twitter"
                 className="gap-2"
               >
-                <SiX className="w-4 h-4" />
+                <SiX className="w-4 h-4 text-foreground" />
                 Share on X
               </Button>
               <Button 
@@ -449,7 +449,7 @@ export default function Results() {
                 data-testid="button-share-linkedin"
                 className="gap-2"
               >
-                <SiLinkedin className="w-4 h-4" />
+                <SiLinkedin className="w-4 h-4 text-[#0A66C2]" />
                 Share on LinkedIn
               </Button>
             </div>
@@ -467,7 +467,7 @@ export default function Results() {
                   className="gap-2"
                   data-testid="button-copy-compatibility"
                 >
-                  <Users className="w-4 h-4" />
+                  <Users className="w-4 h-4 text-cyan-500" />
                   Copy Quiz Invite Link
                 </Button>
               </div>
@@ -495,7 +495,7 @@ export default function Results() {
                     {isSendingEmail ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      <Send className="w-4 h-4" />
+                      <Send className="w-4 h-4 text-emerald-500" />
                     )}
                     Send
                   </Button>
