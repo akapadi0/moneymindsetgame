@@ -15,7 +15,24 @@ export default function Landing() {
       <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-10" style={{ filter: 'invert(1) hue-rotate(180deg)' }} data-testid="img-logo" />
+            <div
+              role="img"
+              aria-label="WealthIQ - Conscious Prosperity"
+              className="h-10 w-[160px] bg-primary"
+              style={{
+                WebkitMaskImage: `url(${wealthIqLogo})`,
+                WebkitMaskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center',
+                WebkitMaskMode: 'luminance' as any,
+                maskImage: `url(${wealthIqLogo})`,
+                maskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                maskPosition: 'center',
+                maskMode: 'luminance' as any,
+              }}
+              data-testid="img-logo"
+            />
           </div>
         </div>
       </nav>

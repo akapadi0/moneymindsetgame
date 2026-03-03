@@ -133,7 +133,24 @@ export default function Game() {
       <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 py-4">
         {/* Header */}
         <div className="text-center mb-2">
-          <img src={wealthIqLogo} alt="WealthIQ Assessment" className="h-8 mx-auto mb-1" style={{ filter: 'invert(1) hue-rotate(180deg)' }} data-testid="img-logo-game" />
+          <div
+            role="img"
+            aria-label="WealthIQ Assessment"
+            className="h-8 w-[140px] bg-primary mx-auto mb-1"
+            style={{
+              WebkitMaskImage: `url(${wealthIqLogo})`,
+              WebkitMaskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'center',
+              WebkitMaskMode: 'luminance' as any,
+              maskImage: `url(${wealthIqLogo})`,
+              maskSize: 'contain',
+              maskRepeat: 'no-repeat',
+              maskPosition: 'center',
+              maskMode: 'luminance' as any,
+            }}
+            data-testid="img-logo-game"
+          />
           <ProgressBar current={currentIndex + 1} total={questions.length} />
         </div>
 
