@@ -133,7 +133,7 @@ export default function Game() {
       <div className="relative z-10 flex-1 flex flex-col max-w-lg mx-auto w-full px-4 py-4">
         {/* Header */}
         <div className="text-center mb-2">
-          <img src={wealthIqLogo} alt="WealthIQ Assessment" className="h-10 bg-white rounded-lg px-3 py-1 mx-auto mb-1" data-testid="img-logo-game" />
+          <img src={wealthIqLogo} alt="WealthIQ Assessment" className="h-8 mx-auto mb-1" style={{ filter: 'invert(1) hue-rotate(180deg)' }} data-testid="img-logo-game" />
           <ProgressBar current={currentIndex + 1} total={questions.length} />
         </div>
 
