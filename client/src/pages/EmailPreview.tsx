@@ -145,196 +145,265 @@ export default function EmailPreview() {
   const maxScore = Math.max(...Object.values(SAMPLE_SCORES));
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4">
-      <div className="max-w-[600px] mx-auto">
-        <p className="text-center text-sm text-muted-foreground mb-4">Email Template Preview</p>
+    <div style={{ backgroundColor: '#f3f4f6', padding: '32px 16px', minHeight: '100vh', fontFamily: "'DM Sans', Arial, Helvetica, sans-serif" }}>
+      <p style={{ textAlign: 'center', fontSize: '12px', color: '#9ca3af', marginBottom: '16px' }}>Email Template Preview</p>
 
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden" style={{ fontFamily: "'DM Sans', Arial, sans-serif" }}>
+      {/* Email container - 600px max like real emails */}
+      <table cellPadding={0} cellSpacing={0} style={{ maxWidth: '600px', margin: '0 auto', width: '100%', backgroundColor: '#ffffff', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}>
+        <tbody>
 
-          <div className="text-center pt-10 pb-6" style={{ background: 'linear-gradient(180deg, #fdf2f4 0%, #ffffff 100%)' }}>
-            <img src={wealthIqLogo} alt="WealthIQ" className="h-20 mx-auto mix-blend-multiply" data-testid="img-logo-email" />
-          </div>
+          {/* Header with logo */}
+          <tr>
+            <td style={{ textAlign: 'center', padding: '32px 24px 16px', background: 'linear-gradient(180deg, #fdf2f4 0%, #ffffff 100%)' }}>
+              <img src={wealthIqLogo} alt="WealthIQ" style={{ height: '64px', margin: '0 auto', display: 'block' }} data-testid="img-logo-email" />
+            </td>
+          </tr>
 
-          <div className="px-8 pb-8">
-
-            <div className="text-center mb-8">
-              <h1 className="text-2xl font-display font-bold text-gray-900 mb-2">
+          {/* Greeting */}
+          <tr>
+            <td style={{ textAlign: 'center', padding: '8px 32px 24px' }}>
+              <h1 style={{ fontSize: '22px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '0 0 6px' }}>
                 Hi {SAMPLE_NAME}, your Financial Blueprint is ready!
               </h1>
-              <p className="text-gray-500 text-sm">
-                Based on your responses to the WealthIQ assessment, here's your personalized money mindset profile.
+              <p style={{ fontSize: '13px', color: '#6b7280', margin: 0, lineHeight: 1.5 }}>
+                Based on your WealthIQ assessment responses, here's your personalized money mindset profile.
               </p>
-            </div>
+            </td>
+          </tr>
 
-            <div className="mb-10">
-              <div className="text-center mb-6">
-                <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gray-400 border-b-2 border-gray-200 pb-1">
-                  Your Top Archetypes
-                </span>
-              </div>
+          {/* Divider */}
+          <tr><td style={{ padding: '0 32px' }}><hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', margin: 0 }} /></td></tr>
 
-              {[
-                { entry: primary, data: primaryData, label: "Primary Archetype", rank: "#1" },
-                { entry: secondary, data: secondaryData, label: "Secondary Archetype", rank: "#2" },
-              ].map(({ entry, data, label, rank }) => (
-                <div
-                  key={entry[0]}
-                  className="rounded-xl mb-5 overflow-hidden"
-                  style={{ border: `1px solid ${data.borderColor}`, backgroundColor: data.bgColor }}
-                >
-                  <div className="px-6 py-4" style={{ borderBottom: `1px solid ${data.borderColor}` }}>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: data.textColor }}>
-                          {label}
-                        </span>
-                        <h2 className="text-xl font-display font-bold text-gray-900 mt-1">
-                          {rank} {entry[0]}
-                        </h2>
-                      </div>
-                      <div
-                        className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                        style={{ backgroundColor: data.barColor }}
-                      >
-                        {entry[1]}%
-                      </div>
-                    </div>
-                  </div>
+          {/* Section: Top 2 Archetypes side by side */}
+          <tr>
+            <td style={{ padding: '24px 24px 8px', textAlign: 'center' }}>
+              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>
+                Your Top Archetypes
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: '12px 24px 24px' }}>
+              <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
+                <tbody>
+                  <tr>
+                    {/* Primary Archetype */}
+                    <td style={{ width: '48%', verticalAlign: 'top', padding: '0 4px 0 0' }}>
+                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', borderRadius: '10px', overflow: 'hidden', border: `1px solid ${primaryData.borderColor}`, backgroundColor: primaryData.bgColor }}>
+                        <tbody>
+                          <tr>
+                            <td style={{ padding: '14px 14px 10px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: primaryData.textColor }}>Primary</span>
+                              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: primaryData.barColor, color: '#fff', fontSize: '15px', fontWeight: 700, lineHeight: '48px', textAlign: 'center', margin: '8px auto' }}>
+                                {primary[1]}%
+                              </div>
+                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 0' }}>
+                                {primary[0]}
+                              </h2>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ padding: '0 14px 12px', fontSize: '11px', color: '#4b5563', lineHeight: 1.5 }}>
+                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Motivation</strong><br />{primaryData.motivation}</p>
+                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Superpowers</strong><br />{primaryData.superpowers}</p>
+                              <p style={{ margin: 0 }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Watch Out</strong><br />{primaryData.biases}</p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
 
-                  <div className="px-6 py-4 space-y-3">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Motivation</p>
-                      <p className="text-sm text-gray-700">{data.motivation}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Superpowers</p>
-                      <p className="text-sm text-gray-700">{data.superpowers}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Watch Out For</p>
-                      <p className="text-sm text-gray-700">{data.biases}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    {/* Spacer */}
+                    <td style={{ width: '4%' }}></td>
 
-            <div className="mb-10">
-              <div className="text-center mb-6">
-                <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gray-400 border-b-2 border-gray-200 pb-1">
-                  Your Complete Financial Profile
-                </span>
-              </div>
-              <p className="text-sm text-gray-500 text-center mb-5">
-                Here's how you scored across all six money archetypes.
-              </p>
+                    {/* Secondary Archetype */}
+                    <td style={{ width: '48%', verticalAlign: 'top', padding: '0 0 0 4px' }}>
+                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', borderRadius: '10px', overflow: 'hidden', border: `1px solid ${secondaryData.borderColor}`, backgroundColor: secondaryData.bgColor }}>
+                        <tbody>
+                          <tr>
+                            <td style={{ padding: '14px 14px 10px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: secondaryData.textColor }}>Secondary</span>
+                              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: secondaryData.barColor, color: '#fff', fontSize: '15px', fontWeight: 700, lineHeight: '48px', textAlign: 'center', margin: '8px auto' }}>
+                                {secondary[1]}%
+                              </div>
+                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 0' }}>
+                                {secondary[0]}
+                              </h2>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ padding: '0 14px 12px', fontSize: '11px', color: '#4b5563', lineHeight: 1.5 }}>
+                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Motivation</strong><br />{secondaryData.motivation}</p>
+                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Superpowers</strong><br />{secondaryData.superpowers}</p>
+                              <p style={{ margin: 0 }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Watch Out</strong><br />{secondaryData.biases}</p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
 
-              <div className="space-y-3">
-                {sorted.map(([name, score], index) => {
-                  const data = ARCHETYPE_DATA[name];
-                  return (
-                    <div key={name} className="flex items-center gap-3">
-                      <div className="w-24 flex-shrink-0 text-right">
-                        <span className="text-sm font-semibold text-gray-700">{name}</span>
-                      </div>
-                      <div className="flex-1 bg-gray-100 rounded-full h-5 overflow-hidden">
-                        <div
-                          className="h-full rounded-full transition-all"
-                          style={{
-                            width: `${(score / maxScore) * 100}%`,
-                            backgroundColor: data.barColor,
-                            opacity: index < 2 ? 1 : 0.6,
-                          }}
-                        />
-                      </div>
-                      <div className="w-10 text-right">
-                        <span className="text-sm font-bold" style={{ color: data.barColor }}>{score}%</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+          {/* Section: Complete Profile - compact bar chart */}
+          <tr>
+            <td style={{ padding: '0 24px' }}>
+              <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#f9fafb', borderRadius: '10px', overflow: 'hidden' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: '16px 20px 8px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>Complete Financial Profile</span>
+                    </td>
+                  </tr>
+                  {sorted.map(([name, score], index) => {
+                    const data = ARCHETYPE_DATA[name];
+                    return (
+                      <tr key={name}>
+                        <td style={{ padding: '4px 20px' }}>
+                          <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
+                            <tbody>
+                              <tr>
+                                <td style={{ width: '90px', fontSize: '12px', fontWeight: 600, color: '#374151', paddingRight: '8px', textAlign: 'right' }}>
+                                  {name}
+                                </td>
+                                <td style={{ padding: '3px 0' }}>
+                                  <div style={{ backgroundColor: '#e5e7eb', borderRadius: '10px', height: '14px', overflow: 'hidden' }}>
+                                    <div style={{ width: `${(score / maxScore) * 100}%`, backgroundColor: data.barColor, height: '100%', borderRadius: '10px', opacity: index < 2 ? 1 : 0.55 }} />
+                                  </div>
+                                </td>
+                                <td style={{ width: '40px', fontSize: '12px', fontWeight: 700, color: data.barColor, textAlign: 'right', paddingLeft: '8px' }}>
+                                  {score}%
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  <tr><td style={{ padding: '8px' }}></td></tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
 
-              <div className="mt-5 space-y-2">
-                {sorted.slice(2).map(([name, score]) => {
-                  const data = ARCHETYPE_DATA[name];
-                  return (
-                    <div key={name} className="flex items-start gap-2 text-sm text-gray-600">
-                      <span className="font-semibold" style={{ color: data.textColor }}>{name}:</span>
-                      <span>{data.motivation}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          {/* Spacer */}
+          <tr><td style={{ padding: '12px' }}></td></tr>
 
-            <div className="mb-10">
-              <div className="text-center mb-6">
-                <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gray-400 border-b-2 border-gray-200 pb-1">
-                  Strategic Recommendations
-                </span>
-              </div>
-              <p className="text-sm text-gray-500 text-center mb-5">
-                Based on your {primary[0]} + {secondary[0]} profile, here's how to make the most of your money mindset.
-              </p>
+          {/* Section: Recommendations + Challenges side by side */}
+          <tr>
+            <td style={{ padding: '0 24px' }}>
+              <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
+                <tbody>
+                  <tr>
+                    {/* Recommendations */}
+                    <td style={{ width: '48%', verticalAlign: 'top', padding: '0 4px 0 0' }}>
+                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#f0fdf4', borderRadius: '10px', border: '1px solid #bbf7d0' }}>
+                        <tbody>
+                          <tr>
+                            <td style={{ padding: '14px 14px 6px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#16a34a' }}>Recommendations</span>
+                            </td>
+                          </tr>
+                          {primaryData.recommendations.map((rec, i) => (
+                            <tr key={`pr-${i}`}>
+                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
+                                <table cellPadding={0} cellSpacing={0}><tbody><tr>
+                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#16a34a', fontWeight: 700 }}>+</td>
+                                  <td>{rec}</td>
+                                </tr></tbody></table>
+                              </td>
+                            </tr>
+                          ))}
+                          {secondaryData.recommendations.map((rec, i) => (
+                            <tr key={`sr-${i}`}>
+                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
+                                <table cellPadding={0} cellSpacing={0}><tbody><tr>
+                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#16a34a', fontWeight: 700 }}>+</td>
+                                  <td>{rec}</td>
+                                </tr></tbody></table>
+                              </td>
+                            </tr>
+                          ))}
+                          <tr><td style={{ padding: '8px' }}></td></tr>
+                        </tbody>
+                      </table>
+                    </td>
 
-              <div className="grid grid-cols-1 gap-3">
-                {[...primaryData.recommendations, ...secondaryData.recommendations].map((rec, i) => (
-                  <div key={i} className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-3">
-                    <span className="text-emerald-500 mt-0.5 flex-shrink-0">✓</span>
-                    <p className="text-sm text-gray-700">{rec}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+                    {/* Spacer */}
+                    <td style={{ width: '4%' }}></td>
 
-            <div className="mb-10">
-              <div className="text-center mb-6">
-                <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gray-400 border-b-2 border-gray-200 pb-1">
-                  Growth Challenges
-                </span>
-              </div>
-              <p className="text-sm text-gray-500 text-center mb-5">
-                Small steps to stretch beyond your comfort zone this week.
-              </p>
+                    {/* Challenges */}
+                    <td style={{ width: '48%', verticalAlign: 'top', padding: '0 0 0 4px' }}>
+                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#fffbeb', borderRadius: '10px', border: '1px solid #fde68a' }}>
+                        <tbody>
+                          <tr>
+                            <td style={{ padding: '14px 14px 6px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#d97706' }}>Growth Challenges</span>
+                            </td>
+                          </tr>
+                          {primaryData.challenges.map((ch, i) => (
+                            <tr key={`pc-${i}`}>
+                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
+                                <table cellPadding={0} cellSpacing={0}><tbody><tr>
+                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#d97706', fontWeight: 700 }}>*</td>
+                                  <td>{ch}</td>
+                                </tr></tbody></table>
+                              </td>
+                            </tr>
+                          ))}
+                          {secondaryData.challenges.map((ch, i) => (
+                            <tr key={`sc-${i}`}>
+                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
+                                <table cellPadding={0} cellSpacing={0}><tbody><tr>
+                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#d97706', fontWeight: 700 }}>*</td>
+                                  <td>{ch}</td>
+                                </tr></tbody></table>
+                              </td>
+                            </tr>
+                          ))}
+                          <tr><td style={{ padding: '8px' }}></td></tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
 
-              <div className="grid grid-cols-1 gap-3">
-                {[...primaryData.challenges, ...secondaryData.challenges].map((challenge, i) => (
-                  <div key={i} className="flex items-start gap-3 bg-amber-50 rounded-lg px-4 py-3">
-                    <span className="text-amber-500 mt-0.5 flex-shrink-0">⚡</span>
-                    <p className="text-sm text-gray-700">{challenge}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="text-center mb-8">
+          {/* CTA Button */}
+          <tr>
+            <td style={{ textAlign: 'center', padding: '28px 32px 24px' }}>
               <a
                 href="/"
-                className="inline-block px-8 py-3 rounded-full text-white font-semibold text-sm"
-                style={{ backgroundColor: '#b5546a' }}
+                style={{ display: 'inline-block', padding: '12px 32px', borderRadius: '24px', backgroundColor: '#b5546a', color: '#ffffff', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
                 data-testid="button-view-results"
               >
-                View Your Full Interactive Results →
+                View Your Full Interactive Results
               </a>
-              <p className="text-xs text-gray-400 mt-3">
+              <p style={{ fontSize: '11px', color: '#9ca3af', marginTop: '8px' }}>
                 See your detailed charts and compare with friends
               </p>
-            </div>
+            </td>
+          </tr>
 
-          </div>
+          {/* Footer */}
+          <tr>
+            <td style={{ backgroundColor: '#faf5f6', padding: '20px 32px', textAlign: 'center' }}>
+              <img src={wealthIqLogo} alt="WealthIQ" style={{ height: '36px', margin: '0 auto 8px', display: 'block', opacity: 0.5 }} />
+              <p style={{ fontSize: '10px', color: '#9ca3af', lineHeight: 1.6, margin: 0 }}>
+                WealthIQ - Conscious Prosperity<br />
+                This email was sent because you completed the WealthIQ Money Mindset Assessment.<br />
+                Your results are confidential and never shared with third parties.
+              </p>
+            </td>
+          </tr>
 
-          <div className="px-8 py-6 text-center" style={{ backgroundColor: '#faf5f6' }}>
-            <img src={wealthIqLogo} alt="WealthIQ" className="h-10 mx-auto mb-3 mix-blend-multiply opacity-60" />
-            <p className="text-xs text-gray-400 leading-relaxed">
-              WealthIQ — Conscious Prosperity<br />
-              This email was sent because you completed the WealthIQ Money Mindset Assessment.<br />
-              Your results are confidential and never shared with third parties.
-            </p>
-          </div>
-
-        </div>
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 }
