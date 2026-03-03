@@ -12,7 +12,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+      <nav className="fixed w-full z-50 bg-background border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center">
             <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-16 mix-blend-multiply" data-testid="img-logo" />
