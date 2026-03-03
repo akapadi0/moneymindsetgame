@@ -374,19 +374,62 @@ export default function EmailPreview() {
             </td>
           </tr>
 
-          {/* CTA Button */}
+          {/* Share Section */}
           <tr>
-            <td style={{ textAlign: 'center', padding: '28px 32px 24px' }}>
-              <a
-                href="/"
-                style={{ display: 'inline-block', padding: '12px 32px', borderRadius: '24px', backgroundColor: '#b5546a', color: '#ffffff', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
-                data-testid="button-view-results"
-              >
-                View Your Full Interactive Results
-              </a>
-              <p style={{ fontSize: '11px', color: '#9ca3af', marginTop: '8px' }}>
-                See your detailed charts and compare with friends
-              </p>
+            <td style={{ padding: '24px 24px 8px', textAlign: 'center' }}>
+              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>
+                Share Your Blueprint
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: '12px 32px 8px' }}>
+              <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ textAlign: 'center', paddingRight: '6px', width: '50%' }}>
+                      <a
+                        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just discovered my money archetypes: ${primary[0]} & ${secondary[0]}! Take the WealthIQ Assessment to find yours.`)}`}
+                        style={{ display: 'inline-block', padding: '10px 20px', borderRadius: '8px', backgroundColor: '#0f1419', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
+                        data-testid="button-share-twitter"
+                      >
+                        Share on X
+                      </a>
+                    </td>
+                    <td style={{ textAlign: 'center', paddingLeft: '6px', width: '50%' }}>
+                      <a
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://wealthiq.app')}&summary=${encodeURIComponent(`I just discovered my money archetypes: ${primary[0]} & ${secondary[0]}! Take the WealthIQ Assessment to find yours.`)}`}
+                        style={{ display: 'inline-block', padding: '10px 20px', borderRadius: '8px', backgroundColor: '#0A66C2', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
+                        data-testid="button-share-linkedin"
+                      >
+                        Share on LinkedIn
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: '12px 32px 24px', textAlign: 'center' }}>
+              <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: '14px 20px', textAlign: 'center' }}>
+                      <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 10px', lineHeight: 1.5 }}>
+                        Invite a partner, spouse, or family member to take the quiz and compare your money mindsets
+                      </p>
+                      <a
+                        href="/"
+                        style={{ display: 'inline-block', padding: '10px 24px', borderRadius: '8px', backgroundColor: '#b5546a', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none' }}
+                        data-testid="button-invite-compare"
+                      >
+                        Send Quiz Invite
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </td>
           </tr>
 
