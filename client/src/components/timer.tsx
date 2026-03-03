@@ -3,17 +3,24 @@ import { motion } from "framer-motion";
 
 interface TimerProps {
   duration: number;
-  onTimeUp?: () => void;
   resetKey: any;
+  onWarning?: (isWarning: boolean) => void;
 }
 
-export function Timer({ duration, resetKey }: TimerProps) {
+export function Timer({ duration, resetKey, onWarning }: TimerProps) {
   const [timeLeft, setTimeLeft] = useState(duration);
 
   // Reset timer when resetKey changes
   useEffect(() => {
     setTimeLeft(duration);
   }, [resetKey, duration]);
+
+  // Notify parent when entering/leaving warning zone
+  useEffect(() => {
+    if (onWarning) {
+      onWarning(timeLeft <= 10 && timeLeft > 0);
+    }
+  }, [timeLeft <= 10 && timeLeft > 0]);
 
   // Countdown effect - stops at 0
   useEffect(() => {
@@ -57,21 +64,11 @@ export function Timer({ duration, resetKey }: TimerProps) {
           />
         </svg>
         <div className={`absolute inset-0 flex items-center justify-center font-bold text-lg ${isUrgent || isExpired ? "text-destructive" : "text-primary"}`}>
-          {isExpired ? (
-            <motion.span
-              animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ repeat: Infinity, duration: 1.2 }}
-              className="text-xs font-bold"
-            >
-              GO!
-            </motion.span>
-          ) : (
-            timeLeft
-          )}
+          {timeLeft}
         </div>
       </div>
       <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">
-        {isExpired ? "Take your time" : "Seconds Left"}
+        Seconds Left
       </span>
     </div>
   );

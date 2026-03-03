@@ -16,6 +16,7 @@ export default function Game() {
   const [scores, setScores] = useState<Record<string, number>>({});
   const [answerHistory, setAnswerHistory] = useState<Array<{ category: string; direction: "left" | "right" }>>([]);
   const [timerKey, setTimerKey] = useState(0);
+  const [timerWarning, setTimerWarning] = useState(false);
 
   // Reset scores on mount
   useEffect(() => {
@@ -110,7 +111,8 @@ export default function Game() {
         <div className="flex justify-center mb-2">
           <Timer 
             duration={35} 
-            resetKey={`${currentIndex}-${timerKey}`} 
+            resetKey={`${currentIndex}-${timerKey}`}
+            onWarning={setTimerWarning}
           />
         </div>
 
@@ -144,6 +146,7 @@ export default function Game() {
                 question={currentQuestion} 
                 onSwipe={handleSwipe} 
                 active={true}
+                timerWarning={timerWarning}
               />
             )}
           </AnimatePresence>

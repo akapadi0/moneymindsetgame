@@ -5,9 +5,10 @@ interface GameCardProps {
   question: Question;
   onSwipe: (direction: "left" | "right") => void;
   active: boolean;
+  timerWarning?: boolean;
 }
 
-export function GameCard({ question, onSwipe, active }: GameCardProps) {
+export function GameCard({ question, onSwipe, active, timerWarning }: GameCardProps) {
   // Motion values for drag interaction
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
@@ -45,7 +46,9 @@ export function GameCard({ question, onSwipe, active }: GameCardProps) {
     >
       <motion.div 
         style={{ borderColor }}
-        className="w-full aspect-[4/3] min-h-[240px] bg-card rounded-2xl shadow-2xl border-4 border-transparent p-6 md:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden"
+        animate={timerWarning ? { boxShadow: ["0 0 0px rgba(234,179,8,0)", "0 0 20px rgba(234,179,8,0.5)", "0 0 0px rgba(234,179,8,0)"] } : { boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)" }}
+        transition={timerWarning ? { repeat: Infinity, duration: 1.2, ease: "easeInOut" } : { duration: 0.3 }}
+        className={`w-full aspect-[4/3] min-h-[240px] bg-card rounded-2xl shadow-2xl border-4 border-transparent p-6 md:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden ${timerWarning ? "border-amber-400/60" : ""}`}
       >
         {/* Category Tag */}
         <div className="absolute top-4 text-xs font-bold tracking-widest text-muted-foreground uppercase opacity-50">
