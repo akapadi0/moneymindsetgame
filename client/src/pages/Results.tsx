@@ -446,7 +446,17 @@ export default function Results() {
               <Button 
                 variant="outline" 
                 onClick={() => {
-                  const linkedInText = `Turns out I'm a ${primaryArchetype?.[0]}-${secondaryArchetype?.[0]} when it comes to money.\n\nWe all have a money personality — patterns that shape how we earn, spend, save, and invest without us even realizing it.\n\nWhat surprised me most? The blind spots.\n\nWhat's yours? 👇`;
+                  const traitDescriptions: Record<string, string> = {
+                    "Strategists": "a long-term planner who thrives on structure",
+                    "Guardians": "security-first with a focus on protecting what I have",
+                    "Givers": "driven by generosity and helping others",
+                    "Adventurers": "a risk-taker who chases new opportunities",
+                    "Impressors": "motivated by quality and how success looks",
+                    "Free Spirits": "someone who follows their instincts over spreadsheets"
+                  };
+                  const primaryDesc = traitDescriptions[primaryArchetype?.[0] || ""] || "";
+                  const secondaryDesc = traitDescriptions[secondaryArchetype?.[0] || ""] || "";
+                  const linkedInText = `Turns out when it comes to money, I'm ${primaryDesc} — but also ${secondaryDesc}.\n\nWe all have a money personality. Patterns that shape how we earn, spend, save, and invest without us even realizing it.\n\nWhat surprised me most? The blind spots.\n\nWhat's yours? 👇`;
                   const url = window.location.origin;
                   window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent('WealthIQ Money Mindset Assessment')}&summary=${encodeURIComponent(linkedInText)}`, '_blank');
                 }}
