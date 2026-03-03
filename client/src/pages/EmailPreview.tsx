@@ -286,7 +286,7 @@ export default function EmailPreview() {
                 <tbody>
                   <tr>
                     <td style={{ padding: '16px 20px 8px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#b5546a' }}>Your Archetype Compatibility</span>
+                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#b5546a' }}>What Does This Mean?</span>
                     </td>
                   </tr>
                   <tr>
