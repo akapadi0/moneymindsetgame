@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, PieChart, Shield, Zap } from "lucide-react";
+import wealthIqLogo from "@assets/Screenshot_2026-03-03_at_10.30.37_AM_1772555440489.png";
 
 // Use a nice gradient overlay on a placeholder image
 // Abstract geometric background with wealth-associated colors
@@ -13,11 +14,8 @@ export default function Landing() {
       {/* Navigation */}
       <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-serif font-bold text-xl">W</span>
-            </div>
-            <span className="font-display text-xl font-bold tracking-tight text-primary">WealthIQ</span>
+          <div className="flex items-center">
+            <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-12 bg-white rounded-lg px-3 py-1" data-testid="img-logo" />
           </div>
         </div>
       </nav>
