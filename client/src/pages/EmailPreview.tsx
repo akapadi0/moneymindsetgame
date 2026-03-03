@@ -306,10 +306,10 @@ export default function EmailPreview() {
                 <tbody>
                   <tr>
                     <td style={{ padding: '16px 20px 8px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>Complete Financial Profile</span>
+                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>Your Other Traits</span>
                     </td>
                   </tr>
-                  {sorted.map(([name, score], index) => {
+                  {sorted.slice(2).map(([name, score]) => {
                     const data = ARCHETYPE_DATA[name];
                     return (
                       <tr key={name}>
@@ -325,7 +325,7 @@ export default function EmailPreview() {
                                 </td>
                                 <td style={{ padding: '3px 0' }}>
                                   <div style={{ backgroundColor: '#e5e7eb', borderRadius: '10px', height: '14px', overflow: 'hidden' }}>
-                                    <div style={{ width: `${(score / maxScore) * 100}%`, backgroundColor: data.barColor, height: '100%', borderRadius: '10px', opacity: index < 2 ? 1 : 0.55 }} />
+                                    <div style={{ width: `${(score / maxScore) * 100}%`, backgroundColor: data.barColor, height: '100%', borderRadius: '10px' }} />
                                   </div>
                                 </td>
                                 <td style={{ width: '40px', fontSize: '12px', fontWeight: 700, color: data.barColor, textAlign: 'right', paddingLeft: '8px' }}>
