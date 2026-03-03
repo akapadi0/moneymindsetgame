@@ -249,39 +249,34 @@ export default function EmailPreview() {
   const xShareText = xPosts[xComboKey] || "Took the WealthIQ assessment — it reveals your money personality based on how you actually think about money.\n\nThe blind spots were the real surprise.\n\nWhat's yours?";
 
   return (
-    <div style={{ backgroundColor: '#f3f4f6', padding: '32px 16px', minHeight: '100vh', fontFamily: "'DM Sans', Arial, Helvetica, sans-serif" }}>
-      <p style={{ textAlign: 'center', fontSize: '12px', color: '#9ca3af', marginBottom: '16px' }}>Email Template Preview</p>
+    <div style={{ backgroundColor: '#f3f4f6', padding: '32px 16px', minHeight: '100vh', fontFamily: "-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell, 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif" }}>
+      <p style={{ textAlign: 'center', fontSize: '12px', color: '#9ca3af', marginBottom: '16px' }} data-testid="text-preview-label">Email Template Preview</p>
 
-      {/* Email container - 600px max like real emails */}
       <table cellPadding={0} cellSpacing={0} style={{ maxWidth: '600px', margin: '0 auto', width: '100%', backgroundColor: '#ffffff', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,0.07)' }}>
         <tbody>
 
-          {/* Header with logo */}
           <tr>
             <td style={{ textAlign: 'center', padding: '32px 24px 16px', background: 'linear-gradient(180deg, #fdf2f4 0%, #ffffff 100%)' }}>
               <img src={wealthIqLogo} alt="WealthIQ" style={{ height: '64px', margin: '0 auto', display: 'block' }} data-testid="img-logo-email" />
             </td>
           </tr>
 
-          {/* Greeting */}
           <tr>
             <td style={{ textAlign: 'center', padding: '8px 32px 24px' }}>
-              <h1 style={{ fontSize: '22px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '0 0 6px' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: 600, color: 'rgba(0,0,0,0.9)', margin: '0 0 8px', lineHeight: 1.25 }} data-testid="text-greeting">
                 Hi {SAMPLE_NAME}, your Financial Blueprint is ready!
               </h1>
-              <p style={{ fontSize: '13px', color: '#6b7280', margin: 0, lineHeight: 1.5 }}>
+              <p style={{ fontSize: '14px', color: 'rgba(0,0,0,0.6)', margin: 0, lineHeight: 1.42857 }}>
                 Based on your WealthIQ assessment responses, here's your personalized money mindset profile.
               </p>
             </td>
           </tr>
 
-          {/* Divider */}
           <tr><td style={{ padding: '0 32px' }}><hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', margin: 0 }} /></td></tr>
 
-          {/* Section: Top 2 Archetypes side by side */}
           <tr>
             <td style={{ padding: '24px 24px 8px', textAlign: 'center' }}>
-              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>
+              <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: 'rgba(0,0,0,0.4)' }}>
                 Your Top Archetypes
               </span>
             </td>
@@ -291,53 +286,50 @@ export default function EmailPreview() {
               <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
                 <tbody>
                   <tr>
-                    {/* Primary Archetype */}
                     <td style={{ width: '48%', verticalAlign: 'top', padding: '0 4px 0 0' }}>
-                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', borderRadius: '10px', overflow: 'hidden', border: `1px solid ${primaryData.borderColor}`, backgroundColor: primaryData.bgColor }}>
+                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', borderRadius: '10px', overflow: 'hidden', border: `1.5px solid ${primaryData.borderColor}`, backgroundColor: primaryData.bgColor }}>
                         <tbody>
                           <tr>
-                            <td style={{ padding: '14px 14px 10px', textAlign: 'center' }}>
-                              <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: primaryData.textColor }}>Primary</span>
-                              <img src={primaryData.image} alt={primary[0]} style={{ width: '80px', height: '80px', objectFit: 'contain', display: 'block', margin: '8px auto' }} />
-                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 2px' }}>
+                            <td style={{ padding: '16px 16px 10px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: primaryData.textColor }} data-testid="label-primary">Primary</span>
+                              <img src={primaryData.image} alt={primary[0]} style={{ width: '80px', height: '80px', objectFit: 'contain', display: 'block', margin: '10px auto' }} data-testid="img-primary-archetype" />
+                              <h2 style={{ fontSize: '18px', fontWeight: 600, color: 'rgba(0,0,0,0.9)', margin: '6px 0 4px', lineHeight: 1.25 }} data-testid="text-primary-name">
                                 {primary[0]}
                               </h2>
-                              <span style={{ fontSize: '14px', fontWeight: 700, color: primaryData.barColor }}>{primary[1]}%</span>
+                              <span style={{ fontSize: '16px', fontWeight: 700, color: primaryData.barColor }} data-testid="text-primary-score">{primary[1]}%</span>
                             </td>
                           </tr>
                           <tr>
-                            <td style={{ padding: '0 14px 12px', fontSize: '11px', color: '#4b5563', lineHeight: 1.5 }}>
-                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Motivation</strong><br />{primaryData.motivation}</p>
-                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Superpowers</strong><br />{primaryData.superpowers}</p>
-                              <p style={{ margin: 0 }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Watch Out</strong><br />{primaryData.biases}</p>
+                            <td style={{ padding: '0 16px 14px', fontSize: '13px', color: 'rgba(0,0,0,0.7)', lineHeight: 1.42857 }}>
+                              <p style={{ margin: '0 0 8px' }}><strong style={{ color: 'rgba(0,0,0,0.4)', fontSize: '10px', textTransform: 'uppercase' as const, letterSpacing: '1px', fontWeight: 700 }}>Motivation</strong><br />{primaryData.motivation}</p>
+                              <p style={{ margin: '0 0 8px' }}><strong style={{ color: 'rgba(0,0,0,0.4)', fontSize: '10px', textTransform: 'uppercase' as const, letterSpacing: '1px', fontWeight: 700 }}>Superpowers</strong><br />{primaryData.superpowers}</p>
+                              <p style={{ margin: 0 }}><strong style={{ color: 'rgba(0,0,0,0.4)', fontSize: '10px', textTransform: 'uppercase' as const, letterSpacing: '1px', fontWeight: 700 }}>Watch Out</strong><br />{primaryData.biases}</p>
                             </td>
                           </tr>
                         </tbody>
                       </table>
                     </td>
 
-                    {/* Spacer */}
                     <td style={{ width: '4%' }}></td>
 
-                    {/* Secondary Archetype */}
                     <td style={{ width: '48%', verticalAlign: 'top', padding: '0 0 0 4px' }}>
-                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', borderRadius: '10px', overflow: 'hidden', border: `1px solid ${secondaryData.borderColor}`, backgroundColor: secondaryData.bgColor }}>
+                      <table cellPadding={0} cellSpacing={0} style={{ width: '100%', borderRadius: '10px', overflow: 'hidden', border: `1.5px solid ${secondaryData.borderColor}`, backgroundColor: secondaryData.bgColor }}>
                         <tbody>
                           <tr>
-                            <td style={{ padding: '14px 14px 10px', textAlign: 'center' }}>
-                              <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: secondaryData.textColor }}>Secondary</span>
-                              <img src={secondaryData.image} alt={secondary[0]} style={{ width: '80px', height: '80px', objectFit: 'contain', display: 'block', margin: '8px auto' }} />
-                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 2px' }}>
+                            <td style={{ padding: '16px 16px 10px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: secondaryData.textColor }} data-testid="label-secondary">Secondary</span>
+                              <img src={secondaryData.image} alt={secondary[0]} style={{ width: '80px', height: '80px', objectFit: 'contain', display: 'block', margin: '10px auto' }} data-testid="img-secondary-archetype" />
+                              <h2 style={{ fontSize: '18px', fontWeight: 600, color: 'rgba(0,0,0,0.9)', margin: '6px 0 4px', lineHeight: 1.25 }} data-testid="text-secondary-name">
                                 {secondary[0]}
                               </h2>
-                              <span style={{ fontSize: '14px', fontWeight: 700, color: secondaryData.barColor }}>{secondary[1]}%</span>
+                              <span style={{ fontSize: '16px', fontWeight: 700, color: secondaryData.barColor }} data-testid="text-secondary-score">{secondary[1]}%</span>
                             </td>
                           </tr>
                           <tr>
-                            <td style={{ padding: '0 14px 12px', fontSize: '11px', color: '#4b5563', lineHeight: 1.5 }}>
-                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Motivation</strong><br />{secondaryData.motivation}</p>
-                              <p style={{ margin: '0 0 6px' }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Superpowers</strong><br />{secondaryData.superpowers}</p>
-                              <p style={{ margin: 0 }}><strong style={{ color: '#9ca3af', fontSize: '9px', textTransform: 'uppercase' as const, letterSpacing: '1px' }}>Watch Out</strong><br />{secondaryData.biases}</p>
+                            <td style={{ padding: '0 16px 14px', fontSize: '13px', color: 'rgba(0,0,0,0.7)', lineHeight: 1.42857 }}>
+                              <p style={{ margin: '0 0 8px' }}><strong style={{ color: 'rgba(0,0,0,0.4)', fontSize: '10px', textTransform: 'uppercase' as const, letterSpacing: '1px', fontWeight: 700 }}>Motivation</strong><br />{secondaryData.motivation}</p>
+                              <p style={{ margin: '0 0 8px' }}><strong style={{ color: 'rgba(0,0,0,0.4)', fontSize: '10px', textTransform: 'uppercase' as const, letterSpacing: '1px', fontWeight: 700 }}>Superpowers</strong><br />{secondaryData.superpowers}</p>
+                              <p style={{ margin: 0 }}><strong style={{ color: 'rgba(0,0,0,0.4)', fontSize: '10px', textTransform: 'uppercase' as const, letterSpacing: '1px', fontWeight: 700 }}>Watch Out</strong><br />{secondaryData.biases}</p>
                             </td>
                           </tr>
                         </tbody>
@@ -349,18 +341,17 @@ export default function EmailPreview() {
             </td>
           </tr>
 
-          {/* Section: Compatibility Insight */}
           <tr>
             <td style={{ padding: '0 24px 16px' }}>
               <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#fdf2f4', borderRadius: '10px', border: '1px solid #fce7f3' }}>
                 <tbody>
                   <tr>
-                    <td style={{ padding: '16px 20px 8px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#b5546a' }}>What Does This Mean?</span>
+                    <td style={{ padding: '18px 24px 8px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#b5546a' }}>What Does This Mean?</span>
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '0 20px 16px', fontSize: '13px', color: '#374151', lineHeight: 1.7, textAlign: 'center' }}>
+                    <td style={{ padding: '0 24px 18px', fontSize: '14px', color: 'rgba(0,0,0,0.7)', lineHeight: 1.42857, textAlign: 'center' }}>
                       {compatibilityInsight}
                     </td>
                   </tr>
@@ -369,36 +360,35 @@ export default function EmailPreview() {
             </td>
           </tr>
 
-          {/* Section: Complete Profile - compact bar chart */}
           <tr>
             <td style={{ padding: '0 24px' }}>
               <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#f9fafb', borderRadius: '10px', overflow: 'hidden' }}>
                 <tbody>
                   <tr>
-                    <td style={{ padding: '16px 20px 8px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>Your Other Traits</span>
+                    <td style={{ padding: '18px 20px 10px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: 'rgba(0,0,0,0.4)' }}>Your Other Traits</span>
                     </td>
                   </tr>
                   {sorted.slice(2).map(([name, score]) => {
                     const data = ARCHETYPE_DATA[name];
                     return (
                       <tr key={name}>
-                        <td style={{ padding: '4px 20px' }}>
+                        <td style={{ padding: '5px 20px' }}>
                           <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
                             <tbody>
                               <tr>
-                                <td style={{ width: '24px', paddingRight: '4px' }}>
-                                  <img src={data.image} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain', display: 'block' }} />
+                                <td style={{ width: '28px', paddingRight: '6px' }}>
+                                  <img src={data.image} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain', display: 'block' }} />
                                 </td>
-                                <td style={{ width: '80px', fontSize: '12px', fontWeight: 600, color: '#374151', paddingRight: '8px' }}>
+                                <td style={{ width: '90px', fontSize: '14px', fontWeight: 600, color: 'rgba(0,0,0,0.9)', paddingRight: '10px' }} data-testid={`text-trait-${name}`}>
                                   {name}
                                 </td>
                                 <td style={{ padding: '3px 0' }}>
-                                  <div style={{ backgroundColor: '#e5e7eb', borderRadius: '10px', height: '14px', overflow: 'hidden' }}>
+                                  <div style={{ backgroundColor: '#e5e7eb', borderRadius: '10px', height: '16px', overflow: 'hidden' }}>
                                     <div style={{ width: `${(score / maxScore) * 100}%`, backgroundColor: data.barColor, height: '100%', borderRadius: '10px' }} />
                                   </div>
                                 </td>
-                                <td style={{ width: '40px', fontSize: '12px', fontWeight: 700, color: data.barColor, textAlign: 'right', paddingLeft: '8px' }}>
+                                <td style={{ width: '44px', fontSize: '14px', fontWeight: 700, color: data.barColor, textAlign: 'right', paddingLeft: '10px' }} data-testid={`text-score-${name}`}>
                                   {score}%
                                 </td>
                               </tr>
@@ -408,68 +398,63 @@ export default function EmailPreview() {
                       </tr>
                     );
                   })}
-                  <tr><td style={{ padding: '8px' }}></td></tr>
+                  <tr><td style={{ padding: '10px' }}></td></tr>
                 </tbody>
               </table>
             </td>
           </tr>
 
-          {/* Spacer */}
-          <tr><td style={{ padding: '12px' }}></td></tr>
+          <tr><td style={{ padding: '14px' }}></td></tr>
 
-          {/* Section: Recommendations + Challenges side by side */}
           <tr>
             <td style={{ padding: '0 24px' }}>
               <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
                 <tbody>
                   <tr>
-                    {/* Recommendations */}
                     <td style={{ width: '48%', verticalAlign: 'top', padding: '0 4px 0 0' }}>
                       <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#f0fdf4', borderRadius: '10px', border: '1px solid #bbf7d0' }}>
                         <tbody>
                           <tr>
-                            <td style={{ padding: '14px 14px 6px', textAlign: 'center' }}>
-                              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#16a34a' }}>Recommendations</span>
+                            <td style={{ padding: '16px 16px 8px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#16a34a' }}>Recommendations</span>
                             </td>
                           </tr>
                           {[...primaryData.recommendations, ...secondaryData.recommendations].slice(0, 5).map((rec, i) => (
                             <tr key={`r-${i}`}>
-                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
+                              <td style={{ padding: '5px 16px', fontSize: '13px', color: 'rgba(0,0,0,0.7)', lineHeight: 1.42857 }}>
                                 <table cellPadding={0} cellSpacing={0}><tbody><tr>
-                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#16a34a', fontWeight: 700 }}>+</td>
+                                  <td style={{ verticalAlign: 'top', paddingRight: '8px', color: '#16a34a', fontWeight: 700, fontSize: '14px' }}>+</td>
                                   <td>{rec}</td>
                                 </tr></tbody></table>
                               </td>
                             </tr>
                           ))}
-                          <tr><td style={{ padding: '8px' }}></td></tr>
+                          <tr><td style={{ padding: '10px' }}></td></tr>
                         </tbody>
                       </table>
                     </td>
 
-                    {/* Spacer */}
                     <td style={{ width: '4%' }}></td>
 
-                    {/* Challenges */}
                     <td style={{ width: '48%', verticalAlign: 'top', padding: '0 0 0 4px' }}>
                       <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#fffbeb', borderRadius: '10px', border: '1px solid #fde68a' }}>
                         <tbody>
                           <tr>
-                            <td style={{ padding: '14px 14px 6px', textAlign: 'center' }}>
-                              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#d97706' }}>Growth Challenges</span>
+                            <td style={{ padding: '16px 16px 8px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#d97706' }}>Growth Challenges</span>
                             </td>
                           </tr>
                           {[...primaryData.challenges, ...secondaryData.challenges].slice(0, 5).map((ch, i) => (
                             <tr key={`c-${i}`}>
-                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
+                              <td style={{ padding: '5px 16px', fontSize: '13px', color: 'rgba(0,0,0,0.7)', lineHeight: 1.42857 }}>
                                 <table cellPadding={0} cellSpacing={0}><tbody><tr>
-                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#d97706', fontWeight: 700 }}>*</td>
+                                  <td style={{ verticalAlign: 'top', paddingRight: '8px', color: '#d97706', fontWeight: 700, fontSize: '14px' }}>★</td>
                                   <td>{ch}</td>
                                 </tr></tbody></table>
                               </td>
                             </tr>
                           ))}
-                          <tr><td style={{ padding: '8px' }}></td></tr>
+                          <tr><td style={{ padding: '10px' }}></td></tr>
                         </tbody>
                       </table>
                     </td>
@@ -479,10 +464,9 @@ export default function EmailPreview() {
             </td>
           </tr>
 
-          {/* Share Section */}
           <tr>
             <td style={{ padding: '24px 24px 8px', textAlign: 'center' }}>
-              <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9ca3af' }}>
+              <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: 'rgba(0,0,0,0.4)' }}>
                 Share Your Blueprint
               </span>
             </td>
@@ -495,7 +479,7 @@ export default function EmailPreview() {
                     <td style={{ textAlign: 'center', paddingRight: '6px', width: '50%' }}>
                       <a
                         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(xShareText)}&url=${encodeURIComponent('https://wealthiq.app')}`}
-                        style={{ display: 'inline-block', padding: '10px 20px', borderRadius: '8px', backgroundColor: '#0f1419', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
+                        style={{ display: 'inline-block', padding: '12px 20px', borderRadius: '24px', backgroundColor: '#0f1419', color: '#ffffff', fontWeight: 600, fontSize: '14px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
                         data-testid="button-share-twitter"
                       >
                         Share on X
@@ -504,7 +488,7 @@ export default function EmailPreview() {
                     <td style={{ textAlign: 'center', paddingLeft: '6px', width: '50%' }}>
                       <a
                         href={`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(linkedInShareText + '\n\nhttps://wealthiq.app')}`}
-                        style={{ display: 'inline-block', padding: '10px 20px', borderRadius: '8px', backgroundColor: '#0A66C2', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
+                        style={{ display: 'inline-block', padding: '12px 20px', borderRadius: '24px', backgroundColor: '#0A66C2', color: '#ffffff', fontWeight: 600, fontSize: '14px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
                         data-testid="button-share-linkedin"
                       >
                         Share on LinkedIn
@@ -517,16 +501,16 @@ export default function EmailPreview() {
           </tr>
           <tr>
             <td style={{ padding: '12px 32px 24px', textAlign: 'center' }}>
-              <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#f9fafb', borderRadius: '10px', border: '1px solid #e5e7eb' }}>
                 <tbody>
                   <tr>
-                    <td style={{ padding: '14px 20px', textAlign: 'center' }}>
-                      <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 10px', lineHeight: 1.5 }}>
+                    <td style={{ padding: '18px 24px', textAlign: 'center' }}>
+                      <p style={{ fontSize: '14px', color: 'rgba(0,0,0,0.6)', margin: '0 0 12px', lineHeight: 1.42857 }}>
                         Invite a partner, spouse, or family member to take the quiz and compare your money mindsets
                       </p>
                       <a
                         href="/"
-                        style={{ display: 'inline-block', padding: '10px 24px', borderRadius: '8px', backgroundColor: '#b5546a', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none' }}
+                        style={{ display: 'inline-block', padding: '12px 28px', borderRadius: '24px', backgroundColor: '#b5546a', color: '#ffffff', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
                         data-testid="button-invite-compare"
                       >
                         Send Quiz Invite
@@ -538,11 +522,10 @@ export default function EmailPreview() {
             </td>
           </tr>
 
-          {/* Footer */}
           <tr>
-            <td style={{ backgroundColor: '#faf5f6', padding: '20px 32px', textAlign: 'center' }}>
-              <img src={wealthIqLogo} alt="WealthIQ" style={{ height: '36px', margin: '0 auto 8px', display: 'block', opacity: 0.5 }} />
-              <p style={{ fontSize: '10px', color: '#9ca3af', lineHeight: 1.6, margin: 0 }}>
+            <td style={{ backgroundColor: '#faf5f6', padding: '24px 32px', textAlign: 'center' }}>
+              <img src={wealthIqLogo} alt="WealthIQ" style={{ height: '36px', margin: '0 auto 10px', display: 'block', opacity: 0.5 }} />
+              <p style={{ fontSize: '12px', color: 'rgba(0,0,0,0.4)', lineHeight: 1.42857, margin: 0 }}>
                 WealthIQ - Conscious Prosperity<br />
                 This email was sent because you completed the WealthIQ Money Mindset Assessment.<br />
                 Your results are confidential and never shared with third parties.
