@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { SiX, SiLinkedin } from "react-icons/si";
 import { useToast } from "@/hooks/use-toast";
+import wealthIqLogo from "@assets/fulllogo_1772556379287.png";
 
 // Import archetype images
 import strategistImg from "@/assets/images/archetype-strategist.png";
@@ -364,6 +365,7 @@ export default function Results() {
           
           {/* Header */}
           <div className="text-center mb-12">
+            <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-20 mix-blend-multiply mx-auto mb-6" data-testid="img-logo-results" />
             <h1 className="text-4xl font-display font-bold mb-2">Your Financial Blueprint</h1>
             <p className="text-muted-foreground">Analysis based on your 36 responses</p>
           </div>
