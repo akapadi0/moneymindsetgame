@@ -1,4 +1,10 @@
 import wealthIqLogo from "@assets/fulllogo_1772556379287.png";
+import strategistImg from "@/assets/images/archetype-strategist.png";
+import giverImg from "@/assets/images/archetype-giver.png";
+import adventurerImg from "@/assets/images/archetype-adventurer.png";
+import guardianImg from "@/assets/images/archetype-guardian.png";
+import impressorImg from "@/assets/images/archetype-impressor.png";
+import freespiritImg from "@/assets/images/archetype-freespirit.png";
 
 const SAMPLE_NAME = "Sarah";
 const SAMPLE_SCORES: Record<string, number> = {
@@ -18,6 +24,7 @@ const ARCHETYPE_DATA: Record<string, {
   bgColor: string;
   borderColor: string;
   textColor: string;
+  image: string;
   recommendations: string[];
   challenges: string[];
 }> = {
@@ -29,6 +36,7 @@ const ARCHETYPE_DATA: Record<string, {
     bgColor: "#ecfdf5",
     borderColor: "#a7f3d0",
     textColor: "#047857",
+    image: strategistImg,
     recommendations: [
       "Set a deadline for financial decisions to avoid analysis paralysis",
       "Build in a 'spontaneity fund' for unplanned opportunities",
@@ -48,6 +56,7 @@ const ARCHETYPE_DATA: Record<string, {
     bgColor: "#fff1f2",
     borderColor: "#fecdd3",
     textColor: "#be123c",
+    image: giverImg,
     recommendations: [
       "Create a giving budget that protects your own financial security first",
       "Learn to say 'not right now' instead of always saying yes",
@@ -67,6 +76,7 @@ const ARCHETYPE_DATA: Record<string, {
     bgColor: "#fffbeb",
     borderColor: "#fde68a",
     textColor: "#b45309",
+    image: adventurerImg,
     recommendations: [
       "Implement a 48-hour rule before major financial decisions",
       "Channel your risk tolerance into diversified investments",
@@ -86,6 +96,7 @@ const ARCHETYPE_DATA: Record<string, {
     bgColor: "#f0fdfa",
     borderColor: "#99f6e4",
     textColor: "#0f766e",
+    image: guardianImg,
     recommendations: [
       "Set up a 'growth fund' separate from your emergency savings",
       "Start small with investments to build comfort with calculated risks",
@@ -105,6 +116,7 @@ const ARCHETYPE_DATA: Record<string, {
     bgColor: "#f5f3ff",
     borderColor: "#ddd6fe",
     textColor: "#6d28d9",
+    image: impressorImg,
     recommendations: [
       "Before purchases, ask: 'Would I buy this if no one would ever see it?'",
       "Create a 'values list' to check spending decisions against",
@@ -124,6 +136,7 @@ const ARCHETYPE_DATA: Record<string, {
     bgColor: "#f0f9ff",
     borderColor: "#bae6fd",
     textColor: "#0369a1",
+    image: freespiritImg,
     recommendations: [
       "Set up one automated transfer to savings — 'set it and forget it'",
       "Create a simple, visual spending tracker you'll actually enjoy using",
@@ -194,12 +207,11 @@ export default function EmailPreview() {
                           <tr>
                             <td style={{ padding: '14px 14px 10px', textAlign: 'center' }}>
                               <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: primaryData.textColor }}>Primary</span>
-                              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: primaryData.barColor, color: '#fff', fontSize: '15px', fontWeight: 700, lineHeight: '48px', textAlign: 'center', margin: '8px auto' }}>
-                                {primary[1]}%
-                              </div>
-                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 0' }}>
+                              <img src={primaryData.image} alt={primary[0]} style={{ width: '80px', height: '80px', objectFit: 'contain', display: 'block', margin: '8px auto' }} />
+                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 2px' }}>
                                 {primary[0]}
                               </h2>
+                              <span style={{ fontSize: '14px', fontWeight: 700, color: primaryData.barColor }}>{primary[1]}%</span>
                             </td>
                           </tr>
                           <tr>
@@ -223,12 +235,11 @@ export default function EmailPreview() {
                           <tr>
                             <td style={{ padding: '14px 14px 10px', textAlign: 'center' }}>
                               <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: secondaryData.textColor }}>Secondary</span>
-                              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: secondaryData.barColor, color: '#fff', fontSize: '15px', fontWeight: 700, lineHeight: '48px', textAlign: 'center', margin: '8px auto' }}>
-                                {secondary[1]}%
-                              </div>
-                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 0' }}>
+                              <img src={secondaryData.image} alt={secondary[0]} style={{ width: '80px', height: '80px', objectFit: 'contain', display: 'block', margin: '8px auto' }} />
+                              <h2 style={{ fontSize: '16px', fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#111827', margin: '4px 0 2px' }}>
                                 {secondary[0]}
                               </h2>
+                              <span style={{ fontSize: '14px', fontWeight: 700, color: secondaryData.barColor }}>{secondary[1]}%</span>
                             </td>
                           </tr>
                           <tr>
@@ -265,7 +276,10 @@ export default function EmailPreview() {
                           <table cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
                             <tbody>
                               <tr>
-                                <td style={{ width: '90px', fontSize: '12px', fontWeight: 600, color: '#374151', paddingRight: '8px', textAlign: 'right' }}>
+                                <td style={{ width: '24px', paddingRight: '4px' }}>
+                                  <img src={data.image} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain', display: 'block' }} />
+                                </td>
+                                <td style={{ width: '80px', fontSize: '12px', fontWeight: 600, color: '#374151', paddingRight: '8px' }}>
                                   {name}
                                 </td>
                                 <td style={{ padding: '3px 0' }}>
