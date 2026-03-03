@@ -433,7 +433,7 @@ export default function EmailPreview() {
                     </td>
                     <td style={{ textAlign: 'center', paddingLeft: '6px', width: '50%' }}>
                       <a
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://wealthiq.app')}&summary=${encodeURIComponent(`I just discovered my money archetypes: ${primary[0]} & ${secondary[0]}! Take the WealthIQ Assessment to find yours.`)}`}
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://wealthiq.app')}&title=${encodeURIComponent('WealthIQ Money Mindset Assessment')}&summary=${encodeURIComponent(`I just took the WealthIQ Money Mindset Assessment and discovered I'm a ${primary[0]}-${secondary[0]} when it comes to money.\n\nHere's what surprised me — we all think we know how we handle money, but most of us have blind spots we don't even realize.\n\nQuestion for my network: Do you consider yourself more of a saver, a spender, or somewhere in between? And do you think the people closest to you would agree?\n\nCurious to find out your money personality? Take the free 2-min quiz below 👇`)}`}
                         style={{ display: 'inline-block', padding: '10px 20px', borderRadius: '8px', backgroundColor: '#0A66C2', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
                         data-testid="button-share-linkedin"
                       >

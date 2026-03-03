@@ -446,9 +446,9 @@ export default function Results() {
               <Button 
                 variant="outline" 
                 onClick={() => {
-                  const text = `I just discovered my money archetypes: ${primaryArchetype?.[0]} & ${secondaryArchetype?.[0]}! Take the WealthIQ Assessment to find yours.`;
+                  const linkedInText = `I just took the WealthIQ Money Mindset Assessment and discovered I'm a ${primaryArchetype?.[0]}-${secondaryArchetype?.[0]} when it comes to money.\n\nHere's what surprised me — we all think we know how we handle money, but most of us have blind spots we don't even realize.\n\nQuestion for my network: Do you consider yourself more of a saver, a spender, or somewhere in between? And do you think the people closest to you would agree?\n\nCurious to find out your money personality? Take the free 2-min quiz below 👇`;
                   const url = window.location.origin;
-                  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(text)}`, '_blank');
+                  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent('WealthIQ Money Mindset Assessment')}&summary=${encodeURIComponent(linkedInText)}`, '_blank');
                 }}
                 data-testid="button-share-linkedin"
                 className="gap-2"
