@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, PieChart, Shield, Zap } from "lucide-react";
-import wealthIqLogo from "@assets/Screenshot_2026-03-03_at_10.30.37_AM_1772555440489.png";
+import wealthIqLogo from "@assets/fulllogo_1772556379287.png";
 
 // Use a nice gradient overlay on a placeholder image
 // Abstract geometric background with wealth-associated colors
@@ -15,24 +15,7 @@ export default function Landing() {
       <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center">
-            <div
-              role="img"
-              aria-label="WealthIQ - Conscious Prosperity"
-              className="h-10 w-[160px] bg-primary"
-              style={{
-                WebkitMaskImage: `url(${wealthIqLogo})`,
-                WebkitMaskSize: 'contain',
-                WebkitMaskRepeat: 'no-repeat',
-                WebkitMaskPosition: 'center',
-                WebkitMaskMode: 'luminance' as any,
-                maskImage: `url(${wealthIqLogo})`,
-                maskSize: 'contain',
-                maskRepeat: 'no-repeat',
-                maskPosition: 'center',
-                maskMode: 'luminance' as any,
-              }}
-              data-testid="img-logo"
-            />
+            <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-12" data-testid="img-logo" />
           </div>
         </div>
       </nav>
