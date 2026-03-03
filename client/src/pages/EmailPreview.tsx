@@ -150,12 +150,33 @@ const ARCHETYPE_DATA: Record<string, {
   }
 };
 
+const COMPATIBILITY_INSIGHTS: Record<string, string> = {
+  "Guardians + Strategists": "As a Strategist-Guardian, you combine meticulous planning with a security-first mindset. You're exceptional at building long-term wealth through careful, well-researched decisions. Your superpower is creating bulletproof financial plans — but watch out for being so cautious that you miss timely opportunities. Challenge yourself to act on your research faster.",
+  "Givers + Strategists": "As a Strategist-Giver, you blend analytical thinking with a deep desire to help others. You're the person who creates smart systems for giving — budgeted generosity with maximum impact. Your challenge is balancing your natural impulse to help with the data-driven part of you that knows you need to secure your own future first.",
+  "Adventurers + Strategists": "As a Strategist-Adventurer, you have a rare combination: the ability to plan ahead AND take bold risks when the moment is right. You're the calculated risk-taker — someone who does their homework before making exciting moves. Your edge is knowing when to follow the plan and when to trust your instinct for opportunity.",
+  "Impressors + Strategists": "As a Strategist-Impressor, you combine analytical precision with an eye for quality and presentation. You don't just build wealth — you build it with style. Your strength is making strategic decisions that also reflect your values and image. Just make sure your desire for the best doesn't override your excellent planning instincts.",
+  "Free Spirits + Strategists": "As a Strategist-Free Spirit, you hold two powerful but opposing forces: a love of structure and a need for freedom. When balanced, this makes you incredibly adaptable — you can create plans that leave room for spontaneity. The key is building systems that run on autopilot so your free-spirited side can thrive without financial stress.",
+  "Givers + Guardians": "As a Guardian-Giver, you're driven by protecting both your own security and the well-being of those you care about. You're the person who builds a strong financial foundation AND extends that safety net to others. Your challenge is knowing where your responsibility ends — you can't protect everyone without risking your own stability.",
+  "Adventurers + Guardians": "As a Guardian-Adventurer, you live with an interesting inner tension: one part of you craves safety, while another yearns for excitement. This actually makes you a balanced decision-maker — you know how to take risks without betting the farm. Your sweet spot is creating a rock-solid safety net that frees you to take calculated adventures.",
+  "Guardians + Impressors": "As a Guardian-Impressor, you value both security and quality. You want the finer things in life, but not at the expense of your financial safety. This makes you a smart spender — you save diligently but also invest in things that truly matter to you. Watch for the tension between wanting to display success and wanting to keep your reserves strong.",
+  "Free Spirits + Guardians": "As a Guardian-Free Spirit, you balance a need for security with a desire to live freely. You might resist traditional financial structures, but deep down you want the peace of mind that comes from stability. Your path forward is creating simple, low-maintenance financial systems that protect you without making you feel trapped.",
+  "Adventurers + Givers": "As a Giver-Adventurer, you're generous, spontaneous, and driven by experiences. You're the person who buys the group dinner on a whim or donates to a cause that moves you in the moment. Your heart is in the right place, but your wallet needs guardrails. Channel your adventurous energy into creative ways to give that don't drain your resources.",
+  "Givers + Impressors": "As a Giver-Impressor, you're motivated by both generosity and recognition. You want to make a difference AND be seen doing it. This isn't a bad thing — it can drive you to make big, visible contributions. Just ensure your giving comes from genuine values rather than social pressure, and protect your own financial health along the way.",
+  "Free Spirits + Givers": "As a Giver-Free Spirit, you're led by your heart and intuition. You give freely and live in the moment, which makes you wonderfully generous and adaptable. The flip side is that neither side of your personality loves budgets or structure. Finding one simple financial habit — like automatic savings — will give you the freedom to keep being generous sustainably.",
+  "Adventurers + Impressors": "As an Adventurer-Impressor, you love exciting experiences and looking good while having them. You're drawn to the bold, the new, and the impressive. This combination makes you magnetic and ambitious, but it can also lead to spending that prioritizes appearances and thrills over long-term goals. Your challenge is channeling that energy into adventures that build real wealth.",
+  "Adventurers + Free Spirits": "As an Adventurer-Free Spirit, you're the ultimate spontaneous soul. You follow your instincts, embrace new experiences, and resist anything that feels restrictive. Your relationship with money is likely intuitive rather than structured. The good news: you're adaptable and resilient. The growth area: building just enough structure to support your freedom long-term.",
+  "Free Spirits + Impressors": "As an Impressor-Free Spirit, you value both self-expression and flow. You want to look and feel successful, but you don't want rigid systems to get there. This combination thrives when you find financial approaches that feel natural and aligned with your identity — not forced or formulaic. Automate the basics so you can focus on what inspires you."
+};
+
 export default function EmailPreview() {
   const sorted = Object.entries(SAMPLE_SCORES).sort((a, b) => b[1] - a[1]);
   const [primary, secondary] = sorted;
   const primaryData = ARCHETYPE_DATA[primary[0]];
   const secondaryData = ARCHETYPE_DATA[secondary[0]];
   const maxScore = Math.max(...Object.values(SAMPLE_SCORES));
+
+  const comboKey = [primary[0], secondary[0]].sort().join(" + ");
+  const compatibilityInsight = COMPATIBILITY_INSIGHTS[comboKey] || "Your unique combination of archetypes gives you a distinctive approach to money that blends multiple perspectives.";
 
   return (
     <div style={{ backgroundColor: '#f3f4f6', padding: '32px 16px', minHeight: '100vh', fontFamily: "'DM Sans', Arial, Helvetica, sans-serif" }}>
@@ -251,6 +272,26 @@ export default function EmailPreview() {
                           </tr>
                         </tbody>
                       </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+
+          {/* Section: Compatibility Insight */}
+          <tr>
+            <td style={{ padding: '0 24px 16px' }}>
+              <table cellPadding={0} cellSpacing={0} style={{ width: '100%', backgroundColor: '#fdf2f4', borderRadius: '10px', border: '1px solid #fce7f3' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: '16px 20px 8px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#b5546a' }}>Your Archetype Compatibility</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ padding: '0 20px 16px', fontSize: '13px', color: '#374151', lineHeight: 1.7, textAlign: 'center' }}>
+                      {compatibilityInsight}
                     </td>
                   </tr>
                 </tbody>
