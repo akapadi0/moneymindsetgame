@@ -503,7 +503,7 @@ export default function EmailPreview() {
                     </td>
                     <td style={{ textAlign: 'center', paddingLeft: '6px', width: '50%' }}>
                       <a
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://wealthiq.app')}&title=${encodeURIComponent('WealthIQ Money Mindset Assessment')}&summary=${encodeURIComponent(linkedInShareText)}`}
+                        href={`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(linkedInShareText + '\n\nhttps://wealthiq.app')}`}
                         style={{ display: 'inline-block', padding: '10px 20px', borderRadius: '8px', backgroundColor: '#0A66C2', color: '#ffffff', fontWeight: 600, fontSize: '12px', textDecoration: 'none', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' }}
                         data-testid="button-share-linkedin"
                       >

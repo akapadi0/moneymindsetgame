@@ -515,7 +515,8 @@ export default function Results() {
                   const comboKey = `${primaryArchetype?.[0]}+${secondaryArchetype?.[0]}`;
                   const linkedInText = linkedInPosts[comboKey] || `I just discovered something interesting about my relationship with money.\n\nWe all have a money personality — patterns that shape how we earn, spend, and save without us realizing it.\n\nWhat surprised me most? The blind spots.\n\nWhat's yours? 👇`;
                   const url = window.location.origin;
-                  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent('WealthIQ Money Mindset Assessment')}&summary=${encodeURIComponent(linkedInText)}`, '_blank');
+                  const fullText = `${linkedInText}\n\n${url}`;
+                  window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(fullText)}`, '_blank');
                 }}
                 data-testid="button-share-linkedin"
                 className="gap-2"
