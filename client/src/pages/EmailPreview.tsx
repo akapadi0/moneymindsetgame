@@ -321,18 +321,8 @@ export default function EmailPreview() {
                               <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#16a34a' }}>Recommendations</span>
                             </td>
                           </tr>
-                          {primaryData.recommendations.map((rec, i) => (
-                            <tr key={`pr-${i}`}>
-                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
-                                <table cellPadding={0} cellSpacing={0}><tbody><tr>
-                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#16a34a', fontWeight: 700 }}>+</td>
-                                  <td>{rec}</td>
-                                </tr></tbody></table>
-                              </td>
-                            </tr>
-                          ))}
-                          {secondaryData.recommendations.map((rec, i) => (
-                            <tr key={`sr-${i}`}>
+                          {[...primaryData.recommendations, ...secondaryData.recommendations].slice(0, 5).map((rec, i) => (
+                            <tr key={`r-${i}`}>
                               <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
                                 <table cellPadding={0} cellSpacing={0}><tbody><tr>
                                   <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#16a34a', fontWeight: 700 }}>+</td>
@@ -358,18 +348,8 @@ export default function EmailPreview() {
                               <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: '#d97706' }}>Growth Challenges</span>
                             </td>
                           </tr>
-                          {primaryData.challenges.map((ch, i) => (
-                            <tr key={`pc-${i}`}>
-                              <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
-                                <table cellPadding={0} cellSpacing={0}><tbody><tr>
-                                  <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#d97706', fontWeight: 700 }}>*</td>
-                                  <td>{ch}</td>
-                                </tr></tbody></table>
-                              </td>
-                            </tr>
-                          ))}
-                          {secondaryData.challenges.map((ch, i) => (
-                            <tr key={`sc-${i}`}>
+                          {[...primaryData.challenges, ...secondaryData.challenges].slice(0, 5).map((ch, i) => (
+                            <tr key={`c-${i}`}>
                               <td style={{ padding: '4px 14px', fontSize: '11px', color: '#374151', lineHeight: 1.5 }}>
                                 <table cellPadding={0} cellSpacing={0}><tbody><tr>
                                   <td style={{ verticalAlign: 'top', paddingRight: '6px', color: '#d97706', fontWeight: 700 }}>*</td>
