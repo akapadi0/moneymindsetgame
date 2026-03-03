@@ -1,30 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 interface TimerProps {
   duration: number;
+  onTimeUp: () => void;
   resetKey: any;
   onWarning?: (isWarning: boolean) => void;
 }
 
-export function Timer({ duration, resetKey, onWarning }: TimerProps) {
+export function Timer({ duration, onTimeUp, resetKey, onWarning }: TimerProps) {
   const [timeLeft, setTimeLeft] = useState(duration);
+  const onTimeUpRef = useRef(onTimeUp);
+  const hasCalledRef = useRef(false);
+  
+  // Keep callback ref updated
+  useEffect(() => {
+    onTimeUpRef.current = onTimeUp;
+  }, [onTimeUp]);
 
   // Reset timer when resetKey changes
   useEffect(() => {
     setTimeLeft(duration);
+    hasCalledRef.current = false;
   }, [resetKey, duration]);
 
-  // Notify parent when entering/leaving warning zone
+  // Countdown effect
   useEffect(() => {
-    if (onWarning) {
-      onWarning(timeLeft <= 10 && timeLeft > 0);
+    if (timeLeft <= 0) {
+      if (!hasCalledRef.current) {
+        hasCalledRef.current = true;
+        onTimeUpRef.current();
+      }
+      return;
     }
-  }, [timeLeft <= 10 && timeLeft > 0]);
-
-  // Countdown effect - stops at 0
-  useEffect(() => {
-    if (timeLeft <= 0) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
@@ -33,8 +41,15 @@ export function Timer({ duration, resetKey, onWarning }: TimerProps) {
     return () => clearInterval(timer);
   }, [timeLeft]);
 
+  // Notify parent when entering/leaving warning zone
+  useEffect(() => {
+    if (onWarning) {
+      onWarning(timeLeft <= 10 && timeLeft > 0);
+    }
+  }, [timeLeft <= 10 && timeLeft > 0]);
+
+  const percentage = (timeLeft / duration) * 100;
   const isUrgent = timeLeft <= 5;
-  const isExpired = timeLeft <= 0;
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -59,17 +74,15 @@ export function Timer({ duration, resetKey, onWarning }: TimerProps) {
             strokeDasharray="175.9"
             initial={{ strokeDashoffset: 0 }}
             animate={{ strokeDashoffset: 175.9 * (1 - timeLeft / duration) }}
-            className={isUrgent || isExpired ? "text-destructive" : "text-primary"}
+            className={isUrgent ? "text-destructive" : "text-primary"}
             transition={{ duration: 1, ease: "linear" }}
           />
         </svg>
-        <div className={`absolute inset-0 flex items-center justify-center font-bold text-lg ${isUrgent || isExpired ? "text-destructive" : "text-primary"}`}>
+        <div className={`absolute inset-0 flex items-center justify-center font-bold text-lg ${isUrgent ? "text-destructive" : "text-primary"}`}>
           {timeLeft}
         </div>
       </div>
-      <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">
-        Seconds Left
-      </span>
+      <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">Seconds Left</span>
     </div>
   );
 }
