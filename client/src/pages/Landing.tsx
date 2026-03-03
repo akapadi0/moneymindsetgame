@@ -11,8 +11,17 @@ const HERO_BG = "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=
 export default function Landing() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      {/* Navigation */}
+      <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          <div className="flex items-center">
+            <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-16 mix-blend-multiply" data-testid="img-logo" />
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
-      <section className="relative pt-8 pb-20 lg:pt-12 lg:pb-32 overflow-hidden">
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/95 to-background z-10" />
           {/* Descriptive comment for Unsplash: Abstract financial growth background */}
@@ -25,7 +34,6 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-24 mx-auto mb-8 mix-blend-multiply" data-testid="img-logo" />
             <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent font-semibold text-sm tracking-wide mb-6">
               The #1 Financial Personality Assessment
             </span>
