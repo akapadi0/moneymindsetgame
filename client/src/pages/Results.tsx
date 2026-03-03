@@ -434,8 +434,42 @@ export default function Results() {
               <Button 
                 variant="outline" 
                 onClick={() => {
-                  const text = `I just discovered my money archetypes: ${primaryArchetype?.[0]} & ${secondaryArchetype?.[0]}! Take the WealthIQ Assessment to find yours.`;
-                  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+                  const xPosts: Record<string, string> = {
+                    "Strategists+Guardians": "I plan every dollar and then guard it like a dragon. Apparently that's my money personality.\n\nWhat's yours?",
+                    "Strategists+Givers": "I make a financial plan and then give half of it away. My money personality makes so much sense now.\n\nWhat's yours?",
+                    "Strategists+Adventurers": "I build a spreadsheet, then throw caution to the wind. My money personality is… conflicted.\n\nWhat's yours?",
+                    "Strategists+Impressors": "I plan obsessively and spend on quality. Turns out that's a whole money personality.\n\nWhat's yours?",
+                    "Strategists+Free Spirits": "Half of me wants a 10-year plan. The other half wants to wing it. My money personality checks out.\n\nWhat's yours?",
+                    "Guardians+Strategists": "Protect first, plan second. That's my money personality in five words.\n\nWhat's yours?",
+                    "Guardians+Givers": "I save carefully… unless someone needs help. Then all bets are off. That's my money personality.\n\nWhat's yours?",
+                    "Guardians+Adventurers": "I want a safety net AND an adventure. My money personality is a contradiction.\n\nWhat's yours?",
+                    "Guardians+Impressors": "I save like my life depends on it, then splurge on something beautiful. That's my money personality.\n\nWhat's yours?",
+                    "Guardians+Free Spirits": "I crave security but hate being boxed in. My money personality finally explained why.\n\nWhat's yours?",
+                    "Givers+Strategists": "I give first, strategize second. My money personality just called me out.\n\nWhat's yours?",
+                    "Givers+Guardians": "Generous but anxious about it. My money personality is basically an internal argument.\n\nWhat's yours?",
+                    "Givers+Adventurers": "I'll pick up the tab on a spontaneous trip I didn't plan. That's my money personality.\n\nWhat's yours?",
+                    "Givers+Impressors": "I give generously and want people to notice. My money personality didn't hold back.\n\nWhat's yours?",
+                    "Givers+Free Spirits": "I follow my heart with money — giving, flowing, vibing. My money personality is on brand.\n\nWhat's yours?",
+                    "Adventurers+Strategists": "I research thoroughly, then leap. My money personality is 'calculated chaos.'\n\nWhat's yours?",
+                    "Adventurers+Guardians": "Thrill-seeker with a savings account. My money personality is a wild combo.\n\nWhat's yours?",
+                    "Adventurers+Givers": "I chase experiences and bring everyone along. My money personality tracks.\n\nWhat's yours?",
+                    "Adventurers+Impressors": "Go big and make it look good. That's my money personality in seven words.\n\nWhat's yours?",
+                    "Adventurers+Free Spirits": "Spontaneous. Instinctive. Zero regrets. My money personality just confirmed what I already knew.\n\nWhat's yours?",
+                    "Impressors+Strategists": "I want the best and I have a plan to afford it. My money personality gets me.\n\nWhat's yours?",
+                    "Impressors+Guardians": "High standards, strong savings. My money personality makes more sense than I expected.\n\nWhat's yours?",
+                    "Impressors+Givers": "I care about image and people equally. My money personality exposed that tension.\n\nWhat's yours?",
+                    "Impressors+Adventurers": "I want bold moves that look incredible. My money personality is basically my Instagram.\n\nWhat's yours?",
+                    "Impressors+Free Spirits": "I want success to look effortless. My money personality said 'we know.'\n\nWhat's yours?",
+                    "Free Spirits+Strategists": "I resist rules but respect a good plan. My money personality is a paradox.\n\nWhat's yours?",
+                    "Free Spirits+Guardians": "I want freedom AND security. My money personality explained why that's so hard.\n\nWhat's yours?",
+                    "Free Spirits+Givers": "Go with the flow and give along the way. My money personality summed me up perfectly.\n\nWhat's yours?",
+                    "Free Spirits+Adventurers": "Instinct over spreadsheets. Always. My money personality just made it official.\n\nWhat's yours?",
+                    "Free Spirits+Impressors": "Effortless vibes, high standards. My money personality is a whole mood.\n\nWhat's yours?"
+                  };
+                  const xComboKey = `${primaryArchetype?.[0]}+${secondaryArchetype?.[0]}`;
+                  const text = xPosts[xComboKey] || "I just discovered my money personality. The blind spots were the real surprise.\n\nWhat's yours?";
+                  const url = window.location.origin;
+                  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
                 }}
                 data-testid="button-share-twitter"
                 className="gap-2"
