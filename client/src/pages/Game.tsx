@@ -17,6 +17,8 @@ export default function Game() {
   const [answerHistory, setAnswerHistory] = useState<Array<{ category: string; direction: "left" | "right" | "timeout" }>>([]);
   const [timerKey, setTimerKey] = useState(0);
   const [timerWarning, setTimerWarning] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [promptCountdown, setPromptCountdown] = useState(10);
   const [showTimeoutFlash, setShowTimeoutFlash] = useState(false);
 
   // Reset scores on mount
@@ -24,21 +26,67 @@ export default function Game() {
     localStorage.removeItem("moneyMindsetResults");
   }, []);
 
-  const handleSwipe = (direction: "left" | "right", isTimeout = false) => {
+  // Auto-skip countdown when prompt is showing
+  useEffect(() => {
+    if (!showPrompt) return;
+    setPromptCountdown(10);
+
+    const interval = setInterval(() => {
+      setPromptCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          handleAutoSkip();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [showPrompt, currentIndex]);
+
+  const handleAutoSkip = () => {
     if (!questions) return;
+    setShowPrompt(false);
+    setShowTimeoutFlash(true);
+    setTimeout(() => setShowTimeoutFlash(false), 800);
+
+    const currentQuestion = questions[currentIndex];
+    setAnswerHistory(prev => [
+      ...prev.slice(0, currentIndex),
+      { category: currentQuestion.category, direction: "timeout" as const }
+    ]);
+
+    setTimeout(() => {
+      const nextIndex = currentIndex + 1;
+      if (nextIndex >= questions.length) {
+        localStorage.setItem("moneyMindsetResults", JSON.stringify(scores));
+        setLocation("/results");
+      } else {
+        setCurrentIndex(nextIndex);
+      }
+    }, 600);
+  };
+
+  const handleTimeUp = () => {
+    setShowPrompt(true);
+  };
+
+  const handlePromptChoice = (direction: "left" | "right") => {
+    setShowPrompt(false);
+    handleSwipe(direction);
+  };
+
+  const handleSwipe = (direction: "left" | "right") => {
+    if (!questions) return;
+    setShowPrompt(false);
     
     const currentQuestion = questions[currentIndex];
-    
-    // Show timeout flash if time ran out
-    if (isTimeout) {
-      setShowTimeoutFlash(true);
-      setTimeout(() => setShowTimeoutFlash(false), 800);
-    }
     
     // Track this answer in history
     setAnswerHistory(prev => [
       ...prev.slice(0, currentIndex),
-      { category: currentQuestion.category, direction: isTimeout ? "timeout" : direction }
+      { category: currentQuestion.category, direction }
     ]);
     
     if (direction === "right") {
@@ -48,8 +96,6 @@ export default function Game() {
       }));
     }
 
-    // Delay slightly longer for timeout to show flash
-    const delay = isTimeout ? 600 : 200;
     setTimeout(() => {
       const nextIndex = currentIndex + 1;
       if (nextIndex >= questions.length) {
@@ -62,7 +108,7 @@ export default function Game() {
       } else {
         setCurrentIndex(nextIndex);
       }
-    }, delay);
+    }, 200);
   };
 
   const handleGoBack = () => {
@@ -110,7 +156,7 @@ export default function Game() {
     <div className="min-h-screen flex flex-col bg-slate-50 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1/2 bg-primary/5 rounded-b-[3rem] -z-0" />
       
-      {/* Timeout Flash Overlay */}
+      {/* Timeout Flash Overlay - shown when auto-skipped */}
       <AnimatePresence>
         {showTimeoutFlash && (
           <motion.div 
@@ -125,7 +171,60 @@ export default function Game() {
               className="bg-white rounded-2xl p-6 shadow-xl flex items-center gap-3"
             >
               <Clock className="w-8 h-8 text-amber-500" />
-              <span className="text-lg font-bold text-amber-700">Time's up! Moving on...</span>
+              <span className="text-lg font-bold text-amber-700">Skipped! Moving on...</span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Pause & Prompt Overlay - shown when timer hits 0 */}
+      <AnimatePresence>
+        {showPrompt && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            data-testid="prompt-overlay"
+          >
+            <motion.div 
+              initial={{ scale: 0.85, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              className="bg-white rounded-2xl p-6 shadow-2xl max-w-sm w-full text-center"
+            >
+              <Clock className="w-10 h-10 text-amber-500 mx-auto mb-3" />
+              <h3 className="text-lg font-bold text-foreground mb-1">Time's up!</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Make a choice or this question will be skipped in <span className="font-bold text-amber-600">{promptCountdown}s</span>
+              </p>
+              <div className="flex gap-3">
+                <Button 
+                  variant="outline" 
+                  className="flex-1 border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700" 
+                  onClick={() => handlePromptChoice("left")}
+                  data-testid="button-prompt-disagree"
+                >
+                  <ThumbsDown className="w-4 h-4 mr-2" />
+                  Disagree
+                </Button>
+                <Button 
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white" 
+                  onClick={() => handlePromptChoice("right")}
+                  data-testid="button-prompt-agree"
+                >
+                  <ThumbsUp className="w-4 h-4 mr-2" />
+                  Agree
+                </Button>
+              </div>
+              <div className="mt-3 w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                <motion.div 
+                  className="bg-amber-500 h-full rounded-full"
+                  initial={{ width: "100%" }}
+                  animate={{ width: "0%" }}
+                  transition={{ duration: 10, ease: "linear" }}
+                />
+              </div>
             </motion.div>
           </motion.div>
         )}
@@ -141,7 +240,7 @@ export default function Game() {
         <div className="flex justify-center mb-2">
           <Timer 
             duration={35} 
-            onTimeUp={() => handleSwipe("left", true)}
+            onTimeUp={handleTimeUp}
             resetKey={`${currentIndex}-${timerKey}`}
             onWarning={setTimerWarning}
           />
