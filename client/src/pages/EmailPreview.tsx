@@ -535,6 +535,75 @@ export default function EmailPreview() {
 
         </tbody>
       </table>
+
+      <p style={{ textAlign: 'center', fontSize: '12px', color: '#9ca3af', margin: '32px 0 16px' }}>Social Share Post Previews</p>
+
+      <div style={{ maxWidth: '600px', margin: '0 auto', display: 'flex', gap: '16px' }}>
+
+        <div style={{ flex: 1, backgroundColor: '#000000', borderRadius: '16px', padding: '16px 20px', color: '#e7e9ea', boxShadow: '0 4px 6px rgba(0,0,0,0.15)' }} data-testid="preview-x-post">
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#333639', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '10px', flexShrink: 0 }}>
+              <span style={{ fontSize: '18px', color: '#e7e9ea', fontWeight: 600 }}>{SAMPLE_NAME[0]}</span>
+            </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", fontSize: '15px', fontWeight: 700, color: '#e7e9ea' }}>{SAMPLE_NAME}</span>
+                <svg viewBox="0 0 22 22" width="18" height="18" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="11" fill="#1d9bf0" /><path d="M9.64 15.92l-.03-.03c-.18-.18-.29-.43-.29-.71 0-.03 0-.05.01-.08L6.4 12.17a.996.996 0 111.41-1.41l2.12 2.12 4.24-4.24a.996.996 0 111.41 1.41l-4.95 4.95a.996.996 0 01-.71.29c-.27 0-.52-.1-.71-.29l.03.03-.6-.1z" fill="#fff" /></svg>
+              </div>
+              <span style={{ fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", fontSize: '13px', color: '#71767b' }}>@{SAMPLE_NAME.toLowerCase()}</span>
+            </div>
+          </div>
+          <div style={{ fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", fontSize: '15px', lineHeight: 1.4, color: '#e7e9ea', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+            {xShareText}
+          </div>
+          <div style={{ marginTop: '14px', padding: '12px', borderRadius: '12px', border: '1px solid #2f3336', overflow: 'hidden' }}>
+            <div style={{ width: '100%', height: '100px', backgroundColor: '#1a1a2e', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', marginBottom: '8px' }}>
+              <img src={wealthIqLogo} alt="WealthIQ" style={{ height: '32px', opacity: 0.8 }} />
+            </div>
+            <span style={{ fontSize: '13px', color: '#71767b' }}>wealthiq.app</span>
+            <p style={{ fontSize: '13px', color: '#e7e9ea', margin: '2px 0 0', lineHeight: 1.3 }}>WealthIQ Money Mindset Assessment</p>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '14px', padding: '0 8px' }}>
+            {['💬', '🔁', '❤️', '📊'].map((icon, i) => (
+              <span key={i} style={{ fontSize: '14px', color: '#71767b', cursor: 'default' }}>{icon} {Math.floor(Math.random() * 50)}</span>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ flex: 1, backgroundColor: '#ffffff', borderRadius: '8px', padding: '16px 20px', boxShadow: '0 0 0 1px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.07)' }} data-testid="preview-linkedin-post">
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#0a66c2', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '10px', flexShrink: 0 }}>
+              <span style={{ fontSize: '20px', color: '#ffffff', fontWeight: 600 }}>{SAMPLE_NAME[0]}</span>
+            </div>
+            <div>
+              <span style={{ fontFamily: "-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", fontSize: '14px', fontWeight: 600, color: 'rgba(0,0,0,0.9)', display: 'block' }}>{SAMPLE_NAME}</span>
+              <span style={{ fontFamily: "-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", fontSize: '12px', color: 'rgba(0,0,0,0.6)', display: 'block', marginTop: '1px' }}>WealthIQ Assessment Taker</span>
+              <span style={{ fontFamily: "-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", fontSize: '12px', color: 'rgba(0,0,0,0.6)' }}>Just now · 🌐</span>
+            </div>
+          </div>
+          <div style={{ fontFamily: "-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", fontSize: '14px', lineHeight: 1.42857, color: 'rgba(0,0,0,0.9)', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+            {linkedInShareText}
+          </div>
+          <div style={{ marginTop: '12px', color: '#0a66c2', fontSize: '14px', fontWeight: 600, fontFamily: "-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" }}>
+            wealthiq.app
+          </div>
+          <div style={{ marginTop: '14px', padding: '12px', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.08)', overflow: 'hidden' }}>
+            <div style={{ width: '100%', height: '100px', backgroundColor: '#fdf2f4', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', marginBottom: '8px' }}>
+              <img src={wealthIqLogo} alt="WealthIQ" style={{ height: '32px' }} />
+            </div>
+            <span style={{ fontSize: '12px', color: 'rgba(0,0,0,0.6)' }}>wealthiq.app</span>
+            <p style={{ fontSize: '14px', fontWeight: 600, color: 'rgba(0,0,0,0.9)', margin: '2px 0 0', lineHeight: 1.3 }}>WealthIQ Money Mindset Assessment</p>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', padding: '8px 0 0', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+            {['👍 Like', '💬 Comment', '🔁 Repost', '📨 Send'].map((action, i) => (
+              <span key={i} style={{ fontSize: '12px', color: 'rgba(0,0,0,0.6)', fontWeight: 600, cursor: 'default' }}>{action}</span>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      <div style={{ height: '48px' }}></div>
     </div>
   );
 }
