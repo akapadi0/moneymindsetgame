@@ -59,6 +59,23 @@ async function buildAll() {
     external: externals,
     logLevel: "info",
   });
+
+  console.log("building Vercel API handler...");
+  await esbuild({
+    entryPoints: ["api/server.ts"],
+    platform: "node",
+    bundle: true,
+    format: "esm",
+    outfile: "api/server.js",
+    define: {
+      "process.env.NODE_ENV": '"production"',
+    },
+    // Keep npm packages external (available in Vercel's node_modules).
+    // esbuild will bundle local source files and resolve @shared/* aliases
+    // via tsconfig.json paths automatically.
+    external: allDeps,
+    logLevel: "info",
+  });
 }
 
 buildAll().catch((err) => {
