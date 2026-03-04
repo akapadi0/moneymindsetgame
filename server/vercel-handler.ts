@@ -1,5 +1,5 @@
 /**
- * Vercel Serverless Entry Point
+ * Vercel Serverless Entry Point (source lives here, compiled to api/server.js by build script)
  *
  * Vercel routes all /api/* requests here (see vercel.json).
  * Static files (the Vite-built frontend) are served by Vercel's CDN from dist/public/.
@@ -9,7 +9,7 @@
  */
 import express, { type Request, type Response, type NextFunction } from "express";
 import { createServer } from "http";
-import { registerRoutes } from "../server/routes";
+import { registerRoutes } from "./routes";
 
 const app = express();
 const httpServer = createServer(app);
