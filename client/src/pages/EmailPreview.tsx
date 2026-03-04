@@ -264,7 +264,7 @@ export default function EmailPreview() {
           <tr>
             <td style={{ textAlign: 'center', padding: '8px 32px 24px' }}>
               <h1 style={{ fontSize: '24px', fontWeight: 600, color: 'rgba(0,0,0,0.9)', margin: '0 0 8px', lineHeight: 1.25 }} data-testid="text-greeting">
-                Hi {SAMPLE_NAME}, your Financial Blueprint is ready!
+                Hi {SAMPLE_NAME}, your Money Mindset is ready!
               </h1>
               <p style={{ fontSize: '14px', color: 'rgba(0,0,0,0.6)', margin: 0, lineHeight: 1.42857 }}>
                 Based on your WealthIQ assessment responses, here's your personalized money mindset profile.

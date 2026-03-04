@@ -348,12 +348,53 @@ export default function Results() {
       return;
     }
     setIsSendingEmail(true);
-    // Simulate sending (in production, this would call an API)
-    setTimeout(() => {
-      setIsSendingEmail(false);
+    try {
+      const sorted = Object.entries(scores ?? {}).sort((a, b) => b[1] - a[1]);
+      const [primary, secondary] = sorted;
+
+      const textBody = [
+        "Money Mindset Assessment Results",
+        "",
+        `Primary Archetype:   ${primary?.[0]}`,
+        `Secondary Archetype: ${secondary?.[0]}`,
+        "",
+        "Full Breakdown:",
+        ...sorted.map(([cat, score]) => `• ${cat}: ${score}`),
+        "",
+        "Take the assessment at: " + window.location.origin,
+      ].join("\n");
+
+      const htmlBody = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
+          <h2>Money Mindset Assessment Results</h2>
+          <p><strong>Primary:</strong> ${primary?.[0]}</p>
+          <p><strong>Secondary:</strong> ${secondary?.[0]}</p>
+          <h3>Full Breakdown</h3>
+          <ul>${sorted.map(([cat, score]) => `<li><strong>${cat}:</strong> ${score}</li>`).join("")}</ul>
+          <p><a href="${window.location.origin}">Take the assessment yourself →</a></p>
+        </div>
+      `;
+
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          toEmails: [shareEmail, "hello@wealthiqco.com"],
+          subject: "My WealthIQ Money Mindset Results",
+          textBody,
+          htmlBody,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Email send failed");
+
       setShareEmail("");
       toast({ title: "Results Sent!", description: `Your results have been shared with ${shareEmail}` });
-    }, 1000);
+    } catch {
+      toast({ title: "Error", description: "Failed to send email. Please try again.", variant: "destructive" });
+    } finally {
+      setIsSendingEmail(false);
+    }
   };
 
   return (
@@ -366,7 +407,7 @@ export default function Results() {
           {/* Header */}
           <div className="text-center mb-12">
             <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-20 mix-blend-multiply mx-auto mb-6" data-testid="img-logo-results" />
-            <h1 className="text-4xl font-display font-bold mb-2">Your Financial Blueprint</h1>
+            <h1 className="text-4xl font-display font-bold mb-2">Your Money Mindset</h1>
             <p className="text-muted-foreground">Analysis based on your 36 responses</p>
           </div>
 
@@ -596,7 +637,7 @@ export default function Results() {
             
             <h2 className="text-2xl font-display font-bold text-center mb-2">Almost There!</h2>
             <p className="text-center text-muted-foreground mb-6">
-              Enter your details to reveal your personalized Financial Blueprint and receive a copy via email.
+              Enter your details to reveal your personalized Money Mindset and receive a copy via email.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-3">
@@ -636,10 +677,10 @@ export default function Results() {
               >
                 {isPending ? (
                   <span className="flex items-center gap-2">
-                    <Loader2 className="animate-spin w-5 h-5" /> Preparing your blueprint...
+                    <Loader2 className="animate-spin w-5 h-5" /> Preparing your Money Mindset...
                   </span>
                 ) : (
-                  "Reveal My Financial Blueprint"
+                  "Reveal My Money Mindset"
                 )}
               </Button>
             </form>
