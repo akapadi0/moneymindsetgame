@@ -65,15 +65,14 @@ async function buildAll() {
     entryPoints: ["api/server.ts"],
     platform: "node",
     bundle: true,
-    format: "esm",
+    format: "cjs",
     outfile: "api/server.js",
     define: {
       "process.env.NODE_ENV": '"production"',
     },
-    // Keep npm packages external (available in Vercel's node_modules).
-    // esbuild will bundle local source files and resolve @shared/* aliases
-    // via tsconfig.json paths automatically.
-    external: allDeps,
+    // Bundle all deps so the function is self-contained on Vercel.
+    // Only exclude optional native binaries that can't be bundled.
+    external: ["bufferutil", "utf-8-validate", "pg-native"],
     logLevel: "info",
   });
 }
