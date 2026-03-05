@@ -177,8 +177,9 @@ export default function Results() {
           setIsUnlocked(true);
           toast({ title: "Results Unlocked!", description: "Check your email for your full report." });
         },
-        onError: (err) => {
-          toast({ title: "Error", description: err.message, variant: "destructive" });
+        onError: () => {
+          setIsUnlocked(true);
+          toast({ title: "Results Revealed!", description: "Email delivery failed, but your results are ready below.", variant: "destructive" });
         }
       }
     );

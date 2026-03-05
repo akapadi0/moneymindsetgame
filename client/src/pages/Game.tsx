@@ -52,19 +52,17 @@ export default function Game() {
       }));
     }
 
-    setTimeout(() => {
-      const nextIndex = currentIndex + 1;
-      if (nextIndex >= questions.length) {
-        const finalScores = direction === "right" 
-          ? { ...scores, [currentQuestion.category]: (scores[currentQuestion.category] || 0) + 1 }
-          : scores;
-          
-        localStorage.setItem("moneyMindsetResults", JSON.stringify(finalScores));
-        setLocation("/results");
-      } else {
-        setCurrentIndex(nextIndex);
-      }
-    }, 200);
+    const nextIndex = currentIndex + 1;
+    if (nextIndex >= questions.length) {
+      const finalScores = direction === "right"
+        ? { ...scores, [currentQuestion.category]: (scores[currentQuestion.category] || 0) + 1 }
+        : scores;
+
+      localStorage.setItem("moneyMindsetResults", JSON.stringify(finalScores));
+      setLocation("/results");
+    } else {
+      setCurrentIndex(nextIndex);
+    }
   };
 
   const handleGoBack = () => {

@@ -1,4 +1,5 @@
 import { animate, motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { useState } from "react";
 import { Question } from "@shared/schema";
 
 interface GameCardProps {
@@ -21,12 +22,16 @@ export function GameCard({ question, onSwipe, active, timerWarning }: GameCardPr
     ["rgba(239, 68, 68, 1)", "rgba(0,0,0,0)", "rgba(34, 197, 94, 1)"]
   );
 
-  const handleDragEnd = async (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const [exitX, setExitX] = useState(0);
+
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (Math.abs(info.offset.x) > 60 || Math.abs(info.velocity.x) > 400) {
       const direction = info.offset.x > 0 ? "right" : "left";
-      // Fly card off-screen in the swipe direction before advancing
-      await animate(x, direction === "right" ? 600 : -600, { duration: 0.2, ease: "easeOut" });
+      setExitX(direction === "right" ? 600 : -600);
       onSwipe(direction);
+    } else {
+      // Not a swipe — snap back to center
+      animate(x, 0, { type: "spring", stiffness: 500, damping: 30 });
     }
   };
 
@@ -36,12 +41,13 @@ export function GameCard({ question, onSwipe, active, timerWarning }: GameCardPr
     <motion.div
       style={{ x, rotate, opacity }}
       drag="x"
-      dragConstraints={{ left: -600, right: 600 }}
+      dragConstraints={{ left: 0, right: 0 }}
       dragElastic={1}
+      dragMomentum={false}
       onDragEnd={handleDragEnd}
       initial={{ scale: 0.9, opacity: 0, y: 20 }}
       animate={{ scale: 1, opacity: 1, y: 0 }}
-      exit={{ opacity: 0, transition: { duration: 0.1 } }}
+      exit={{ x: exitX, opacity: 0, transition: { duration: 0.2, ease: "easeOut" } }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="w-full cursor-grab active:cursor-grabbing touch-none"
     >
