@@ -132,20 +132,169 @@ async function sendEmail(
   }
 }
 
-const ARCHETYPE_META: Record<string, { color: string; motivation: string }> = {
-  Guardians:   { color: "#d4edda", motivation: "Minimizing uncertainty and ensuring financial safety." },
-  Givers:      { color: "#f8d7da", motivation: "Fostering community well-being through financial generosity." },
-  Adventurers: { color: "#d1ecf1", motivation: "Seeking excitement, novelty, and personal freedom in money matters." },
-  Impressors:  { color: "#fde8e8", motivation: "Enhancing self-worth or social standing through financial displays." },
-  Strategists: { color: "#fff3cd", motivation: "Achieving long-term success through structure and informed decisions." },
-  "Free Spirits": { color: "#f8f9fa", motivation: "Enjoying life's flow and reducing anxiety about money details." },
+// ============================================================
+// Archetype data for email rendering
+// ============================================================
+
+const BASE_URL = "https://moneymindsetgame.vercel.app";
+
+interface ArchetypeEmailData {
+  motivation: string;
+  superpowers: string;
+  biases: string;
+  barColor: string;
+  bgColor: string;
+  borderColor: string;
+  textColor: string;
+  imageUrl: string;
+  recommendations: string[];
+  challenges: string[];
+}
+
+const ARCHETYPE_EMAIL_DATA: Record<string, ArchetypeEmailData> = {
+  "Strategists": {
+    motivation: "Long-term success through structure & informed decisions",
+    superpowers: "Long-term thinker, loves planning, efficient with resources",
+    biases: "May overanalyze decisions, delay action until all the data is in",
+    barColor: "#059669", bgColor: "#ecfdf5", borderColor: "#a7f3d0", textColor: "#047857",
+    imageUrl: `${BASE_URL}/images/archetype-strategist.png`,
+    recommendations: [
+      "Set a deadline for financial decisions to avoid analysis paralysis",
+      "Build in a 'spontaneity fund' for unplanned opportunities",
+      "Practice making smaller decisions quickly to build confidence",
+    ],
+    challenges: [
+      "Make one financial decision this week in under 10 minutes",
+      "Spend $50 on something fun without researching it first",
+      "Skip one spreadsheet review this month and trust your gut",
+    ],
+  },
+  "Givers": {
+    motivation: "Community well-being through generosity",
+    superpowers: "Deeply values people and purpose, community-oriented",
+    biases: "Take on responsibilities that are not aligned with long-term goals",
+    barColor: "#e11d48", bgColor: "#fff1f2", borderColor: "#fecdd3", textColor: "#be123c",
+    imageUrl: `${BASE_URL}/images/archetype-giver.png`,
+    recommendations: [
+      "Create a giving budget that protects your own financial security first",
+      "Learn to say 'not right now' instead of always saying yes",
+      "Set up automatic savings before allocating funds to help others",
+    ],
+    challenges: [
+      "Say 'let me think about it' before agreeing to any financial help this week",
+      "Transfer 10% of your next paycheck to your own savings before giving",
+      "Write down 3 ways to help others that don't involve money",
+    ],
+  },
+  "Adventurers": {
+    motivation: "Seeking excitement, novelty, and freedom",
+    superpowers: "Comfortable with risk, visionary, flexible thinker",
+    biases: "Prone to impulsive decisions without considering trade offs",
+    barColor: "#d97706", bgColor: "#fffbeb", borderColor: "#fde68a", textColor: "#b45309",
+    imageUrl: `${BASE_URL}/images/archetype-adventurer.png`,
+    recommendations: [
+      "Implement a 48-hour rule before major financial decisions",
+      "Channel your risk tolerance into diversified investments",
+      "Create adventure-specific savings to fund experiences responsibly",
+    ],
+    challenges: [
+      "Wait 48 hours before your next purchase over $100",
+      "Create a dedicated 'adventure fund' and only use that for spontaneous buys",
+      "Track every impulse purchase for 2 weeks — no judgment, just awareness",
+    ],
+  },
+  "Guardians": {
+    motivation: "Minimizing uncertainty and ensuring safety",
+    superpowers: "Excellent at protecting stability and managing downside risk",
+    biases: "Tends to avoid risks or underinvest in growth",
+    barColor: "#0d9488", bgColor: "#f0fdfa", borderColor: "#99f6e4", textColor: "#0f766e",
+    imageUrl: `${BASE_URL}/images/archetype-guardian.png`,
+    recommendations: [
+      "Set up a 'growth fund' separate from your emergency savings",
+      "Start small with investments to build comfort with calculated risks",
+      "Review your portfolio annually to ensure you're not being too conservative",
+    ],
+    challenges: [
+      "Invest $25 in something new this month — even if it feels uncomfortable",
+      "Research one 'risky' investment and learn why others find it appealing",
+      "Calculate how much extra you'd have if you'd taken more growth risk",
+    ],
+  },
+  "Impressors": {
+    motivation: "Enhancing self-worth through display",
+    superpowers: "Great at branding, making things look and feel valuable",
+    biases: "May spend based on external validation or comparison, rather than alignment",
+    barColor: "#7c3aed", bgColor: "#f5f3ff", borderColor: "#ddd6fe", textColor: "#6d28d9",
+    imageUrl: `${BASE_URL}/images/archetype-impressor.png`,
+    recommendations: [
+      "Before purchases, ask: 'Would I buy this if no one would ever see it?'",
+      "Create a 'values list' to check spending decisions against",
+      "Redirect some 'impression spending' into wealth-building investments",
+    ],
+    challenges: [
+      "Before any purchase this week, ask: 'Would I buy this if no one knew?'",
+      "Unfollow 3 accounts that trigger comparison spending",
+      "Redirect one 'impression purchase' into your investment account",
+    ],
+  },
+  "Free Spirits": {
+    motivation: "Enjoying life's flow and reducing anxiety",
+    superpowers: "Intuitive, flow-based, values alignment over optimization",
+    biases: "Avoids structure — often due to anxiety or rebellion",
+    barColor: "#0284c7", bgColor: "#f0f9ff", borderColor: "#bae6fd", textColor: "#0369a1",
+    imageUrl: `${BASE_URL}/images/archetype-freespirit.png`,
+    recommendations: [
+      "Set up one automated transfer to savings — 'set it and forget it'",
+      "Create a simple, visual spending tracker you'll actually enjoy using",
+      "Schedule a quarterly 'money date' to check in without overwhelming yourself",
+    ],
+    challenges: [
+      "Set up one automatic savings transfer — just $20 — and forget about it",
+      "Spend 5 minutes looking at your bank balance (no stress, just awareness)",
+      "Create one simple money rule for yourself that feels freeing, not limiting",
+    ],
+  },
 };
 
-function getStrength(score: number): string {
-  if (score === 0) return "–";
-  if (score <= 2) return "USING";
-  if (score <= 4) return "DOMINANT";
-  return "STRONG DOMINANT";
+const COMPATIBILITY_INSIGHTS: Record<string, string> = {
+  "Guardians + Strategists": "As a Strategist-Guardian, you combine meticulous planning with a security-first mindset. You're exceptional at building long-term wealth through careful, well-researched decisions. Your superpower is creating bulletproof financial plans — but watch out for being so cautious that you miss timely opportunities. Challenge yourself to act on your research faster.",
+  "Givers + Strategists": "As a Strategist-Giver, you blend analytical thinking with a deep desire to help others. You're the person who creates smart systems for giving — budgeted generosity with maximum impact. Your challenge is balancing your natural impulse to help with the data-driven part of you that knows you need to secure your own future first.",
+  "Adventurers + Strategists": "As a Strategist-Adventurer, you have a rare combination: the ability to plan ahead AND take bold risks when the moment is right. You're the calculated risk-taker — someone who does their homework before making exciting moves. Your edge is knowing when to follow the plan and when to trust your instinct for opportunity.",
+  "Impressors + Strategists": "As a Strategist-Impressor, you combine analytical precision with an eye for quality and presentation. You don't just build wealth — you build it with style. Your strength is making strategic decisions that also reflect your values and image. Just make sure your desire for the best doesn't override your excellent planning instincts.",
+  "Free Spirits + Strategists": "As a Strategist-Free Spirit, you hold two powerful but opposing forces: a love of structure and a need for freedom. When balanced, this makes you incredibly adaptable — you can create plans that leave room for spontaneity. The key is building systems that run on autopilot so your free-spirited side can thrive without financial stress.",
+  "Givers + Guardians": "As a Guardian-Giver, you're driven by protecting both your own security and the well-being of those you care about. You're the person who builds a strong financial foundation AND extends that safety net to others. Your challenge is knowing where your responsibility ends — you can't protect everyone without risking your own stability.",
+  "Adventurers + Guardians": "As a Guardian-Adventurer, you live with an interesting inner tension: one part of you craves safety, while another yearns for excitement. This actually makes you a balanced decision-maker — you know how to take risks without betting the farm. Your sweet spot is creating a rock-solid safety net that frees you to take calculated adventures.",
+  "Guardians + Impressors": "As a Guardian-Impressor, you value both security and quality. You want the finer things in life, but not at the expense of your financial safety. This makes you a smart spender — you save diligently but also invest in things that truly matter to you. Watch for the tension between wanting to display success and wanting to keep your reserves strong.",
+  "Free Spirits + Guardians": "As a Guardian-Free Spirit, you balance a need for security with a desire to live freely. You might resist traditional financial structures, but deep down you want the peace of mind that comes from stability. Your path forward is creating simple, low-maintenance financial systems that protect you without making you feel trapped.",
+  "Adventurers + Givers": "As a Giver-Adventurer, you're generous, spontaneous, and driven by experiences. You're the person who buys the group dinner on a whim or donates to a cause that moves you in the moment. Your heart is in the right place, but your wallet needs guardrails. Channel your adventurous energy into creative ways to give that don't drain your resources.",
+  "Givers + Impressors": "As a Giver-Impressor, you're motivated by both generosity and recognition. You want to make a difference AND be seen doing it. This isn't a bad thing — it can drive you to make big, visible contributions. Just ensure your giving comes from genuine values rather than social pressure, and protect your own financial health along the way.",
+  "Free Spirits + Givers": "As a Giver-Free Spirit, you're led by your heart and intuition. You give freely and live in the moment, which makes you wonderfully generous and adaptable. The flip side is that neither side of your personality loves budgets or structure. Finding one simple financial habit — like automatic savings — will give you the freedom to keep being generous sustainably.",
+  "Adventurers + Impressors": "As an Adventurer-Impressor, you love exciting experiences and looking good while having them. You're drawn to the bold, the new, and the impressive. This combination makes you magnetic and ambitious, but it can also lead to spending that prioritizes appearances and thrills over long-term goals. Your challenge is channeling that energy into adventures that build real wealth.",
+  "Adventurers + Free Spirits": "As an Adventurer-Free Spirit, you're the ultimate spontaneous soul. You follow your instincts, embrace new experiences, and resist anything that feels restrictive. Your relationship with money is likely intuitive rather than structured. The good news: you're adaptable and resilient. The growth area: building just enough structure to support your freedom long-term.",
+  "Free Spirits + Impressors": "As an Impressor-Free Spirit, you value both self-expression and flow. You want to look and feel successful, but you don't want rigid systems to get there. This combination thrives when you find financial approaches that feel natural and aligned with your identity — not forced or formulaic. Automate the basics so you can focus on what inspires you.",
+};
+
+function archetypeCardHtml(label: string, name: string, pct: number, d: ArchetypeEmailData): string {
+  return `
+    <table cellpadding="0" cellspacing="0" width="100%" style="border-radius:10px;overflow:hidden;border:1.5px solid ${d.borderColor};background-color:${d.bgColor};">
+      <tbody>
+        <tr>
+          <td style="padding:16px 16px 12px;text-align:center;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${d.textColor};">${label}</span>
+            <img src="${d.imageUrl}" alt="${name}" width="80" height="80" style="display:block;margin:10px auto;object-fit:contain;" />
+            <div style="font-size:20px;font-weight:700;color:rgba(0,0,0,0.9);margin:6px 0 4px;">${name}</div>
+            <span style="font-size:18px;font-weight:700;color:${d.barColor};">${pct}%</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 16px 16px;font-size:13px;color:rgba(0,0,0,0.7);line-height:1.5;">
+            <p style="margin:0 0 10px;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(0,0,0,0.4);">Motivation</span><br/>${d.motivation}</p>
+            <p style="margin:0 0 10px;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(0,0,0,0.4);">Superpowers</span><br/>${d.superpowers}</p>
+            <p style="margin:0;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(0,0,0,0.4);">Watch Out</span><br/>${d.biases}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>`;
 }
 
 async function sendResultsEmail(
@@ -153,62 +302,191 @@ async function sendResultsEmail(
   userName: string,
   results: Record<string, number>,
 ) {
-  const sorted = Object.entries(results).sort((a, b) => b[1] - a[1]);
-  const dominant = sorted.filter(([, s]) => s > 0);
-  const quickGlance = dominant.map(([cat, s]) => `${cat} (${s})`).join(", ");
+  const MAX_SCORE = 6;
+  const sorted = Object.entries(results)
+    .map(([name, score]) => ({ name, score, pct: Math.round(score / MAX_SCORE * 100) }))
+    .sort((a, b) => b.score - a.score);
+
+  const [primary, secondary, ...others] = sorted;
+  const primaryData = ARCHETYPE_EMAIL_DATA[primary?.name] ?? ARCHETYPE_EMAIL_DATA["Strategists"];
+  const secondaryData = ARCHETYPE_EMAIL_DATA[secondary?.name] ?? ARCHETYPE_EMAIL_DATA["Guardians"];
+
+  const comboKey = [primary?.name, secondary?.name].sort().join(" + ");
+  const compatibilityInsight = COMPATIBILITY_INSIGHTS[comboKey]
+    ?? `As a ${primary?.name}-${secondary?.name}, you bring together ${primaryData.motivation.toLowerCase()} with ${secondaryData.motivation.toLowerCase()}. This unique blend shapes how you think about, earn, and grow your wealth.`;
+
+  const recommendations = [...primaryData.recommendations, secondaryData.recommendations[0], secondaryData.recommendations[1]].slice(0, 5);
+  const challenges = [...primaryData.challenges, secondaryData.challenges[0], secondaryData.challenges[1]].slice(0, 5);
+
+  const otherTraitBars = others.map(({ name, pct }) => {
+    const d = ARCHETYPE_EMAIL_DATA[name];
+    if (!d) return "";
+    return `
+      <tr>
+        <td style="padding:5px 20px;">
+          <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+            <td style="width:28px;padding-right:6px;"><img src="${d.imageUrl}" alt="${name}" width="24" height="24" style="display:block;object-fit:contain;" /></td>
+            <td style="width:105px;font-size:13px;font-weight:600;color:rgba(0,0,0,0.9);padding-right:10px;white-space:nowrap;">${name}</td>
+            <td>
+              <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#e5e7eb;border-radius:10px;height:14px;"><tbody><tr>
+                <td width="${pct}%" style="background-color:${d.barColor};height:14px;border-radius:10px;"></td>
+                <td></td>
+              </tr></tbody></table>
+            </td>
+            <td style="width:44px;font-size:13px;font-weight:700;color:${d.barColor};text-align:right;padding-left:10px;">${pct}%</td>
+          </tr></tbody></table>
+        </td>
+      </tr>`;
+  }).join("");
+
+  const recItems = recommendations.map(r => `
+    <tr>
+      <td style="padding:5px 16px;font-size:13px;color:rgba(0,0,0,0.7);line-height:1.5;">
+        <table cellpadding="0" cellspacing="0"><tbody><tr>
+          <td style="vertical-align:top;padding-right:8px;color:#16a34a;font-weight:700;font-size:16px;">+</td>
+          <td>${r}</td>
+        </tr></tbody></table>
+      </td>
+    </tr>`).join("");
+
+  const challengeItems = challenges.map(c => `
+    <tr>
+      <td style="padding:5px 16px;font-size:13px;color:rgba(0,0,0,0.7);line-height:1.5;">
+        <table cellpadding="0" cellspacing="0"><tbody><tr>
+          <td style="vertical-align:top;padding-right:8px;color:#d97706;font-weight:700;font-size:14px;">&#9733;</td>
+          <td>${c}</td>
+        </tr></tbody></table>
+      </td>
+    </tr>`).join("");
 
   const textBody = [
     `Hi ${userName},`,
     "",
-    `Thanks for completing the Money Mindset Game. Quick glance: ${quickGlance}`,
+    "Your Financial Blueprint is ready! Here's your personalized WealthIQ Money Mindset profile.",
     "",
-    "MONEY MINDSET | # OF 'ME' CARDS | STRENGTH",
-    ...sorted.map(([cat, score]) => `${cat}: ${score} cards — ${getStrength(score)}`),
+    "YOUR TOP ARCHETYPES",
+    `Primary:   ${primary?.name} (${primary?.pct}%)`,
+    `Secondary: ${secondary?.name} (${secondary?.pct}%)`,
     "",
-    `Tip: "USING" = light influence, "DOMINANT" = strong theme, "STRONG DOMINANT" = very strong theme.`,
+    "WHAT DOES THIS MEAN?",
+    compatibilityInsight,
     "",
-    "— Wealth IQ",
+    "YOUR OTHER TRAITS",
+    ...others.map(({ name, pct }) => `${name}: ${pct}%`),
+    "",
+    "RECOMMENDATIONS",
+    ...recommendations.map((r, i) => `${i + 1}. ${r}`),
+    "",
+    "GROWTH CHALLENGES",
+    ...challenges.map((c, i) => `${i + 1}. ${c}`),
+    "",
+    "— WealthIQ",
   ].join("\n");
 
-  const tableRows = sorted.map(([cat, score]) => {
-    const meta = ARCHETYPE_META[cat] ?? { color: "#ffffff", motivation: "" };
-    const strength = getStrength(score);
-    return `
-      <tr style="background-color: ${meta.color};">
-        <td style="padding: 10px 14px; font-weight: 600; border-bottom: 1px solid #e0e0e0;">${cat}</td>
-        <td style="padding: 10px 14px; text-align: center; border-bottom: 1px solid #e0e0e0;">${score}</td>
-        <td style="padding: 10px 14px; font-weight: 600; border-bottom: 1px solid #e0e0e0;">${strength}</td>
-        <td style="padding: 10px 14px; color: #444; border-bottom: 1px solid #e0e0e0;">${meta.motivation}</td>
-      </tr>`;
-  }).join("");
-
   const htmlBody = `
-    <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1a1a1a;">
-      <p>Hi ${userName},</p>
-      <p>Thanks for completing the Money Mindset Game. Quick glance: <strong>${quickGlance}</strong></p>
-
-      <table style="width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px;">
-        <thead>
-          <tr style="background-color: #f3d6e4;">
-            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid #ccc;">Money Mindset</th>
-            <th style="padding: 10px 14px; text-align: center; border-bottom: 2px solid #ccc;"># of "Me" Cards</th>
-            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid #ccc;">Strength</th>
-            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid #ccc;">Core Motivation</th>
+    <div style="background-color:#f3f4f6;padding:32px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+      <table cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.07);">
+        <tbody>
+          <tr>
+            <td style="text-align:center;padding:32px 24px 16px;background:linear-gradient(180deg,#fdf2f4 0%,#ffffff 100%);">
+              <div style="font-size:22px;font-weight:800;letter-spacing:3px;color:#9ca3af;">WEALTH IQ</div>
+            </td>
           </tr>
-        </thead>
-        <tbody>${tableRows}</tbody>
-      </table>
+          <tr>
+            <td style="text-align:center;padding:8px 32px 24px;">
+              <h1 style="font-size:24px;font-weight:600;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;">Hi ${userName}, your Financial Blueprint is ready!</h1>
+              <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">Based on your WealthIQ assessment responses, here&#39;s your personalized money mindset profile.</p>
+            </td>
+          </tr>
+          <tr><td style="padding:0 32px;"><hr style="border:none;border-top:1px solid #e5e7eb;margin:0;"/></td></tr>
 
-      <p style="font-size: 13px; color: #555;">
-        Tip: "USING" = light influence, "DOMINANT" = strong theme, "STRONG DOMINANT" = very strong theme.
-      </p>
-      <p>— Wealth IQ</p>
-    </div>
-  `;
+          <tr>
+            <td style="padding:24px 24px 8px;text-align:center;">
+              <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.4);">Your Top Archetypes</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:12px 24px 24px;">
+              <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+                <td width="48%" valign="top" style="padding-right:8px;">
+                  ${archetypeCardHtml("PRIMARY", primary?.name ?? "", primary?.pct ?? 0, primaryData)}
+                </td>
+                <td width="48%" valign="top" style="padding-left:8px;">
+                  ${archetypeCardHtml("SECONDARY", secondary?.name ?? "", secondary?.pct ?? 0, secondaryData)}
+                </td>
+              </tr></tbody></table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:0 24px 16px;">
+              <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#fdf2f4;border-radius:10px;border:1px solid #fce7f3;"><tbody>
+                <tr><td style="padding:18px 24px 8px;text-align:center;">
+                  <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b5546a;">What Does This Mean?</span>
+                </td></tr>
+                <tr><td style="padding:0 24px 18px;font-size:14px;color:rgba(0,0,0,0.7);line-height:1.5;text-align:center;">${compatibilityInsight}</td></tr>
+              </tbody></table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:0 24px;">
+              <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#f9fafb;border-radius:10px;overflow:hidden;"><tbody>
+                <tr><td style="padding:18px 20px 10px;text-align:center;">
+                  <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.4);">Your Other Traits</span>
+                </td></tr>
+                ${otherTraitBars}
+                <tr><td style="padding:10px;"></td></tr>
+              </tbody></table>
+            </td>
+          </tr>
+
+          <tr><td style="padding:14px;"></td></tr>
+
+          <tr>
+            <td style="padding:0 24px;">
+              <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+                <td width="48%" valign="top" style="padding-right:8px;">
+                  <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0;"><tbody>
+                    <tr><td style="padding:16px 16px 8px;text-align:center;">
+                      <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#16a34a;">Recommendations</span>
+                    </td></tr>
+                    ${recItems}
+                    <tr><td style="padding:10px;"></td></tr>
+                  </tbody></table>
+                </td>
+                <td width="48%" valign="top" style="padding-left:8px;">
+                  <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#fffbeb;border-radius:10px;border:1px solid #fde68a;"><tbody>
+                    <tr><td style="padding:16px 16px 8px;text-align:center;">
+                      <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#d97706;">Growth Challenges</span>
+                    </td></tr>
+                    ${challengeItems}
+                    <tr><td style="padding:10px;"></td></tr>
+                  </tbody></table>
+                </td>
+              </tr></tbody></table>
+            </td>
+          </tr>
+
+          <tr><td style="padding:24px;"></td></tr>
+
+          <tr>
+            <td style="background-color:#faf5f6;padding:24px 32px;text-align:center;">
+              <div style="font-size:16px;font-weight:800;letter-spacing:2px;color:rgba(0,0,0,0.3);margin-bottom:10px;">WEALTH IQ</div>
+              <p style="font-size:12px;color:rgba(0,0,0,0.4);line-height:1.5;margin:0;">
+                WealthIQ &#8226; Conscious Prosperity<br/>
+                This email was sent because you completed the WealthIQ Money Mindset Assessment.<br/>
+                Your results are confidential and never shared with third parties.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`;
 
   await sendEmail(
     ["hello@wealthiqco.com", userEmail],
-    "Your Money Mindset Results",
+    `${userName}, your WealthIQ Financial Blueprint is ready`,
     textBody,
     htmlBody,
   );
