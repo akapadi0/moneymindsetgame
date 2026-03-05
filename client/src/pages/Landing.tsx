@@ -99,16 +99,17 @@ export default function Landing() {
       <section className="py-16 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-base text-muted-foreground leading-relaxed">
-            WealthIQ is a fee-only financial planning firm. We are obsessed with delivering excellent
+            Wealth IQ is a fee-only financial planning firm. We are obsessed with delivering excellent
             client experiences and weave in behavioral finance intentionally into our work.{" "}
+            To learn more about Wealth IQ, click{" "}
             <a
               href="https://www.wealthiqco.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline font-medium"
             >
-              To learn more about WealthIQ, please click here.
-            </a>
+              here
+            </a>.
           </p>
         </div>
       </section>
