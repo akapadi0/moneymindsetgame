@@ -11,6 +11,7 @@ import {
 import { SiX, SiLinkedin } from "react-icons/si";
 import { useToast } from "@/hooks/use-toast";
 import wealthIqLogo from "@assets/fulllogo_1772556379287.png";
+import { Footer } from "@/components/footer";
 
 // Import archetype images
 import strategistImg from "@/assets/images/archetype-strategist.png";
@@ -619,6 +620,8 @@ export default function Results() {
           </div>
         </div>
       </div>
+
+      <Footer />
 
       {/* Final Step Overlay - Feels like completion, not a gate */}
       {!isUnlocked && (

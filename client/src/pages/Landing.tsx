@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Shield } from "lucide-react";
 import wealthIqLogo from "@assets/fulllogo_1772556379287.png";
+import { Footer } from "@/components/footer";
 
 // Use a nice gradient overlay on a placeholder image
 // Abstract geometric background with wealth-associated colors
@@ -93,6 +94,26 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* About WealthIQ */}
+      <section className="py-16 bg-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-base text-muted-foreground leading-relaxed">
+            WealthIQ is a fee-only financial planning firm. We are obsessed with delivering excellent
+            client experiences and weave in behavioral finance intentionally into our work.{" "}
+            <a
+              href="https://www.wealthiqco.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline font-medium"
+            >
+              To learn more about WealthIQ, please click here.
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }
