@@ -498,7 +498,7 @@ async function sendResultsEmail(
                   <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just discovered my Money Mindset Archetype: ${primary?.name}! Take the Wealth IQ Money Mindset Assessment 👉 ${BASE_URL}`)}" style="display:inline-block;background-color:#000000;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on X</a>
                 </td>
                 <td>
-                  <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(BASE_URL)}&title=${encodeURIComponent(`My Wealth IQ Money Mindset Archetype: ${primary?.name}`)}&summary=${encodeURIComponent(`I just completed the Wealth IQ Money Mindset Assessment. My primary archetype is ${primary?.name}. Take it yourself!`)}" style="display:inline-block;background-color:#0077b5;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on LinkedIn</a>
+                  <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`💡 I just took the Wealth IQ Money Mindset Assessment\n\nIt breaks down your money personality — the patterns behind how you earn, save, spend, and invest.\n\nMy primary archetype? ${primary?.name}.\n\nThe blind spots it revealed were the real eye-opener.\n\n💬 Curious what yours might be?\n\n${BASE_URL}`)}" style="display:inline-block;background-color:#0077b5;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on LinkedIn</a>
                 </td>
               </tr></tbody></table>
             </td>
