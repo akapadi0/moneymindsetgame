@@ -39857,7 +39857,7 @@ async function sendResultsEmail(userEmail, userName, results) {
   const textBody = [
     `Hi ${userName},`,
     "",
-    "Your Financial Blueprint is ready! Here's your personalized Wealth IQ Money Mindset profile.",
+    "Your Money Mindset Assessment is ready! Here's your personalized Wealth IQ Money Mindset profile.",
     "",
     "YOUR TOP ARCHETYPES",
     `Primary:   ${primary?.name} (${primary?.pct}%)`,
@@ -39888,7 +39888,7 @@ async function sendResultsEmail(userEmail, userName, results) {
           </tr>
           <tr>
             <td style="text-align:center;padding:8px 32px 24px;">
-              <h1 style="font-size:24px;font-weight:600;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;">Hi ${userName}, your Financial Blueprint is ready!</h1>
+              <h1 style="font-size:24px;font-weight:600;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;">Hi ${userName}, your Money Mindset Assessment is ready!</h1>
               <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">Based on your Wealth IQ assessment responses, here&#39;s your personalized money mindset profile.</p>
             </td>
           </tr>
@@ -39985,7 +39985,7 @@ async function sendResultsEmail(userEmail, userName, results) {
     </div>`;
   await sendEmail(
     ["hello@wealthiqco.com", userEmail],
-    `${userName}, your Wealth IQ Financial Blueprint is ready`,
+    `${userName}, your Wealth IQ Money Mindset Assessment is ready`,
     textBody,
     htmlBody
   );
