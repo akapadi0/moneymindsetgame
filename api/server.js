@@ -39891,17 +39891,18 @@ async function sendResultsEmail(userEmail, userName, results) {
     "\u2014 Wealth IQ"
   ].join("\n");
   const htmlBody = `
-    <div style="background-color:#f3f4f6;padding:32px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap');</style>
+    <div style="background-color:#f3f4f6;padding:32px 16px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
       <table cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.07);">
         <tbody>
           <tr>
             <td style="text-align:center;padding:32px 24px 16px;background:linear-gradient(180deg,#fdf2f4 0%,#ffffff 100%);">
-              <div style="font-size:22px;font-weight:800;letter-spacing:3px;color:#9ca3af;">WEALTH IQ</div>
+              <img src="${BASE_URL}/images/logo.png" alt="Wealth IQ" width="180" style="display:block;margin:0 auto;" />
             </td>
           </tr>
           <tr>
             <td style="text-align:center;padding:8px 32px 24px;">
-              <h1 style="font-size:24px;font-weight:600;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;">Hi ${userName}, your Money Mindset Assessment is ready!</h1>
+              <h1 style="font-size:24px;font-weight:700;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">Hi ${userName}, your Money Mindset Assessment is ready!</h1>
               <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">Based on your Wealth IQ assessment responses, here&#39;s your personalized money mindset profile.</p>
             </td>
           </tr>
@@ -40004,7 +40005,7 @@ ${BASE_URL}`)}" style="display:inline-block;background-color:#0077b5;color:#ffff
 
           <tr>
             <td style="background-color:#faf5f6;padding:24px 32px;text-align:center;">
-              <div style="font-size:16px;font-weight:800;letter-spacing:2px;color:rgba(0,0,0,0.3);margin-bottom:10px;">WEALTH IQ</div>
+              <img src="${BASE_URL}/images/logo.png" alt="Wealth IQ" width="120" style="display:block;margin:0 auto 10px;opacity:0.75;" />
               <p style="font-size:13px;margin:0 0 8px;">
                 <a href="https://www.wealthiqco.com" style="color:#b5546a;font-weight:600;text-decoration:none;">www.wealthiqco.com</a>
               </p>
@@ -40098,17 +40099,18 @@ async function sendShareEmail(toEmail, senderName, results) {
     `Curious about your own money mindset? Take the assessment at: ${BASE_URL}`
   ].join("\n");
   const htmlBody = `
-    <div style="background-color:#f3f4f6;padding:32px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap');</style>
+    <div style="background-color:#f3f4f6;padding:32px 16px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
       <table cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.07);">
         <tbody>
           <tr>
             <td style="text-align:center;padding:32px 24px 16px;background:linear-gradient(180deg,#fdf2f4 0%,#ffffff 100%);">
-              <div style="font-size:22px;font-weight:800;letter-spacing:3px;color:#9ca3af;">WEALTH IQ</div>
+              <img src="${BASE_URL}/images/logo.png" alt="Wealth IQ" width="180" style="display:block;margin:0 auto;" />
             </td>
           </tr>
           <tr>
             <td style="text-align:center;padding:8px 32px 24px;">
-              <h1 style="font-size:24px;font-weight:600;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;">${senderName}'s Money Mindset Assessment Results</h1>
+              <h1 style="font-size:24px;font-weight:700;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">${senderName}'s Money Mindset Assessment Results</h1>
               <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">${senderName} recently completed the Wealth IQ Money Mindset Assessment and wants to share their results with you.</p>
             </td>
           </tr>
@@ -40194,7 +40196,7 @@ async function sendShareEmail(toEmail, senderName, results) {
 
           <tr>
             <td style="background-color:#faf5f6;padding:24px 32px;text-align:center;">
-              <div style="font-size:16px;font-weight:800;letter-spacing:2px;color:rgba(0,0,0,0.3);margin-bottom:10px;">WEALTH IQ</div>
+              <img src="${BASE_URL}/images/logo.png" alt="Wealth IQ" width="120" style="display:block;margin:0 auto 10px;opacity:0.75;" />
               <p style="font-size:13px;margin:0 0 8px;">
                 <a href="https://www.wealthiqco.com" style="color:#b5546a;font-weight:600;text-decoration:none;">www.wealthiqco.com</a>
               </p>
