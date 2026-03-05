@@ -17,7 +17,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-28 flex items-center justify-between">
           <div className="flex items-center">
             <a href="https://www.wealthiqco.com/" target="_blank" rel="noopener noreferrer">
-              <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-28 mix-blend-multiply" data-testid="img-logo" />
+              <img src={wealthIqLogo} alt="Wealth IQ - Conscious Prosperity" className="h-28 mix-blend-multiply" data-testid="img-logo" />
             </a>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* About WealthIQ */}
+      {/* About Wealth IQ */}
       <section className="py-16 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-base text-muted-foreground leading-relaxed">

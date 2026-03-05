@@ -362,7 +362,7 @@ async function sendResultsEmail(
   const textBody = [
     `Hi ${userName},`,
     "",
-    "Your Financial Blueprint is ready! Here's your personalized WealthIQ Money Mindset profile.",
+    "Your Financial Blueprint is ready! Here's your personalized Wealth IQ Money Mindset profile.",
     "",
     "YOUR TOP ARCHETYPES",
     `Primary:   ${primary?.name} (${primary?.pct}%)`,
@@ -380,7 +380,7 @@ async function sendResultsEmail(
     "GROWTH CHALLENGES",
     ...challenges.map((c, i) => `${i + 1}. ${c}`),
     "",
-    "— WealthIQ",
+    "— Wealth IQ",
   ].join("\n");
 
   const htmlBody = `
@@ -395,7 +395,7 @@ async function sendResultsEmail(
           <tr>
             <td style="text-align:center;padding:8px 32px 24px;">
               <h1 style="font-size:24px;font-weight:600;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;">Hi ${userName}, your Financial Blueprint is ready!</h1>
-              <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">Based on your WealthIQ assessment responses, here&#39;s your personalized money mindset profile.</p>
+              <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">Based on your Wealth IQ assessment responses, here&#39;s your personalized money mindset profile.</p>
             </td>
           </tr>
           <tr><td style="padding:0 32px;"><hr style="border:none;border-top:1px solid #e5e7eb;margin:0;"/></td></tr>
@@ -473,9 +473,12 @@ async function sendResultsEmail(
           <tr>
             <td style="background-color:#faf5f6;padding:24px 32px;text-align:center;">
               <div style="font-size:16px;font-weight:800;letter-spacing:2px;color:rgba(0,0,0,0.3);margin-bottom:10px;">WEALTH IQ</div>
+              <p style="font-size:13px;margin:0 0 12px;">
+                <a href="https://www.wealthiqco.com" style="color:#b5546a;font-weight:600;text-decoration:none;">www.wealthiqco.com</a>
+              </p>
               <p style="font-size:12px;color:rgba(0,0,0,0.4);line-height:1.5;margin:0;">
-                WealthIQ &#8226; Conscious Prosperity<br/>
-                This email was sent because you completed the WealthIQ Money Mindset Assessment.<br/>
+                Wealth IQ &#8226; Conscious Prosperity<br/>
+                This email was sent because you completed the Wealth IQ Money Mindset Assessment.<br/>
                 Your results are confidential and never shared with third parties.
               </p>
             </td>
@@ -486,7 +489,7 @@ async function sendResultsEmail(
 
   await sendEmail(
     ["hello@wealthiqco.com", userEmail],
-    `${userName}, your WealthIQ Financial Blueprint is ready`,
+    `${userName}, your Wealth IQ Financial Blueprint is ready`,
     textBody,
     htmlBody,
   );
@@ -541,6 +544,6 @@ async function seedQuestions() {
     for (const q of originalQuestions) {
       await storage.createQuestion(q);
     }
-    console.log("Seeded 36 WealthIQ questions");
+    console.log("Seeded 36 Wealth IQ questions");
   }
 }
