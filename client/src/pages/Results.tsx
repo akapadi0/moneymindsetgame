@@ -170,20 +170,13 @@ export default function Results() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!scores) return;
-    
-    submitResults(
-      { ...formData, results: scores },
-      {
-        onSuccess: () => {
-          setIsUnlocked(true);
-          toast({ title: "Results Unlocked!", description: "Check your email for your full report." });
-        },
-        onError: () => {
-          setIsUnlocked(true);
-          toast({ title: "Results Revealed!", description: "Email delivery failed, but your results are ready below.", variant: "destructive" });
-        }
-      }
-    );
+
+    // Unlock immediately — don't gate on API response
+    setIsUnlocked(true);
+    toast({ title: "Results Unlocked!", description: "Check your email for your full report." });
+
+    // Submit in background for email delivery
+    submitResults({ ...formData, results: scores });
   };
 
   if (!scores) return null;
