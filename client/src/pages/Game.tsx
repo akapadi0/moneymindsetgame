@@ -128,8 +128,11 @@ export default function Game() {
             >
               <Clock className="w-10 h-10 text-amber-500 mx-auto mb-3" />
               <h3 className="text-lg font-bold text-foreground mb-1">Time's up!</h3>
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-sm text-muted-foreground mb-2">
                 Please make a choice to continue
+              </p>
+              <p className="text-sm font-medium text-foreground bg-slate-50 rounded-lg px-3 py-2 mb-4 italic">
+                "{currentQuestion.text}"
               </p>
               <div className="flex gap-3">
                 <Button 
