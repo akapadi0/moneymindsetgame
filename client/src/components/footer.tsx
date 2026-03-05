@@ -4,19 +4,23 @@ export function Footer() {
       <div className="max-w-7xl mx-auto text-center text-sm text-muted-foreground">
         <p>
           Built by{" "}
-          <button
-            onClick={() => window.open("https://www.linkedin.com/in/aditikapadia1/", "_blank")}
-            className="text-primary hover:underline font-medium cursor-pointer bg-transparent border-none p-0"
+          <a
+            href="https://www.linkedin.com/in/aditikapadia1/"
+            target="_blank"
+            rel="noopener"
+            className="text-primary hover:underline font-medium"
           >
             Aditi Kapadia
-          </button>{" "}
+          </a>{" "}
           &amp;{" "}
-          <button
-            onClick={() => window.open("https://www.linkedin.com/in/manalipatel19/", "_blank")}
-            className="text-primary hover:underline font-medium cursor-pointer bg-transparent border-none p-0"
+          <a
+            href="https://www.linkedin.com/in/manalipatel19/"
+            target="_blank"
+            rel="noopener"
+            className="text-primary hover:underline font-medium"
           >
             Manali Patel
-          </button>
+          </a>
         </p>
       </div>
     </footer>
