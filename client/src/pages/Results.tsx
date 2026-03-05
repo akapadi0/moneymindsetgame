@@ -420,40 +420,13 @@ export default function Results() {
     }
     setIsSendingEmail(true);
     try {
-      const sorted = Object.entries(scores ?? {}).sort((a, b) => b[1] - a[1]);
-      const [primary, secondary] = sorted;
-
-      const textBody = [
-        "Money Mindset Assessment Results",
-        "",
-        `Primary Archetype:   ${primary?.[0]}`,
-        `Secondary Archetype: ${secondary?.[0]}`,
-        "",
-        "Full Breakdown:",
-        ...sorted.map(([cat, score]) => `• ${cat}: ${score}`),
-        "",
-        "Take the assessment at: " + window.location.origin,
-      ].join("\n");
-
-      const htmlBody = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
-          <h2>Money Mindset Assessment Results</h2>
-          <p><strong>Primary:</strong> ${primary?.[0]}</p>
-          <p><strong>Secondary:</strong> ${secondary?.[0]}</p>
-          <h3>Full Breakdown</h3>
-          <ul>${sorted.map(([cat, score]) => `<li><strong>${cat}:</strong> ${score}</li>`).join("")}</ul>
-          <p><a href="${window.location.origin}">Take the assessment yourself →</a></p>
-        </div>
-      `;
-
-      const response = await fetch("/api/send-email", {
+      const response = await fetch("/api/share-results", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          toEmails: [shareEmail, "hello@wealthiqco.com"],
-          subject: "My Wealth IQ Money Mindset Results",
-          textBody,
-          htmlBody,
+          senderName: formData.name || "Someone",
+          toEmail: shareEmail,
+          scores: scores ?? {},
         }),
       });
 

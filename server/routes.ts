@@ -71,6 +71,25 @@ export async function registerRoutes(
     }
   });
 
+  // Share Results endpoint — sends rich HTML email to a recipient on behalf of the user
+  app.post("/api/share-results", async (req, res) => {
+    try {
+      const { senderName, toEmail, scores } = req.body as {
+        senderName: string;
+        toEmail: string;
+        scores: Record<string, number>;
+      };
+      if (!senderName || !toEmail || !scores) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+      await sendShareEmail(toEmail, senderName, scores);
+      res.json({ message: "Email sent successfully" });
+    } catch (error) {
+      console.error("Error sending share email:", error);
+      res.status(500).json({ error: "Error sending email" });
+    }
+  });
+
   // Seed questions on first start
   await seedQuestions();
 
@@ -446,8 +465,8 @@ async function sendResultsEmail(
           <tr>
             <td style="padding:0 24px;">
               <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-                <td width="48%" valign="top" style="padding-right:8px;">
-                  <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0;"><tbody>
+                <td width="48%" valign="top" style="background-color:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0;">
+                  <table cellpadding="0" cellspacing="0" width="100%"><tbody>
                     <tr><td style="padding:16px 16px 8px;text-align:center;">
                       <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#16a34a;">Recommendations</span>
                     </td></tr>
@@ -455,8 +474,9 @@ async function sendResultsEmail(
                     <tr><td style="padding:10px;"></td></tr>
                   </tbody></table>
                 </td>
-                <td width="48%" valign="top" style="padding-left:8px;">
-                  <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#fffbeb;border-radius:10px;border:1px solid #fde68a;"><tbody>
+                <td width="16">&nbsp;</td>
+                <td width="48%" valign="top" style="background-color:#fffbeb;border-radius:10px;border:1px solid #fde68a;">
+                  <table cellpadding="0" cellspacing="0" width="100%"><tbody>
                     <tr><td style="padding:16px 16px 8px;text-align:center;">
                       <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#d97706;">Growth Challenges</span>
                     </td></tr>
@@ -469,6 +489,20 @@ async function sendResultsEmail(
           </tr>
 
           <tr><td style="padding:24px;"></td></tr>
+
+          <tr>
+            <td style="padding:0 24px 24px;text-align:center;">
+              <p style="font-size:13px;color:rgba(0,0,0,0.5);margin:0 0 12px;">Proud of your results? Share them!</p>
+              <table cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr>
+                <td style="padding-right:8px;">
+                  <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just discovered my Money Mindset Archetype: ${primary?.name}! Take the Wealth IQ Money Mindset Assessment 👉 ${BASE_URL}`)}" style="display:inline-block;background-color:#000000;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on X</a>
+                </td>
+                <td>
+                  <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(BASE_URL)}&title=${encodeURIComponent(`My Wealth IQ Money Mindset Archetype: ${primary?.name}`)}&summary=${encodeURIComponent(`I just completed the Wealth IQ Money Mindset Assessment. My primary archetype is ${primary?.name}. Take it yourself!`)}" style="display:inline-block;background-color:#0077b5;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on LinkedIn</a>
+                </td>
+              </tr></tbody></table>
+            </td>
+          </tr>
 
           <tr>
             <td style="background-color:#faf5f6;padding:24px 32px;text-align:center;">
@@ -493,6 +527,213 @@ async function sendResultsEmail(
   await sendEmail(
     ["hello@wealthiqco.com", userEmail],
     `${userName}, your Wealth IQ Money Mindset Assessment is ready`,
+    textBody,
+    htmlBody,
+  );
+}
+
+async function sendShareEmail(
+  toEmail: string,
+  senderName: string,
+  results: Record<string, number>,
+) {
+  const MAX_SCORE = 6;
+  const sorted = Object.entries(results)
+    .map(([name, score]) => ({ name, score, pct: Math.round(score / MAX_SCORE * 100) }))
+    .sort((a, b) => b.score - a.score);
+
+  const [primary, secondary, ...others] = sorted;
+  const primaryData = ARCHETYPE_EMAIL_DATA[primary?.name] ?? ARCHETYPE_EMAIL_DATA["Strategists"];
+  const secondaryData = ARCHETYPE_EMAIL_DATA[secondary?.name] ?? ARCHETYPE_EMAIL_DATA["Guardians"];
+
+  const comboKey = [primary?.name, secondary?.name].sort().join(" + ");
+  const compatibilityInsight = COMPATIBILITY_INSIGHTS[comboKey]
+    ?? `As a ${primary?.name}-${secondary?.name}, you bring together ${primaryData.motivation.toLowerCase()} with ${secondaryData.motivation.toLowerCase()}. This unique blend shapes how you think about, earn, and grow your wealth.`;
+
+  const recommendations = [...primaryData.recommendations, secondaryData.recommendations[0], secondaryData.recommendations[1]].slice(0, 5);
+  const challenges = [...primaryData.challenges, secondaryData.challenges[0], secondaryData.challenges[1]].slice(0, 5);
+
+  const otherTraitBars = others.map(({ name, pct }) => {
+    const d = ARCHETYPE_EMAIL_DATA[name];
+    if (!d) return "";
+    return `
+      <tr>
+        <td style="padding:5px 20px;">
+          <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+            <td style="width:28px;padding-right:6px;"><img src="${d.imageUrl}" alt="${name}" width="24" height="24" style="display:block;object-fit:contain;" /></td>
+            <td style="width:105px;font-size:13px;font-weight:600;color:rgba(0,0,0,0.9);padding-right:10px;white-space:nowrap;">${name}</td>
+            <td>
+              <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#e5e7eb;border-radius:10px;height:14px;"><tbody><tr>
+                <td width="${pct}%" style="background-color:${d.barColor};height:14px;border-radius:10px;"></td>
+                <td></td>
+              </tr></tbody></table>
+            </td>
+            <td style="width:44px;font-size:13px;font-weight:700;color:${d.barColor};text-align:right;padding-left:10px;">${pct}%</td>
+          </tr></tbody></table>
+        </td>
+      </tr>`;
+  }).join("");
+
+  const recItems = recommendations.map(r => `
+    <tr>
+      <td style="padding:5px 16px;font-size:13px;color:rgba(0,0,0,0.7);line-height:1.5;">
+        <table cellpadding="0" cellspacing="0"><tbody><tr>
+          <td style="vertical-align:top;padding-right:8px;color:#16a34a;font-weight:700;font-size:16px;">+</td>
+          <td>${r}</td>
+        </tr></tbody></table>
+      </td>
+    </tr>`).join("");
+
+  const challengeItems = challenges.map(c => `
+    <tr>
+      <td style="padding:5px 16px;font-size:13px;color:rgba(0,0,0,0.7);line-height:1.5;">
+        <table cellpadding="0" cellspacing="0"><tbody><tr>
+          <td style="vertical-align:top;padding-right:8px;color:#d97706;font-weight:700;font-size:14px;">&#9733;</td>
+          <td>${c}</td>
+        </tr></tbody></table>
+      </td>
+    </tr>`).join("");
+
+  const textBody = [
+    `${senderName} recently completed a Wealth IQ Money Mindset Assessment and wants to share their results with you.`,
+    "",
+    "TOP ARCHETYPES",
+    `Primary:   ${primary?.name} (${primary?.pct}%)`,
+    `Secondary: ${secondary?.name} (${secondary?.pct}%)`,
+    "",
+    "WHAT DOES THIS MEAN?",
+    compatibilityInsight,
+    "",
+    "OTHER TRAITS",
+    ...others.map(({ name, pct }) => `${name}: ${pct}%`),
+    "",
+    "RECOMMENDATIONS",
+    ...recommendations.map((r, i) => `${i + 1}. ${r}`),
+    "",
+    "GROWTH CHALLENGES",
+    ...challenges.map((c, i) => `${i + 1}. ${c}`),
+    "",
+    `Curious about your own money mindset? Take the assessment at: ${BASE_URL}`,
+  ].join("\n");
+
+  const htmlBody = `
+    <div style="background-color:#f3f4f6;padding:32px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+      <table cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.07);">
+        <tbody>
+          <tr>
+            <td style="text-align:center;padding:32px 24px 16px;background:linear-gradient(180deg,#fdf2f4 0%,#ffffff 100%);">
+              <div style="font-size:22px;font-weight:800;letter-spacing:3px;color:#9ca3af;">WEALTH IQ</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;padding:8px 32px 24px;">
+              <h1 style="font-size:24px;font-weight:600;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;">${senderName}'s Money Mindset Assessment Results</h1>
+              <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">${senderName} recently completed the Wealth IQ Money Mindset Assessment and wants to share their results with you.</p>
+            </td>
+          </tr>
+          <tr><td style="padding:0 32px;"><hr style="border:none;border-top:1px solid #e5e7eb;margin:0;"/></td></tr>
+
+          <tr>
+            <td style="padding:24px 24px 8px;text-align:center;">
+              <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.4);">Top Archetypes</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:12px 24px 24px;">
+              <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+                <td width="48%" valign="top" style="padding-right:8px;">
+                  ${archetypeCardHtml("PRIMARY", primary?.name ?? "", primary?.pct ?? 0, primaryData)}
+                </td>
+                <td width="48%" valign="top" style="padding-left:8px;">
+                  ${archetypeCardHtml("SECONDARY", secondary?.name ?? "", secondary?.pct ?? 0, secondaryData)}
+                </td>
+              </tr></tbody></table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:0 24px 16px;">
+              <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#fdf2f4;border-radius:10px;border:1px solid #fce7f3;"><tbody>
+                <tr><td style="padding:18px 24px 8px;text-align:center;">
+                  <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b5546a;">What Does This Mean?</span>
+                </td></tr>
+                <tr><td style="padding:0 24px 18px;font-size:14px;color:rgba(0,0,0,0.7);line-height:1.5;text-align:center;">${compatibilityInsight}</td></tr>
+              </tbody></table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:0 24px;">
+              <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#f9fafb;border-radius:10px;overflow:hidden;"><tbody>
+                <tr><td style="padding:18px 20px 10px;text-align:center;">
+                  <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.4);">Other Traits</span>
+                </td></tr>
+                ${otherTraitBars}
+                <tr><td style="padding:10px;"></td></tr>
+              </tbody></table>
+            </td>
+          </tr>
+
+          <tr><td style="padding:14px;"></td></tr>
+
+          <tr>
+            <td style="padding:0 24px;">
+              <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+                <td width="48%" valign="top" style="background-color:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0;">
+                  <table cellpadding="0" cellspacing="0" width="100%"><tbody>
+                    <tr><td style="padding:16px 16px 8px;text-align:center;">
+                      <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#16a34a;">Recommendations</span>
+                    </td></tr>
+                    ${recItems}
+                    <tr><td style="padding:10px;"></td></tr>
+                  </tbody></table>
+                </td>
+                <td width="16">&nbsp;</td>
+                <td width="48%" valign="top" style="background-color:#fffbeb;border-radius:10px;border:1px solid #fde68a;">
+                  <table cellpadding="0" cellspacing="0" width="100%"><tbody>
+                    <tr><td style="padding:16px 16px 8px;text-align:center;">
+                      <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#d97706;">Growth Challenges</span>
+                    </td></tr>
+                    ${challengeItems}
+                    <tr><td style="padding:10px;"></td></tr>
+                  </tbody></table>
+                </td>
+              </tr></tbody></table>
+            </td>
+          </tr>
+
+          <tr><td style="padding:24px;"></td></tr>
+
+          <tr>
+            <td style="padding:0 24px 24px;text-align:center;">
+              <p style="font-size:13px;color:rgba(0,0,0,0.5);margin:0 0 12px;">Curious about your own money mindset?</p>
+              <a href="${BASE_URL}" style="display:inline-block;background-color:#b5546a;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;padding:12px 28px;border-radius:8px;">Take the Assessment Yourself →</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="background-color:#faf5f6;padding:24px 32px;text-align:center;">
+              <div style="font-size:16px;font-weight:800;letter-spacing:2px;color:rgba(0,0,0,0.3);margin-bottom:10px;">WEALTH IQ</div>
+              <p style="font-size:13px;margin:0 0 8px;">
+                <a href="https://www.wealthiqco.com" style="color:#b5546a;font-weight:600;text-decoration:none;">www.wealthiqco.com</a>
+              </p>
+              <p style="font-size:12px;margin:0 0 12px;">
+                <a href="https://aditis-newsletter-4981f9.beehiiv.com/" style="color:#b5546a;text-decoration:none;">&#128240; Subscribe to our newsletter</a>
+              </p>
+              <p style="font-size:12px;color:rgba(0,0,0,0.4);line-height:1.5;margin:0;">
+                Wealth IQ &#8226; Conscious Prosperity<br/>
+                This email was sent because ${senderName} chose to share their Money Mindset Assessment results with you.<br/>
+                Results are confidential and never shared with third parties.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`;
+
+  await sendEmail(
+    ["hello@wealthiqco.com", toEmail],
+    `${senderName} shared their Wealth IQ Money Mindset Results with you`,
     textBody,
     htmlBody,
   );
