@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRight, PieChart, Shield, Zap } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import wealthIqLogo from "@assets/fulllogo_1772556379287.png";
 
 // Use a nice gradient overlay on a placeholder image
@@ -15,7 +15,9 @@ export default function Landing() {
       <nav className="fixed w-full z-50 bg-background border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-20 mix-blend-multiply" data-testid="img-logo" />
+            <a href="https://www.wealthiqco.com/" target="_blank" rel="noopener noreferrer">
+              <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-28 mix-blend-multiply" data-testid="img-logo" />
+            </a>
           </div>
         </div>
       </nav>
@@ -35,7 +37,7 @@ export default function Landing() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent font-semibold text-sm tracking-wide mb-6">
-              The #1 Financial Personality Assessment
+              Financial Personality Assessment
             </span>
             <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground mb-6 leading-tight">
               Discover Your <br />
