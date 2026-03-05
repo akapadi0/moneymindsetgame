@@ -21,117 +21,172 @@ import guardianImg from "@/assets/images/archetype-guardian.png";
 import impressorImg from "@/assets/images/archetype-impressor.png";
 import freespiritImg from "@/assets/images/archetype-freespirit.png";
 
-// Archetype definitions with motivation, superpowers, biases, image, and challenges
+// Archetype definitions with motivation, superpowers, biases, image, challenges, and growth insight
 const ARCHETYPES: Record<string, {
   motivation: string;
-  superpowers: string;
-  biases: string;
+  superpowers: string[];
+  biases: string[];
   color: string;
   image: string;
   recommendations: string[];
   challenges: string[];
+  growthInsight: string;
 }> = {
   "Strategists": {
-    motivation: "Long-term success through structure & informed decisions",
-    superpowers: "Long-term thinker, loves planning, efficient with resources",
-    biases: "May overanalyze decisions, delay action until all the data is in",
+    motivation: "Long-term success through structure and intelligent planning",
+    superpowers: [
+      "Systems thinker",
+      "Excellent capital allocator",
+      "High discipline and patience"
+    ],
+    biases: [
+      "Analysis paralysis",
+      "Over-optimization of small variables",
+      "Difficulty acting without full information"
+    ],
     color: "bg-emerald-50 border-emerald-200 text-emerald-700",
     image: strategistImg,
     recommendations: [
-      "Set a deadline for financial decisions to avoid analysis paralysis",
-      "Build in a 'spontaneity fund' for unplanned opportunities",
-      "Practice making smaller decisions quickly to build confidence"
+      "Use decision frameworks instead of perfect data (e.g., 70% rule: act when 70% confident)",
+      "Separate strategic decisions from tactical tweaks — not everything deserves deep analysis",
+      "Build a personal \"risk budget\" for opportunities that don't fully fit the spreadsheet"
     ],
     challenges: [
-      "Make one financial decision this week in under 10 minutes",
-      "Spend $50 on something fun without researching it first",
-      "Skip one spreadsheet review this month and trust your gut"
-    ]
+      "Make one $5K+ decision this month with incomplete information",
+      "Schedule a \"no optimization day\" where you intentionally do not research anything financial",
+      "Delegate one financial task you normally insist on controlling"
+    ],
+    growthInsight: "Your biggest returns may come from speed and delegation, not better models."
   },
   "Givers": {
-    motivation: "Community well-being through generosity",
-    superpowers: "Deeply values people and purpose, community-oriented",
-    biases: "Take on responsibilities that are not aligned with long-term goals",
+    motivation: "Community impact and supporting the people around them",
+    superpowers: [
+      "Deep empathy and loyalty",
+      "Community builder",
+      "Purpose-driven wealth"
+    ],
+    biases: [
+      "Blurred financial boundaries",
+      "Guilt around prioritizing personal wealth",
+      "Becoming the default financial safety net"
+    ],
     color: "bg-rose-50 border-rose-200 text-rose-700",
     image: giverImg,
     recommendations: [
-      "Create a giving budget that protects your own financial security first",
-      "Learn to say 'not right now' instead of always saying yes",
-      "Set up automatic savings before allocating funds to help others"
+      "Separate charity, family support, and investment — they are different tools",
+      "Build a structured giving strategy (DAF, annual allocation, or legacy planning)",
+      "Remember: sustainable generosity requires sustainable wealth"
     ],
     challenges: [
-      "Say 'let me think about it' before agreeing to any financial help this week",
-      "Transfer 10% of your next paycheck to your own savings before giving",
-      "Write down 3 ways to help others that don't involve money"
-    ]
+      "Decline one request this month without over-explaining",
+      "Design a 10-year giving vision, not just reactive generosity",
+      "Identify one area where your support may be preventing someone else's growth"
+    ],
+    growthInsight: "Your generosity becomes more powerful when it's intentional rather than reactive."
   },
   "Adventurers": {
-    motivation: "Seeking excitement, novelty, and freedom",
-    superpowers: "Comfortable with risk, visionary, flexible thinker",
-    biases: "Prone to impulsive decisions without considering trade offs",
+    motivation: "Freedom, exploration, and bold opportunities",
+    superpowers: [
+      "High tolerance for uncertainty",
+      "Opportunity spotting",
+      "Energized by new ventures"
+    ],
+    biases: [
+      "Overconfidence in intuition",
+      "Concentrated bets",
+      "Underestimating downside risk"
+    ],
     color: "bg-amber-50 border-amber-200 text-amber-700",
     image: adventurerImg,
     recommendations: [
-      "Implement a 48-hour rule before major financial decisions",
-      "Channel your risk tolerance into diversified investments",
-      "Create adventure-specific savings to fund experiences responsibly"
+      "Use position sizing — even the best ideas shouldn't dominate your portfolio",
+      "Balance adventure capital with compounding capital",
+      "Create a system where curiosity is funded but not reckless"
     ],
     challenges: [
-      "Wait 48 hours before your next purchase over $100",
-      "Create a dedicated 'adventure fund' and only use that for spontaneous buys",
-      "Track every impulse purchase for 2 weeks — no judgment, just awareness"
-    ]
+      "Write down the downside of your next big idea before acting",
+      "Build a \"risk sandbox\" portfolio where experimentation is encouraged but capped",
+      "Say no to one exciting opportunity this quarter"
+    ],
+    growthInsight: "Your edge isn't risk-taking — it's knowing which risks deserve your capital."
   },
   "Guardians": {
-    motivation: "Minimizing uncertainty and ensuring safety",
-    superpowers: "Excellent at protecting stability and managing downside risk",
-    biases: "Tends to avoid risks or underinvest in growth",
+    motivation: "Security, stability, and protecting what has been built",
+    superpowers: [
+      "Excellent downside protection",
+      "Strong contingency planning",
+      "Long-term resilience"
+    ],
+    biases: [
+      "Opportunity avoidance",
+      "Excessive cash or low-risk allocations",
+      "Overestimating worst-case scenarios"
+    ],
     color: "bg-teal-50 border-teal-200 text-teal-700",
     image: guardianImg,
     recommendations: [
-      "Set up a 'growth fund' separate from your emergency savings",
-      "Start small with investments to build comfort with calculated risks",
-      "Review your portfolio annually to ensure you're not being too conservative"
+      "Separate true safety needs from emotional comfort",
+      "Build a two-bucket mindset: protection capital vs growth capital",
+      "Remember that inflation and stagnation are also risks"
     ],
     challenges: [
-      "Invest $25 in something new this month — even if it feels uncomfortable",
-      "Research one 'risky' investment and learn why others find it appealing",
-      "Calculate how much extra you'd have if you'd taken more growth risk"
-    ]
+      "Increase one allocation toward long-term growth",
+      "Review the opportunity cost of safety over the last decade",
+      "Identify one financial risk that is actually manageable rather than dangerous"
+    ],
+    growthInsight: "The goal isn't avoiding risk — it's choosing the right risks."
   },
   "Impressors": {
-    motivation: "Enhancing self-worth through display",
-    superpowers: "Great at branding, making things look and feel valuable",
-    biases: "May spend based on external validation or comparison, rather than alignment",
+    motivation: "Recognition, status, and signaling success",
+    superpowers: [
+      "Excellent personal branding",
+      "Ability to influence and inspire",
+      "Understands perception and value"
+    ],
+    biases: [
+      "Lifestyle creep",
+      "Comparison with elite peer groups",
+      "Spending driven by external validation"
+    ],
     color: "bg-violet-50 border-violet-200 text-violet-700",
     image: impressorImg,
     recommendations: [
-      "Before purchases, ask: 'Would I buy this if no one would ever see it?'",
-      "Create a 'values list' to check spending decisions against",
-      "Redirect some 'impression spending' into wealth-building investments"
+      "Align spending with identity rather than audience",
+      "Invest in assets that appreciate quietly while status depreciates loudly",
+      "Build confidence in private wealth, not public display"
     ],
     challenges: [
-      "Before any purchase this week, ask: 'Would I buy this if no one knew?'",
-      "Unfollow 3 accounts that trigger comparison spending",
-      "Redirect one 'impression purchase' into your investment account"
-    ]
+      "Make one high-value purchase that no one will ever see",
+      "Identify three ways your wealth can compound quietly",
+      "Spend one month not upgrading anything"
+    ],
+    growthInsight: "The most powerful wealth signals are often invisible."
   },
   "Free Spirits": {
-    motivation: "Enjoying life's flow and reducing anxiety",
-    superpowers: "Intuitive, flow-based, values alignment over optimization",
-    biases: "Avoids structure — often due to anxiety or rebellion",
+    motivation: "Living authentically and avoiding financial rigidity",
+    superpowers: [
+      "Intuitive decision-making",
+      "Values-driven life design",
+      "Low attachment to status or comparison"
+    ],
+    biases: [
+      "Avoidance of financial structure",
+      "Anxiety around money conversations",
+      "Delegating too much without oversight"
+    ],
     color: "bg-sky-50 border-sky-200 text-sky-700",
     image: freespiritImg,
     recommendations: [
-      "Set up one automated transfer to savings — 'set it and forget it'",
-      "Create a simple, visual spending tracker you'll actually enjoy using",
-      "Schedule a quarterly 'money date' to check in without overwhelming yourself"
+      "Use minimalist financial systems (few accounts, automated flows)",
+      "Work with advisors or partners who translate complexity into simplicity",
+      "Think of structure as guardrails that preserve freedom"
     ],
     challenges: [
-      "Set up one automatic savings transfer — just $20 — and forget about it",
-      "Spend 5 minutes looking at your bank balance (no stress, just awareness)",
-      "Create one simple money rule for yourself that feels freeing, not limiting"
-    ]
+      "Define three financial values that guide your decisions",
+      "Spend 15 minutes reviewing your net worth without judgment",
+      "Create one simple financial rule that protects your freedom"
+    ],
+    growthInsight: "A small amount of structure can protect a lifetime of freedom."
   }
 };
 
@@ -260,22 +315,44 @@ export default function Results() {
                 </div>
                 <p className="text-xs leading-relaxed text-black/80">{data.motivation}</p>
               </div>
-              
+
               <div className="bg-white rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1.5 text-black">
                   <Zap className="w-4 h-4 text-amber-500" />
                   <span className="font-bold text-xs uppercase tracking-wide">Superpowers</span>
                 </div>
-                <p className="text-xs leading-relaxed text-black/80">{data.superpowers}</p>
+                <ul className="space-y-1">
+                  {data.superpowers.map((s, i) => (
+                    <li key={i} className="flex items-start gap-1.5 text-xs text-black/80">
+                      <span className="text-amber-500 mt-0.5">✦</span>
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              
+
               <div className="bg-white rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1.5 text-black">
                   <AlertTriangle className="w-4 h-4 text-rose-500" />
                   <span className="font-bold text-xs uppercase tracking-wide">Biases</span>
                 </div>
-                <p className="text-xs leading-relaxed text-black/80">{data.biases}</p>
+                <ul className="space-y-1">
+                  {data.biases.map((b, i) => (
+                    <li key={i} className="flex items-start gap-1.5 text-xs text-black/80">
+                      <span className="text-rose-400 mt-0.5">▲</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
+            </div>
+
+            {/* Growth Insight */}
+            <div className="mt-3 bg-white/70 rounded-xl px-4 py-2.5 border border-black/10">
+              <p className="text-xs text-black/70 italic text-center">
+                <span className="font-semibold not-italic text-black/50 uppercase tracking-wide text-[10px] mr-2">Growth Insight</span>
+                {data.growthInsight}
+              </p>
             </div>
           </div>
         </motion.div>
