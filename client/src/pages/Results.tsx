@@ -397,18 +397,29 @@ export default function Results() {
   };
 
   const copyCompatibilityLink = async () => {
+    const link = getCompatibilityLink();
+    const showSuccess = () => toast({ title: "Link Copied!", description: "Share this link with someone to compare money mindsets." });
+    const showError = () => toast({ title: "Could not copy link", description: "Please try again or manually copy the link.", variant: "destructive" });
+
     try {
-      await navigator.clipboard.writeText(getCompatibilityLink());
-      toast({ 
-        title: "Link Copied!", 
-        description: "Share this link with someone to compare money mindsets." 
-      });
-    } catch (err) {
-      toast({ 
-        title: "Could not copy link", 
-        description: "Please try again or manually copy the link.",
-        variant: "destructive"
-      });
+      await navigator.clipboard.writeText(link);
+      showSuccess();
+    } catch {
+      // Fallback for browsers that block clipboard API
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = link;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        showSuccess();
+      } catch {
+        showError();
+      }
     }
   };
 
@@ -643,11 +654,12 @@ export default function Results() {
                     className="flex-1"
                     data-testid="input-share-email"
                   />
-                  <Button 
+                  <Button
                     onClick={handleEmailShare}
                     disabled={isSendingEmail}
                     data-testid="button-send-email"
-                    className="gap-2"
+                    size="sm"
+                    className="gap-1.5 flex-shrink-0 px-4"
                   >
                     {isSendingEmail ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
