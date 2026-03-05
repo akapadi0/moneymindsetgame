@@ -39967,8 +39967,11 @@ async function sendResultsEmail(userEmail, userName, results) {
           <tr>
             <td style="background-color:#faf5f6;padding:24px 32px;text-align:center;">
               <div style="font-size:16px;font-weight:800;letter-spacing:2px;color:rgba(0,0,0,0.3);margin-bottom:10px;">WEALTH IQ</div>
-              <p style="font-size:13px;margin:0 0 12px;">
+              <p style="font-size:13px;margin:0 0 8px;">
                 <a href="https://www.wealthiqco.com" style="color:#b5546a;font-weight:600;text-decoration:none;">www.wealthiqco.com</a>
+              </p>
+              <p style="font-size:12px;margin:0 0 12px;">
+                <a href="https://aditis-newsletter-4981f9.beehiiv.com/" style="color:#b5546a;text-decoration:none;">&#128240; Subscribe to our newsletter</a>
               </p>
               <p style="font-size:12px;color:rgba(0,0,0,0.4);line-height:1.5;margin:0;">
                 Wealth IQ &#8226; Conscious Prosperity<br/>
