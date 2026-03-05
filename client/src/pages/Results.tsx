@@ -167,9 +167,8 @@ export default function Results() {
     setScores(JSON.parse(saved));
   }, [setLocation]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!scores) return;
+  const handleSubmit = () => {
+    if (!scores || !formData.name || !formData.email) return;
 
     // Unlock immediately — don't gate on API response
     setIsUnlocked(true);
@@ -637,11 +636,10 @@ export default function Results() {
               Enter your details to reveal your personalized Money Mindset and receive a copy via email.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="space-y-3">
               <div className="space-y-1">
                 <label className="text-xs font-medium text-muted-foreground ml-1">Full Name</label>
-                <input 
-                  required
+                <input
                   type="text"
                   placeholder="Jane Doe"
                   className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
@@ -654,8 +652,7 @@ export default function Results() {
                 <label className="text-xs font-medium text-muted-foreground ml-1">Email Address</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input 
-                    required
+                  <input
                     type="email"
                     placeholder="jane@example.com"
                     className="w-full pl-11 pr-4 py-3 rounded-xl bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
@@ -666,21 +663,15 @@ export default function Results() {
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full h-12 text-base mt-2" 
-                disabled={isPending}
+              <Button
+                onClick={handleSubmit}
+                className="w-full h-12 text-base mt-2"
+                disabled={!formData.name || !formData.email}
                 data-testid="button-reveal-results"
               >
-                {isPending ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="animate-spin w-5 h-5" /> Preparing your Money Mindset...
-                  </span>
-                ) : (
-                  "Reveal My Money Mindset"
-                )}
+                Reveal My Money Mindset
               </Button>
-            </form>
+            </div>
           </motion.div>
         </div>
       )}
