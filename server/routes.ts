@@ -24,13 +24,17 @@ export async function registerRoutes(
       const input = api.submissions.create.input.parse(req.body);
       const submission = await storage.createSubmission(input);
 
-      // Fire-and-forget: send results email (don't block the response)
-      sendResultsEmail(
-        input.email,
-        input.name ?? "there",
-        input.results as Record<string, number>,
-      ).then(() => console.log(`Results email sent to ${input.email}`))
-       .catch((err) => console.error("Email send error:", err?.message ?? err));
+      // Send results email before responding (Vercel kills the function after response)
+      try {
+        await sendResultsEmail(
+          input.email,
+          input.name ?? "there",
+          input.results as Record<string, number>,
+        );
+        console.log(`Results email sent to ${input.email}`);
+      } catch (err: any) {
+        console.error("Email send error:", err?.message ?? err);
+      }
 
       res.status(201).json(submission);
     } catch (err) {

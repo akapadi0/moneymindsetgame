@@ -39562,11 +39562,16 @@ async function registerRoutes(httpServer2, app2) {
     try {
       const input = api.submissions.create.input.parse(req.body);
       const submission = await storage.createSubmission(input);
-      sendResultsEmail(
-        input.email,
-        input.name ?? "there",
-        input.results
-      ).then(() => console.log(`Results email sent to ${input.email}`)).catch((err) => console.error("Email send error:", err?.message ?? err));
+      try {
+        await sendResultsEmail(
+          input.email,
+          input.name ?? "there",
+          input.results
+        );
+        console.log(`Results email sent to ${input.email}`);
+      } catch (err) {
+        console.error("Email send error:", err?.message ?? err);
+      }
       res.status(201).json(submission);
     } catch (err) {
       if (err instanceof z.ZodError) {
