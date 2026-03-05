@@ -13,7 +13,7 @@ export default function Landing() {
     <div className="min-h-screen flex flex-col bg-background">
       {/* Navigation */}
       <nav className="fixed w-full z-50 bg-background border-b border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-28 flex items-center justify-between">
           <div className="flex items-center">
             <a href="https://www.wealthiqco.com/" target="_blank" rel="noopener noreferrer">
               <img src={wealthIqLogo} alt="WealthIQ - Conscious Prosperity" className="h-28 mix-blend-multiply" data-testid="img-logo" />
@@ -23,7 +23,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+      <section className="relative pt-40 pb-20 lg:pt-56 lg:pb-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/95 to-background z-10" />
           {/* Descriptive comment for Unsplash: Abstract financial growth background */}
@@ -46,10 +46,10 @@ export default function Landing() {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-              Unlock the hidden psychological patterns driving your financial decisions. 
+              Unlock the hidden psychological patterns driving your financial decisions.
               Play the 5-minute card game to reveal your unique archetype.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/game">
                 <Button size="lg" className="w-full sm:w-auto text-lg px-10 shadow-accent/20">

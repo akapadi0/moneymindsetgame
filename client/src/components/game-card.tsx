@@ -13,7 +13,7 @@ export function GameCard({ question, onSwipe, active, timerWarning }: GameCardPr
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0]);
-  
+
   // Visual indicators based on drag position
   const rightOpacity = useTransform(x, [0, 100], [0, 1]);
   const leftOpacity = useTransform(x, [0, -100], [0, 1]);
@@ -23,8 +23,8 @@ export function GameCard({ question, onSwipe, active, timerWarning }: GameCardPr
     ["rgba(239, 68, 68, 1)", "rgba(0,0,0,0)", "rgba(34, 197, 94, 1)"]
   );
 
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (Math.abs(info.offset.x) > 100) {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (Math.abs(info.offset.x) > 60 || Math.abs(info.velocity.x) > 400) {
       const direction = info.offset.x > 0 ? "right" : "left";
       onSwipe(direction);
     }
@@ -36,7 +36,8 @@ export function GameCard({ question, onSwipe, active, timerWarning }: GameCardPr
     <motion.div
       style={{ x, rotate, opacity }}
       drag="x"
-      dragConstraints={{ left: 0, right: 0 }}
+      dragConstraints={{ left: -300, right: 300 }}
+      dragElastic={0.8}
       onDragEnd={handleDragEnd}
       initial={{ scale: 0.9, opacity: 0, y: 20 }}
       animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -44,7 +45,7 @@ export function GameCard({ question, onSwipe, active, timerWarning }: GameCardPr
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="w-full cursor-grab active:cursor-grabbing touch-none"
     >
-      <motion.div 
+      <motion.div
         style={{ borderColor }}
         animate={timerWarning ? { boxShadow: ["0 0 0px rgba(234,179,8,0)", "0 0 20px rgba(234,179,8,0.5)", "0 0 0px rgba(234,179,8,0)"] } : { boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)" }}
         transition={timerWarning ? { repeat: Infinity, duration: 1.2, ease: "easeInOut" } : { duration: 0.3 }}
@@ -56,16 +57,16 @@ export function GameCard({ question, onSwipe, active, timerWarning }: GameCardPr
         </div>
 
         {/* Swipe Indicators */}
-        <motion.div 
-          style={{ opacity: rightOpacity }} 
+        <motion.div
+          style={{ opacity: rightOpacity }}
           className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-green-500/20 to-transparent flex items-center justify-center pointer-events-none"
         >
           <div className="text-green-500 transform rotate-90 border-2 border-green-500 rounded-lg px-3 py-1 font-bold text-lg uppercase tracking-widest bg-card/80 backdrop-blur-sm">
             Agree
           </div>
         </motion.div>
-        <motion.div 
-          style={{ opacity: leftOpacity }} 
+        <motion.div
+          style={{ opacity: leftOpacity }}
           className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-red-500/20 to-transparent flex items-center justify-center pointer-events-none"
         >
           <div className="text-red-500 transform -rotate-90 border-2 border-red-500 rounded-lg px-3 py-1 font-bold text-lg uppercase tracking-widest bg-card/80 backdrop-blur-sm">
