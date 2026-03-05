@@ -39647,123 +39647,123 @@ async function sendEmail(toEmails, subject, _textBody, htmlBody) {
 var BASE_URL = "https://moneymindsetgame.vercel.app";
 var ARCHETYPE_EMAIL_DATA = {
   "Strategists": {
-    motivation: "Long-term success through structure & informed decisions",
-    superpowers: "Long-term thinker, loves planning, efficient with resources",
-    biases: "May overanalyze decisions, delay action until all the data is in",
+    motivation: "Long-term success through structure and intelligent planning",
+    superpowers: "Systems thinker, excellent capital allocator, high discipline and patience",
+    biases: "Analysis paralysis, over-optimization of small variables, difficulty acting without full information",
     barColor: "#059669",
     bgColor: "#ecfdf5",
     borderColor: "#a7f3d0",
     textColor: "#047857",
     imageUrl: `${BASE_URL}/images/archetype-strategist.png`,
     recommendations: [
-      "Set a deadline for financial decisions to avoid analysis paralysis",
-      "Build in a 'spontaneity fund' for unplanned opportunities",
-      "Practice making smaller decisions quickly to build confidence"
+      "Use decision frameworks instead of perfect data (e.g., 70% rule: act when 70% confident)",
+      "Separate strategic decisions from tactical tweaks \u2014 not everything deserves deep analysis",
+      "Build a personal 'risk budget' for opportunities that don't fully fit the spreadsheet"
     ],
     challenges: [
-      "Make one financial decision this week in under 10 minutes",
-      "Spend $50 on something fun without researching it first",
-      "Skip one spreadsheet review this month and trust your gut"
+      "Make one $5K+ decision this month with incomplete information",
+      "Schedule a 'no optimization day' where you intentionally do not research anything financial",
+      "Delegate one financial task you normally insist on controlling"
     ]
   },
   "Givers": {
-    motivation: "Community well-being through generosity",
-    superpowers: "Deeply values people and purpose, community-oriented",
-    biases: "Take on responsibilities that are not aligned with long-term goals",
+    motivation: "Community impact and supporting the people around them",
+    superpowers: "Deep empathy and loyalty, community builder, purpose-driven wealth",
+    biases: "Blurred financial boundaries, guilt around prioritizing personal wealth, becoming the default financial safety net",
     barColor: "#e11d48",
     bgColor: "#fff1f2",
     borderColor: "#fecdd3",
     textColor: "#be123c",
     imageUrl: `${BASE_URL}/images/archetype-giver.png`,
     recommendations: [
-      "Create a giving budget that protects your own financial security first",
-      "Learn to say 'not right now' instead of always saying yes",
-      "Set up automatic savings before allocating funds to help others"
+      "Separate charity, family support, and investment \u2014 they are different tools",
+      "Build a structured giving strategy (DAF, annual allocation, or legacy planning)",
+      "Remember: sustainable generosity requires sustainable wealth"
     ],
     challenges: [
-      "Say 'let me think about it' before agreeing to any financial help this week",
-      "Transfer 10% of your next paycheck to your own savings before giving",
-      "Write down 3 ways to help others that don't involve money"
+      "Decline one request this month without over-explaining",
+      "Design a 10-year giving vision, not just reactive generosity",
+      "Identify one area where your support may be preventing someone else's growth"
     ]
   },
   "Adventurers": {
-    motivation: "Seeking excitement, novelty, and freedom",
-    superpowers: "Comfortable with risk, visionary, flexible thinker",
-    biases: "Prone to impulsive decisions without considering trade offs",
+    motivation: "Freedom, exploration, and bold opportunities",
+    superpowers: "High tolerance for uncertainty, opportunity spotting, energized by new ventures",
+    biases: "Overconfidence in intuition, concentrated bets, underestimating downside risk",
     barColor: "#d97706",
     bgColor: "#fffbeb",
     borderColor: "#fde68a",
     textColor: "#b45309",
     imageUrl: `${BASE_URL}/images/archetype-adventurer.png`,
     recommendations: [
-      "Implement a 48-hour rule before major financial decisions",
-      "Channel your risk tolerance into diversified investments",
-      "Create adventure-specific savings to fund experiences responsibly"
+      "Use position sizing \u2014 even the best ideas shouldn't dominate your portfolio",
+      "Balance adventure capital with compounding capital",
+      "Create a system where curiosity is funded but not reckless"
     ],
     challenges: [
-      "Wait 48 hours before your next purchase over $100",
-      "Create a dedicated 'adventure fund' and only use that for spontaneous buys",
-      "Track every impulse purchase for 2 weeks \u2014 no judgment, just awareness"
+      "Write down the downside of your next big idea before acting",
+      "Build a 'risk sandbox' portfolio where experimentation is encouraged but capped",
+      "Say no to one exciting opportunity this quarter"
     ]
   },
   "Guardians": {
-    motivation: "Minimizing uncertainty and ensuring safety",
-    superpowers: "Excellent at protecting stability and managing downside risk",
-    biases: "Tends to avoid risks or underinvest in growth",
+    motivation: "Security, stability, and protecting what has been built",
+    superpowers: "Excellent downside protection, strong contingency planning, long-term resilience",
+    biases: "Opportunity avoidance, excessive cash or low-risk allocations, overestimating worst-case scenarios",
     barColor: "#0d9488",
     bgColor: "#f0fdfa",
     borderColor: "#99f6e4",
     textColor: "#0f766e",
     imageUrl: `${BASE_URL}/images/archetype-guardian.png`,
     recommendations: [
-      "Set up a 'growth fund' separate from your emergency savings",
-      "Start small with investments to build comfort with calculated risks",
-      "Review your portfolio annually to ensure you're not being too conservative"
+      "Separate true safety needs from emotional comfort",
+      "Build a two-bucket mindset: protection capital vs growth capital",
+      "Remember that inflation and stagnation are also risks"
     ],
     challenges: [
-      "Invest $25 in something new this month \u2014 even if it feels uncomfortable",
-      "Research one 'risky' investment and learn why others find it appealing",
-      "Calculate how much extra you'd have if you'd taken more growth risk"
+      "Increase one allocation toward long-term growth",
+      "Review the opportunity cost of safety over the last decade",
+      "Identify one financial risk that is actually manageable rather than dangerous"
     ]
   },
   "Impressors": {
-    motivation: "Enhancing self-worth through display",
-    superpowers: "Great at branding, making things look and feel valuable",
-    biases: "May spend based on external validation or comparison, rather than alignment",
+    motivation: "Recognition, status, and signaling success",
+    superpowers: "Excellent personal branding, ability to influence and inspire, understands perception and value",
+    biases: "Lifestyle creep, comparison with elite peer groups, spending driven by external validation",
     barColor: "#7c3aed",
     bgColor: "#f5f3ff",
     borderColor: "#ddd6fe",
     textColor: "#6d28d9",
     imageUrl: `${BASE_URL}/images/archetype-impressor.png`,
     recommendations: [
-      "Before purchases, ask: 'Would I buy this if no one would ever see it?'",
-      "Create a 'values list' to check spending decisions against",
-      "Redirect some 'impression spending' into wealth-building investments"
+      "Align spending with identity rather than audience",
+      "Invest in assets that appreciate quietly while status depreciates loudly",
+      "Build confidence in private wealth, not public display"
     ],
     challenges: [
-      "Before any purchase this week, ask: 'Would I buy this if no one knew?'",
-      "Unfollow 3 accounts that trigger comparison spending",
-      "Redirect one 'impression purchase' into your investment account"
+      "Make one high-value purchase that no one will ever see",
+      "Identify three ways your wealth can compound quietly",
+      "Spend one month not upgrading anything"
     ]
   },
   "Free Spirits": {
-    motivation: "Enjoying life's flow and reducing anxiety",
-    superpowers: "Intuitive, flow-based, values alignment over optimization",
-    biases: "Avoids structure \u2014 often due to anxiety or rebellion",
+    motivation: "Living authentically and avoiding financial rigidity",
+    superpowers: "Intuitive decision-making, values-driven life design, low attachment to status or comparison",
+    biases: "Avoidance of financial structure, anxiety around money conversations, delegating too much without oversight",
     barColor: "#0284c7",
     bgColor: "#f0f9ff",
     borderColor: "#bae6fd",
     textColor: "#0369a1",
     imageUrl: `${BASE_URL}/images/archetype-freespirit.png`,
     recommendations: [
-      "Set up one automated transfer to savings \u2014 'set it and forget it'",
-      "Create a simple, visual spending tracker you'll actually enjoy using",
-      "Schedule a quarterly 'money date' to check in without overwhelming yourself"
+      "Use minimalist financial systems (few accounts, automated flows)",
+      "Work with advisors or partners who translate complexity into simplicity",
+      "Think of structure as guardrails that preserve freedom"
     ],
     challenges: [
-      "Set up one automatic savings transfer \u2014 just $20 \u2014 and forget about it",
-      "Spend 5 minutes looking at your bank balance (no stress, just awareness)",
-      "Create one simple money rule for yourself that feels freeing, not limiting"
+      "Define three financial values that guide your decisions",
+      "Spend 15 minutes reviewing your net worth without judgment",
+      "Create one simple financial rule that protects your freedom"
     ]
   }
 };
