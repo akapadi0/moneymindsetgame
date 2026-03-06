@@ -321,9 +321,9 @@ async function sendResultsEmail(
   userName: string,
   results: Record<string, number>,
 ) {
-  const MAX_SCORE = 6;
+  const totalScore = Object.values(results).reduce((sum, s) => sum + s, 0) || 1;
   const sorted = Object.entries(results)
-    .map(([name, score]) => ({ name, score, pct: Math.round(score / MAX_SCORE * 100) }))
+    .map(([name, score]) => ({ name, score, pct: Math.round(score / totalScore * 100) }))
     .sort((a, b) => b.score - a.score);
 
   const [primary, secondary, ...others] = sorted;
@@ -538,9 +538,9 @@ async function sendShareEmail(
   senderName: string,
   results: Record<string, number>,
 ) {
-  const MAX_SCORE = 6;
+  const totalScore = Object.values(results).reduce((sum, s) => sum + s, 0) || 1;
   const sorted = Object.entries(results)
-    .map(([name, score]) => ({ name, score, pct: Math.round(score / MAX_SCORE * 100) }))
+    .map(([name, score]) => ({ name, score, pct: Math.round(score / totalScore * 100) }))
     .sort((a, b) => b.score - a.score);
 
   const [primary, secondary, ...others] = sorted;

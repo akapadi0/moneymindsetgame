@@ -39820,8 +39820,8 @@ function archetypeCardHtml(label, name, pct, d) {
     </table>`;
 }
 async function sendResultsEmail(userEmail, userName, results) {
-  const MAX_SCORE = 6;
-  const sorted = Object.entries(results).map(([name, score]) => ({ name, score, pct: Math.round(score / MAX_SCORE * 100) })).sort((a, b) => b.score - a.score);
+  const totalScore = Object.values(results).reduce((sum, s) => sum + s, 0) || 1;
+  const sorted = Object.entries(results).map(([name, score]) => ({ name, score, pct: Math.round(score / totalScore * 100) })).sort((a, b) => b.score - a.score);
   const [primary, secondary, ...others] = sorted;
   const primaryData = ARCHETYPE_EMAIL_DATA[primary?.name] ?? ARCHETYPE_EMAIL_DATA["Strategists"];
   const secondaryData = ARCHETYPE_EMAIL_DATA[secondary?.name] ?? ARCHETYPE_EMAIL_DATA["Guardians"];
@@ -40030,8 +40030,8 @@ ${BASE_URL}`)}" style="display:inline-block;background-color:#0077b5;color:#ffff
   );
 }
 async function sendShareEmail(toEmail, senderName, results) {
-  const MAX_SCORE = 6;
-  const sorted = Object.entries(results).map(([name, score]) => ({ name, score, pct: Math.round(score / MAX_SCORE * 100) })).sort((a, b) => b.score - a.score);
+  const totalScore = Object.values(results).reduce((sum, s) => sum + s, 0) || 1;
+  const sorted = Object.entries(results).map(([name, score]) => ({ name, score, pct: Math.round(score / totalScore * 100) })).sort((a, b) => b.score - a.score);
   const [primary, secondary, ...others] = sorted;
   const primaryData = ARCHETYPE_EMAIL_DATA[primary?.name] ?? ARCHETYPE_EMAIL_DATA["Strategists"];
   const secondaryData = ARCHETYPE_EMAIL_DATA[secondary?.name] ?? ARCHETYPE_EMAIL_DATA["Guardians"];
