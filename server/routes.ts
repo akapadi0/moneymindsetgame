@@ -293,6 +293,16 @@ const COMPATIBILITY_INSIGHTS: Record<string, string> = {
   "Free Spirits + Impressors": "As an Impressor-Free Spirit, you value both self-expression and flow. You want to look and feel successful, but you don't want rigid systems to get there. This combination thrives when you find financial approaches that feel natural and aligned with your identity — not forced or formulaic. Automate the basics so you can focus on what inspires you.",
 };
 
+const SINGULAR: Record<string, string> = {
+  "Strategists": "Strategist",
+  "Givers": "Giver",
+  "Adventurers": "Adventurer",
+  "Guardians": "Guardian",
+  "Impressors": "Impressor",
+  "Free Spirits": "Free Spirit",
+};
+const singular = (name: string) => SINGULAR[name] ?? name;
+
 function archetypeCardHtml(label: string, name: string, pct: number, d: ArchetypeEmailData): string {
   return `
     <table cellpadding="0" cellspacing="0" width="100%" style="border-radius:10px;overflow:hidden;border:1.5px solid ${d.borderColor};background-color:${d.bgColor};">
@@ -344,8 +354,8 @@ async function sendResultsEmail(
       <tr>
         <td style="padding:5px 20px;">
           <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-            <td style="width:28px;padding-right:6px;"><img src="${d.imageUrl}" alt="${name}" width="24" height="24" style="display:block;object-fit:contain;" /></td>
-            <td style="width:105px;font-size:13px;font-weight:600;color:rgba(0,0,0,0.9);padding-right:10px;white-space:nowrap;">${name}</td>
+            <td style="width:28px;padding-right:6px;"><img src="${d.imageUrl}" alt="${singular(name)}" width="24" height="24" style="display:block;object-fit:contain;" /></td>
+            <td style="width:105px;font-size:13px;font-weight:600;color:rgba(0,0,0,0.9);padding-right:10px;white-space:nowrap;">${singular(name)}</td>
             <td>
               <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#e5e7eb;border-radius:10px;height:14px;"><tbody><tr>
                 <td width="${pct}%" style="background-color:${d.barColor};height:14px;border-radius:10px;"></td>
@@ -384,14 +394,14 @@ async function sendResultsEmail(
     "Your Money Mindset Assessment is ready! Here's your personalized Wealth IQ Money Mindset profile.",
     "",
     "YOUR TOP ARCHETYPES",
-    `Primary:   ${primary?.name} (${primary?.pct}%)`,
-    `Secondary: ${secondary?.name} (${secondary?.pct}%)`,
+    `Primary:   ${singular(primary?.name ?? "")} (${primary?.pct}%)`,
+    `Secondary: ${singular(secondary?.name ?? "")} (${secondary?.pct}%)`,
     "",
     "WHAT DOES THIS MEAN?",
     compatibilityInsight,
     "",
     "YOUR OTHER TRAITS",
-    ...others.map(({ name, pct }) => `${name}: ${pct}%`),
+    ...others.map(({ name, pct }) => `${singular(name)}: ${pct}%`),
     "",
     "RECOMMENDATIONS",
     ...recommendations.map((r, i) => `${i + 1}. ${r}`),
@@ -415,7 +425,7 @@ async function sendResultsEmail(
           <tr>
             <td style="text-align:center;padding:8px 32px 24px;">
               <h1 style="font-size:24px;font-weight:700;color:rgba(0,0,0,0.9);margin:0 0 8px;line-height:1.25;font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">Hi ${userName}, your Money Mindset Assessment is ready!</h1>
-              <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">Based on your Wealth IQ assessment responses, here&#39;s your personalized money mindset profile.</p>
+              <p style="font-size:14px;color:rgba(0,0,0,0.6);margin:0;line-height:1.5;">Based on your assessment responses, here&#39;s your personalized money mindset profile.</p>
             </td>
           </tr>
           <tr><td style="padding:0 32px;"><hr style="border:none;border-top:1px solid #e5e7eb;margin:0;"/></td></tr>
@@ -429,10 +439,10 @@ async function sendResultsEmail(
             <td style="padding:12px 24px 24px;">
               <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
                 <td width="48%" valign="top" style="padding-right:8px;">
-                  ${archetypeCardHtml("PRIMARY", primary?.name ?? "", primary?.pct ?? 0, primaryData)}
+                  ${archetypeCardHtml("PRIMARY", singular(primary?.name ?? ""), primary?.pct ?? 0, primaryData)}
                 </td>
                 <td width="48%" valign="top" style="padding-left:8px;">
-                  ${archetypeCardHtml("SECONDARY", secondary?.name ?? "", secondary?.pct ?? 0, secondaryData)}
+                  ${archetypeCardHtml("SECONDARY", singular(secondary?.name ?? ""), secondary?.pct ?? 0, secondaryData)}
                 </td>
               </tr></tbody></table>
             </td>
@@ -496,10 +506,10 @@ async function sendResultsEmail(
               <p style="font-size:13px;color:rgba(0,0,0,0.5);margin:0 0 12px;">Proud of your results? Share them!</p>
               <table cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr>
                 <td style="padding-right:8px;">
-                  <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just discovered my Money Mindset Archetype: ${primary?.name}! Take the Wealth IQ Money Mindset Assessment 👉 ${BASE_URL}`)}" style="display:inline-block;background-color:#000000;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on X</a>
+                  <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just discovered my Money Mindset Archetype: ${singular(primary?.name ?? "")}! Take the Wealth IQ Money Mindset Assessment 👉 ${BASE_URL}`)}" style="display:inline-block;background-color:#000000;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on X</a>
                 </td>
                 <td>
-                  <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`💡 I just took the Wealth IQ Money Mindset Assessment\n\nIt breaks down your money personality — the patterns behind how you earn, save, spend, and invest.\n\nMy primary archetype? ${primary?.name}.\n\nThe blind spots it revealed were the real eye-opener.\n\n💬 Curious what yours might be?\n\n${BASE_URL}`)}" style="display:inline-block;background-color:#0077b5;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on LinkedIn</a>
+                  <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`💡 I just took the Wealth IQ Money Mindset Assessment\n\nIt breaks down your money personality — the patterns behind how you earn, save, spend, and invest.\n\nMy primary archetype? ${singular(primary?.name ?? "")}.\n\nThe blind spots it revealed were the real eye-opener.\n\n💬 Curious what yours might be?\n\n${BASE_URL}`)}" style="display:inline-block;background-color:#0077b5;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">Share on LinkedIn</a>
                 </td>
               </tr></tbody></table>
             </td>
@@ -561,8 +571,8 @@ async function sendShareEmail(
       <tr>
         <td style="padding:5px 20px;">
           <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-            <td style="width:28px;padding-right:6px;"><img src="${d.imageUrl}" alt="${name}" width="24" height="24" style="display:block;object-fit:contain;" /></td>
-            <td style="width:105px;font-size:13px;font-weight:600;color:rgba(0,0,0,0.9);padding-right:10px;white-space:nowrap;">${name}</td>
+            <td style="width:28px;padding-right:6px;"><img src="${d.imageUrl}" alt="${singular(name)}" width="24" height="24" style="display:block;object-fit:contain;" /></td>
+            <td style="width:105px;font-size:13px;font-weight:600;color:rgba(0,0,0,0.9);padding-right:10px;white-space:nowrap;">${singular(name)}</td>
             <td>
               <table cellpadding="0" cellspacing="0" width="100%" style="background-color:#e5e7eb;border-radius:10px;height:14px;"><tbody><tr>
                 <td width="${pct}%" style="background-color:${d.barColor};height:14px;border-radius:10px;"></td>
@@ -599,14 +609,14 @@ async function sendShareEmail(
     `${senderName} recently completed a Wealth IQ Money Mindset Assessment and wants to share their results with you.`,
     "",
     "TOP ARCHETYPES",
-    `Primary:   ${primary?.name} (${primary?.pct}%)`,
-    `Secondary: ${secondary?.name} (${secondary?.pct}%)`,
+    `Primary:   ${singular(primary?.name ?? "")} (${primary?.pct}%)`,
+    `Secondary: ${singular(secondary?.name ?? "")} (${secondary?.pct}%)`,
     "",
     "WHAT DOES THIS MEAN?",
     compatibilityInsight,
     "",
     "OTHER TRAITS",
-    ...others.map(({ name, pct }) => `${name}: ${pct}%`),
+    ...others.map(({ name, pct }) => `${singular(name)}: ${pct}%`),
     "",
     "RECOMMENDATIONS",
     ...recommendations.map((r, i) => `${i + 1}. ${r}`),
@@ -644,10 +654,10 @@ async function sendShareEmail(
             <td style="padding:12px 24px 24px;">
               <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
                 <td width="48%" valign="top" style="padding-right:8px;">
-                  ${archetypeCardHtml("PRIMARY", primary?.name ?? "", primary?.pct ?? 0, primaryData)}
+                  ${archetypeCardHtml("PRIMARY", singular(primary?.name ?? ""), primary?.pct ?? 0, primaryData)}
                 </td>
                 <td width="48%" valign="top" style="padding-left:8px;">
-                  ${archetypeCardHtml("SECONDARY", secondary?.name ?? "", secondary?.pct ?? 0, secondaryData)}
+                  ${archetypeCardHtml("SECONDARY", singular(secondary?.name ?? ""), secondary?.pct ?? 0, secondaryData)}
                 </td>
               </tr></tbody></table>
             </td>
