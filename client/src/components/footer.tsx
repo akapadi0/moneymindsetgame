@@ -22,6 +22,15 @@ export function Footer() {
             Manali Patel
           </a>
         </p>
+        <p className="mt-2">
+          Interested in white-labeling this for your clients?{" "}
+          <a
+            href="mailto:aditi@wealthiqco.com"
+            className="text-primary hover:underline font-medium"
+          >
+            Email us
+          </a>
+        </p>
       </div>
     </footer>
   );
