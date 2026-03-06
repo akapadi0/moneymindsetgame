@@ -39808,7 +39808,7 @@ var SINGULAR = {
 var singular = (name) => SINGULAR[name] ?? name;
 function archetypeCardHtml(label, name, pct, d) {
   return `
-    <table cellpadding="0" cellspacing="0" width="100%" style="border-radius:10px;overflow:hidden;border:1.5px solid ${d.borderColor};background-color:${d.bgColor};">
+    <table cellpadding="0" cellspacing="0" width="100%">
       <tbody>
         <tr>
           <td style="padding:16px 16px 12px;text-align:center;">
@@ -39925,10 +39925,11 @@ async function sendResultsEmail(userEmail, userName, results) {
           <tr>
             <td style="padding:12px 24px 24px;">
               <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-                <td width="48%" valign="top" style="padding-right:8px;">
+                <td width="48%" valign="top" style="background-color:${primaryData.bgColor};border-radius:10px;border:1.5px solid ${primaryData.borderColor};">
                   ${archetypeCardHtml("PRIMARY", singular(primary?.name ?? ""), primary?.pct ?? 0, primaryData)}
                 </td>
-                <td width="48%" valign="top" style="padding-left:8px;">
+                <td width="16">&nbsp;</td>
+                <td width="48%" valign="top" style="background-color:${secondaryData.bgColor};border-radius:10px;border:1.5px solid ${secondaryData.borderColor};">
                   ${archetypeCardHtml("SECONDARY", singular(secondary?.name ?? ""), secondary?.pct ?? 0, secondaryData)}
                 </td>
               </tr></tbody></table>
@@ -40133,10 +40134,11 @@ async function sendShareEmail(toEmail, senderName, results) {
           <tr>
             <td style="padding:12px 24px 24px;">
               <table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-                <td width="48%" valign="top" style="padding-right:8px;">
+                <td width="48%" valign="top" style="background-color:${primaryData.bgColor};border-radius:10px;border:1.5px solid ${primaryData.borderColor};">
                   ${archetypeCardHtml("PRIMARY", singular(primary?.name ?? ""), primary?.pct ?? 0, primaryData)}
                 </td>
-                <td width="48%" valign="top" style="padding-left:8px;">
+                <td width="16">&nbsp;</td>
+                <td width="48%" valign="top" style="background-color:${secondaryData.bgColor};border-radius:10px;border:1.5px solid ${secondaryData.borderColor};">
                   ${archetypeCardHtml("SECONDARY", singular(secondary?.name ?? ""), secondary?.pct ?? 0, secondaryData)}
                 </td>
               </tr></tbody></table>
